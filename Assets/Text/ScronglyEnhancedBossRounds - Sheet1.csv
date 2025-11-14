@@ -1,0 +1,21 @@
+Tag,Description,Tier
+DestroyAllPlayedCards,Destroy all played cards after scoring,2
+SuitDestroyed,Cards of a randomly chosen suit are destroyed after scoring,0
+SuitPairGrantsNoValue,Two randomly chosen suits provide no value or mulitplier,3
+PreplacedCard,Each hand has a randomly chosen preplaced card,5
+NoDiscards,Start with 0 discards,4
+Fatigued,Start fatigued,3
+SmallerHand,-1 hand size,1
+PointsRequiredTripled,Points required is tripled,5
+SmallerPlayArea,-1 playable standard card,4
+BaubleDisabled,One random bauble is disabled,1
+NegativeZodiac,Before scoringCOMMA scored hand gets a negative zodiac,2
+BaseScoreMultHalved,Base score and multiplier are halved,4
+DestroyFaceCards,Destroy all played face cards,0
+LessDiscardsAndHands,-1 Discard and -1 Hand Until Fatigue,1
+HandQuartered,Hands containing (3oak / Straight / Flush) have their multiplier quartered,2
+PointsRequiredDoubled,Points required is doubled,3
+TwoBaublesDisabled,Two random baubles are disabled,2
+ThreeBaublesDisabled,Three random baubles are disabled,3
+FourBaublesDisabled,Four random baubles are disabled,4
+FiveBaublesDisabled,Five random baubles are disabled,5

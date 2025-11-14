@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: JuliaMaterial
+  m_Shader: {fileID: 4800000, guid: a9ee47484d6b5a340851b6f8a03391f0, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _EnableExternalAlpha: 0
+    - _MaxIterations: 100
+    - _ZWrite: 0
+    - _Zoom: 1
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _InsideConstant: {r: 0.2, g: 0, b: 0, a: 1}
+    - _InsideDZEffectFactor: {r: 0.3, g: 0, b: 0, a: 1}
+    - _InsideDistanceFactor: {r: 0, g: 0.2, b: 0, a: 1}
+    - _InsideTrapValueFactor: {r: 1, g: 0.1, b: 0, a: 1}
+    - _InsideVeinBoostFactor: {r: 0, g: 0, b: 0, a: 1}
+    - _JuliaConstant: {r: -7.113018, g: -12.5593, b: 0, a: 0}
+    - _OutsideConstant: {r: 0, g: 0, b: 0, a: 1}
+    - _OutsideDZEffectFactor: {r: 0.4, g: 0.2, b: 0, a: 1}
+    - _OutsideDistanceFactor: {r: -0.1, g: -0.1, b: 0, a: 1}
+    - _OutsideTFactor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutsideTrapGlowFactor: {r: 0, g: 0.1, b: 0, a: 1}
+    - _OutsideVeinBoostFactor: {r: 0.4, g: 0.2, b: 0, a: 1}
+    - _PanOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

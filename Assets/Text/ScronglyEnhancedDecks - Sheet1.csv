@@ -1,0 +1,8 @@
+Name,Description,How to unlock,Order int,Unlocked by default
+Swirly,+1 discard and +1 hand until fatigue per round,Unlocked by default,0,TRUE
+Swiney,Start with Piggy Bank and 10 extra chips,Earn 10 interest at once with the Piggy Bank,1,FALSE
+Schromatic,Start with 13 rainbow cards,Add 13 rainbow cards to one deck,2,FALSE
+Screpublic,Start with no face cards,Remove all face cards from your deck,3,FALSE
+Sleepy,+4 discards per round. Always fatigued,Play 10 hands in fatigue in a single game,4,FALSE
+Scastronomy,Start with two Telescopes,Play all 9 atypical hand types in one game,5,FALSE
+Sgambler,Start with Chip Magnet and +1 chip threshold per round. Collect no interest,With the Chip MagnetCOMMA clear all chip thresholds at onceCOMMA two rounds in a row,6,FALSE

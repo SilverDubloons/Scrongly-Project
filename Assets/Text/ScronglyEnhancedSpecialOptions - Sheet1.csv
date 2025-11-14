@@ -1,0 +1,31 @@
+Tag,Label,Description,Type,Range,Default
+DestroyAllPlayedHands,Destroy All Played Hands,Destroy all played hands,Toggle,0-0,FALSE
+StartingRound,Starting Round,Start at Round {0},Slider,1-50,1
+StandardCardBaseCost,Standard Card Base Cost,Standard Cards Cost {0},Slider,0-15,1
+RerollBaseCost,Reroll Base Cost,Reroll Base Cost is {0},Slider,0-50,2
+StartingChips,Starting Chips,Start with {0} Chips,InputField,0-10000,5
+StartInShop,Start in Shop,Start in Shop,Toggle,0-0,FALSE
+AllBaublesZodiacsUnlocked,All Baubles & Zodiacs Unlocked,All Baubles & Zodiacs Unlocked,Toggle,0-0,FALSE
+StartingShopSize,Starting Shop Size,Shop Size Starts at {0},Slider,1-7,4
+ShopRerollScaling,Shop Reroll Price Scaling,Shop Reroll Price Increases by {0} each Use,Slider,0-5,1
+StartingDiscards,Starting Discards,Start with {0} Discards Per Round,Slider,0-15,3
+StartingHandsUntilFatigue,Starting Hands Until Fatigue,Start with {0} Hands Until Fatigue,Slider,0-15,3
+StartingHandSize,Starting Hand Size,Starting Hand Size of {0},Slider,1-20,7
+ChipThresholdsPerRound,Chip Thresholds per Round,Each Round has {0} Chip Thresholds,Slider,0-20,5
+ChipToInterestRatio,Chip to Interest Ratio,Chip to Interest ratio is {0} to 1,Slider,0-20,5
+BaseMaxInterest,Max Interest,Max Interest per Round is {0},Slider,0-50,5
+ZodiacsUnpurchasable,Zodiacs Cannot be Purchased,Zodiacs Cannot be Purchased,Toggle,0-0,FALSE
+PreplacedCard,Hands have 1 Preplaced Card,Hands have 1 Preplaced Card,Toggle,0-0,FALSE
+CommonBaubleWeight,Bauble Weight - Common,Common Bauble Weight is {0},Slider,0-100,100
+UncommonBaubleWeight,Bauble Weight - Uncommon,Uncommon Bauble Weight is {0},Slider,0-100,25
+RareBaubleWeight,Bauble Weight - Rare,Rare Bauble Weight is {0},Slider,0-100,8
+LegendaryBaubleWeight,Bauble Weight - Legendary,Legendary Bauble Weight is {0},Slider,0-100,1
+BonusChipThresholdHands,Bonus Chip Threshold Hands,{0} bonus chip threshold hands,Slider,0-5,1
+CommonSpecialCardWeight,Special Card Weight - Common,Common special card weight is {0},Slider,0-100,100
+UncommonSpecialCardWeight,Special Card Weight - Uncommon,Uncommon special card weight is {0},Slider,0-100,25
+RareSpecialCardWeight,Special Card Weight - Rare,Rare special card is weight {0},Slider,0-100,8
+LegendarySpecialCardWeight,Special Card Weight - Legendary,Legendary special card weight is {0},Slider,0-100,1
+MaxCardsDiscarded,Max Cards Discarded at Once,Max cards discarded at once is {0},Slider,1-25,5
+SpecialCardsAllowedInStandardSlots,S. Cards in standard card slots,Special cards are not allowed in standard slots,Toggle,0-0,TRUE
+IgnoreDeckBonus,Ignore deck bonus,Deck effects are not applied,Toggle,0-0,FALSE
+ChipThresholdMinimumPercent,Chip threshold minimum percent,Chip thresholds start at {0} percent of round score,Slider,0-100,20

@@ -1,0 +1,13 @@
+Tag,Name,Description,Category,Image Coordinates,Played Image Coordinates,Cost,Impact,StartsAvailable,MustBeUnlocked,HowToUnlock
+Bomb,Bomb,After scoringCOMMA destroy all played cards,Common,B1,B2,2,0,TRUE,FALSE,none
+RainbowPaint,Rainbow Paint,Before scoringCOMMA turn all played standard cards rainbowCOMMA permanently,Uncommon,B4,B5,3,0,TRUE,FALSE,none
+IncreaseValue,Blue Mushroom,Before scoringCOMMA add [IncreaseValueSpecialCardImpact] to the value of all scored cardsCOMMA permanently,Common,B10,B11,1,25,TRUE,FALSE,none
+IncreaseMult,Red Mushroom,Before scoringCOMMA add [IncreaseMultSpecialCardImpact] to the multiplier of all scored cardsCOMMA permanently,Common,B12,B13,2,3,TRUE,FALSE,none
+DoubleValueAndMult,Pink Mushroom,Before scoringCOMMA multiply the points and multiplier of all scored cards by [MultiplyPointsAndMultSpecialCardImpact]COMMA permanently,Legendary,B8,B9,5,2,TRUE,FALSE,none
+Promotion,Promotion,Before scoringCOMMA increase the rank of all played cards by [PromotionImpact]. Aces become deuces,Common,C1,C2,1,1,TRUE,FALSE,none
+Demotion,Demotion,Before scoringCOMMA decrease the rank of all played cards by [DemotionImpact]. Deuces become aces,Common,C4,C5,1,1,TRUE,FALSE,none
+ChangeAllRanks,Magic Marker,Before scoringCOMMA change all played cards to a singleCOMMA random rank,Rare,C7,C8,3,0,TRUE,FALSE,none
+ConvertCard,Magic Mirror,Before scoringCOMMA convert this card into the card directly to the left,Rare,C9,C11,3,0,TRUE,FALSE,none
+EarnZodiac,Spyglass,Before scoringCOMMA gain a zodiac for your played hand,Special,C12,C13,0,0,FALSE,FALSE,none
+SlotMachine,Lucky 7,Before scoringCOMMA spin a slot machine with a number of lines equal to the number of played standard 7's (1 minimum) once for each played Lucky 7. Earn lots of chips if you're lucky!,Legendary,D4,D5,3,1,TRUE,TRUE,Score 50 7's
+ZodiacContainedHands,Observatory,Before scoringCOMMA gain a zodiac for each hand contained in your played hand,Uncommon,D6,D7,3,1,TRUE,TRUE,Play a hand that contains both a full house and a straight flush
