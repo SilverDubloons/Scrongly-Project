@@ -34,8 +34,9 @@ public class Preferences : MonoBehaviour
 	public Toggle cheatsOnToggle;
 	public Toggle classicThemeToggle;
 	public Toggle darkThemeToggle;
-	// video options
-	public Toggle borderlessToggle;
+    public Slider dragThresholdSlider;
+    // video options
+    public Toggle borderlessToggle;
 	public Toggle fullScreenToggle;
 	public Toggle windowedToggle;
 	public TMP_Dropdown resolutionDropdown;
@@ -99,6 +100,8 @@ public class Preferences : MonoBehaviour
 	public bool showZodiacTooltips;
 	public bool showHandTooltips;
 	public int currentTheme;
+	public bool animateLockButton;
+	public int  dragThreshold; // 5 to 100, default 20. Higher means more likely to register drags, lower means more likely 
 	
 	public string preferencesFileName;
 	public string preferencesFileVersion;
@@ -235,6 +238,24 @@ public class Preferences : MonoBehaviour
 					showZodiacTooltips = bool.Parse(preferencesLines[27].Replace("showZodiacTooltips=", string.Empty));
 					showHandTooltips = bool.Parse(preferencesLines[28].Replace("showHandTooltips=", string.Empty));
 					currentTheme = int.Parse(preferencesLines[29].Replace("currentTheme=", string.Empty));
+					if (preferencesLines.Length > 30)
+					{
+						animateLockButton = bool.Parse(preferencesLines[30].Replace("animateLockButton=", string.Empty));
+					}
+					else
+					{
+						animateLockButton = true;
+						SetPreferencesFileToCurrentSettings();
+                    }
+					if (preferencesLines.Length > 31)
+					{
+						dragThreshold = int.Parse(preferencesLines[31].Replace("dragThreshold=", string.Empty));
+					}
+					else
+					{
+						dragThreshold = 20;
+						SetPreferencesFileToCurrentSettings();
+                    }
 				}
 				else
 				{
@@ -356,6 +377,8 @@ public class Preferences : MonoBehaviour
 		showZodiacTooltips = true;
 		showHandTooltips = true;
 		currentTheme = 0;
+        animateLockButton = true;
+        dragThreshold = 20;
 		string[] preferencesLines = LocalInterface.instance.GetFileTextLines(preferencesFileName);
 		if(preferencesLines != null && !doNotLoadFile)
 		{
@@ -455,7 +478,13 @@ public class Preferences : MonoBehaviour
 							case "currentTheme":
 								currentTheme = int.Parse(preferenceLineData[1]);
 							break;
-						}
+                            case "animateLockButton":
+                                animateLockButton = bool.Parse(preferenceLineData[1]);
+                            break;
+                            case "dragThreshold":
+                                dragThreshold = int.Parse(preferenceLineData[1]);
+                            break;
+                        }
 					}
 				}
 			}
@@ -470,11 +499,12 @@ public class Preferences : MonoBehaviour
 	
 	public void SetPreferencesFileToCurrentSettings()
 	{
-		string preferencesText = $"{preferencesFileVersion}\nsoundOn={soundOn.ToString()}\nmusicOn={musicOn.ToString()}\nsoundVolume={soundVolume.ToString()}\nmusicVolume={musicVolume.ToString()}\nmuteOnFocusLost={muteOnFocusLost.ToString()}\nmaxTimeBetweenDoubleClicks={maxTimeBetweenDoubleClicks.ToString()}\ncheatsOn={cheatsOn.ToString()}\nrotatingBackground={rotatingBackground.ToString()}\nlastSelectedVariant={lastSelectedVariant}\ngameSpeed={gameSpeed.ToString()}\nspecialCardsSortToLeftOfHand={specialCardsSortToLeftOfHand.ToString()}\ndisableExcessScoringAnimation={disableExcessScoringAnimation.ToString()}\nmuteMusicWhenMenuOpen={muteMusicWhenMenuOpen.ToString()}\nshowCommonTooltips={showCommonTooltips}\nonlyShowModifiedCardValues={onlyShowModifiedCardValues}\nlastSelectedDifficulty={lastSelectedDifficulty}\ndisplayType={displayType}\nresolutionX={resolutionX}\nresolutionY={resolutionY}\nvSyncOn={vSyncOn}\ntargetFrameRate={targetFrameRate}\nshowFramerate={showFramerate}\nglyphSet={glyphSet}\ncontrollerDeadzone={controllerDeadzone}\nshowBaubleTooltips={showBaubleTooltips}\nshowSpecialCardTooltips={showSpecialCardTooltips}\nshowZodiacTooltips={showZodiacTooltips}\nshowHandTooltips={showHandTooltips}\ncurrentTheme={currentTheme}";
+		string preferencesText = $"{preferencesFileVersion}\nsoundOn={soundOn.ToString()}\nmusicOn={musicOn.ToString()}\nsoundVolume={soundVolume.ToString()}\nmusicVolume={musicVolume.ToString()}\nmuteOnFocusLost={muteOnFocusLost.ToString()}\nmaxTimeBetweenDoubleClicks={maxTimeBetweenDoubleClicks.ToString()}\ncheatsOn={cheatsOn.ToString()}\nrotatingBackground={rotatingBackground.ToString()}\nlastSelectedVariant={lastSelectedVariant}\ngameSpeed={gameSpeed.ToString()}\nspecialCardsSortToLeftOfHand={specialCardsSortToLeftOfHand.ToString()}\ndisableExcessScoringAnimation={disableExcessScoringAnimation.ToString()}\nmuteMusicWhenMenuOpen={muteMusicWhenMenuOpen.ToString()}\nshowCommonTooltips={showCommonTooltips}\nonlyShowModifiedCardValues={onlyShowModifiedCardValues}\nlastSelectedDifficulty={lastSelectedDifficulty}\ndisplayType={displayType}\nresolutionX={resolutionX}\nresolutionY={resolutionY}\nvSyncOn={vSyncOn}\ntargetFrameRate={targetFrameRate}\nshowFramerate={showFramerate}\nglyphSet={glyphSet}\ncontrollerDeadzone={controllerDeadzone}\nshowBaubleTooltips={showBaubleTooltips}\nshowSpecialCardTooltips={showSpecialCardTooltips}\nshowZodiacTooltips={showZodiacTooltips}\nshowHandTooltips={showHandTooltips}\ncurrentTheme={currentTheme}\nanimateLockButton={animateLockButton}\ndragThreshold={dragThreshold}";
 		LocalInterface.instance.SetFileText(preferencesFileName, preferencesText);
 	}
-	
-	public void MenuButtonClicked()
+
+
+    public void MenuButtonClicked()
 	{
 		menuVisualObject.SetActive(true);
 	}
@@ -496,7 +526,8 @@ public class Preferences : MonoBehaviour
 		onlyShowModifiedCardValuesToggle.isOn = onlyShowModifiedCardValues;
 		cheatsOnToggle.isOn = cheatsOn;
 		cheatsOnToggle.gameObject.SetActive(cheatsOn);
-		if(LocalInterface.instance.GetCurrentSceneName() == "GameplayScene")
+		dragThresholdSlider.value = dragThreshold;
+        if (LocalInterface.instance.GetCurrentSceneName() == "GameplayScene")
 		{
 			GameManager.instance.SetVisibilityOfCheatOptions(cheatsOn);
 		}
@@ -598,7 +629,9 @@ public class Preferences : MonoBehaviour
 		showCommonTooltips = showCommonTooltipsToggle.isOn;
 		onlyShowModifiedCardValues = onlyShowModifiedCardValuesToggle.isOn;
 		cheatsOn = cheatsOnToggle.isOn;
-		if(LocalInterface.instance.GetCurrentSceneName() == "GameplayScene")
+		dragThreshold = (int)dragThresholdSlider.value;
+        EventSystem.current.pixelDragThreshold = dragThreshold;
+        if (LocalInterface.instance.GetCurrentSceneName() == "GameplayScene")
 		{
 			GameManager.instance.SetVisibilityOfCheatOptions(cheatsOn);
 		}

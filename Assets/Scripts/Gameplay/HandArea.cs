@@ -348,7 +348,18 @@ public class HandArea : MonoBehaviour
 				{
 					if(x.cardData.suit == y.cardData.suit)
 					{
-						return x.rt.anchoredPosition.x.CompareTo(y.rt.anchoredPosition.x);
+						if (Mathf.Approximately(x.cardData.multiplier, y.cardData.multiplier))
+						{
+							if (Mathf.Approximately(x.cardData.baseValue, y.cardData.baseValue))
+							{
+                                return x.rt.anchoredPosition.x.CompareTo(y.rt.anchoredPosition.x);
+                            }
+							return x.cardData.baseValue.CompareTo(y.cardData.baseValue);
+                        }
+						else
+						{ 
+							return x.cardData.multiplier.CompareTo(y.cardData.multiplier);
+						}
 					}
 					else
 					{
@@ -411,8 +422,19 @@ public class HandArea : MonoBehaviour
 				{
 					if(x.cardData.rank == y.cardData.rank)
 					{
-						return x.rt.anchoredPosition.x.CompareTo(y.rt.anchoredPosition.x);
-					}
+                        if (Mathf.Approximately(x.cardData.multiplier, y.cardData.multiplier))
+                        {
+                            if (Mathf.Approximately(x.cardData.baseValue, y.cardData.baseValue))
+                            {
+                                return x.rt.anchoredPosition.x.CompareTo(y.rt.anchoredPosition.x);
+                            }
+                            return x.cardData.baseValue.CompareTo(y.cardData.baseValue);
+                        }
+                        else
+                        {
+                            return x.cardData.multiplier.CompareTo(y.cardData.multiplier);
+                        }
+                    }
 					else
 					{
 						return x.cardData.rank - y.cardData.rank;

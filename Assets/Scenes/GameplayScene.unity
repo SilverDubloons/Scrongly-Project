@@ -8679,7 +8679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 60cd25f2dcbd9ab4dadd7d243552efcb, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.15686275}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.9137255}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10919,7 +10919,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8249916464157488008, guid: e2792ccd3a28aa348845c8bf90cda70a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1636100494}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6322806370821308120, guid: e2792ccd3a28aa348845c8bf90cda70a, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 311515801}
   m_SourcePrefab: {fileID: 100100000, guid: e2792ccd3a28aa348845c8bf90cda70a, type: 3}
 --- !u!224 &311515796 stripped
 RectTransform:
@@ -10936,7 +10939,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1490149308362008853, guid: e2792ccd3a28aa348845c8bf90cda70a, type: 3}
   m_PrefabInstance: {fileID: 311515795}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 311515800}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e9efcddada04ba448607e80cfd0e809, type: 3}
@@ -10947,12 +10950,35 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6749689422242403289, guid: e2792ccd3a28aa348845c8bf90cda70a, type: 3}
   m_PrefabInstance: {fileID: 311515795}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 311515800}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae13002d64f7b5a4282ef8de5828768c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &311515800 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6322806370821308120, guid: e2792ccd3a28aa348845c8bf90cda70a, type: 3}
+  m_PrefabInstance: {fileID: 311515795}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &311515801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311515800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c7fdec0921a7f941959f33fefa8b45d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImageWiggle
+  rt: {fileID: 311515796}
+  originRotation: {x: 0, y: 0, z: 0}
+  rightRotation: {x: 0, y: 0, z: -10}
+  leftRotation: {x: 0, y: 0, z: 10}
+  lockButton: {fileID: 311515798}
+  timeBetweenWiggles: 8
 --- !u!1 &314800675
 GameObject:
   m_ObjectHideFlags: 0
@@ -37486,7 +37512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
-  m_DragThreshold: 10
+  m_DragThreshold: 20
 --- !u!4 &1145443842
 Transform:
   m_ObjectHideFlags: 0

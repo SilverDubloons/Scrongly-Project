@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 using UnityEngine.Events;
 using TMPro;
+using UnityEngine.EventSystems;
 
 // C:\Users\jsilv\AppData\LocalLow\SilverDubloons\ScronglyEnhanced
 // D:\Unity Projects\ScronglyEnhanced\Assets\Text
@@ -1360,8 +1361,9 @@ public class LocalInterface : MonoBehaviour
 		Preferences.instance.SceneChanged(newSceneName);
 		persistentCanvas.worldCamera = Camera.main;
 		Preferences.instance.UpdateTheme();
-	}
-	
+		EventSystem.current.pixelDragThreshold = Preferences.instance.dragThreshold;
+    }
+
 	public static string GetTimeDifferenceString(DateTime pastTime)
 	{
 		TimeSpan difference = DateTime.Now - pastTime;

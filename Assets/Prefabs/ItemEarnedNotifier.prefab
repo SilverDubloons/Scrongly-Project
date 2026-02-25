@@ -328,7 +328,7 @@ MonoBehaviour:
   defaultObject: {fileID: 2667152680204613449}
   lastSelectedObject: {fileID: 0}
   priority: 0
-  availabilityPriority: 0
+  availabilityPriority: 1
   neverAutoSelect: 0
   canvas: {fileID: 0}
   ignoreAvailablilityPriority: 0
@@ -422,9 +422,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainText: 
   title: 
-  titleColor: {r: 0, g: 0, b: 0, a: 0}
+  titleColor: 0
   subtitle: 
-  subtitleColor: {r: 0, g: 0, b: 0, a: 0}
+  subtitleColor: 0
   isCommonTooltip: 0
   isBauble: 0
   isSpecialCard: 0

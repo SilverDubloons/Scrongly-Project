@@ -52,7 +52,7 @@ Material:
     - _InsideDistanceFactor: {r: 0, g: 0.2, b: 0, a: 1}
     - _InsideTrapValueFactor: {r: 1, g: 0.1, b: 0, a: 1}
     - _InsideVeinBoostFactor: {r: 0, g: 0, b: 0, a: 1}
-    - _JuliaConstant: {r: -7.113018, g: -12.5593, b: 0, a: 0}
+    - _JuliaConstant: {r: -0.12689272, g: -0.041934088, b: 0, a: 0}
     - _OutsideConstant: {r: 0, g: 0, b: 0, a: 1}
     - _OutsideDZEffectFactor: {r: 0.4, g: 0.2, b: 0, a: 1}
     - _OutsideDistanceFactor: {r: -0.1, g: -0.1, b: 0, a: 1}

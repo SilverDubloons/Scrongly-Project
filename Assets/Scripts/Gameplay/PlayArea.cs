@@ -1754,6 +1754,10 @@ public class PlayArea : MonoBehaviour, IPointerClickHandler
 		{
 			cardToDissolve.dropZonePlacedIn.CardRemoved();
 		}
+		if (cardToDissolve.controllerSelectableObject == ControllerSelection.instance.currentlySelectedObject)
+		{
+			ControllerSelection.instance.MoveSelectionToBestFit();
+        }
 		GameObject newDissolveGO = Instantiate(dissolvePrefab, cardToDissolve.rt);
 		Dissolve newDissolve = newDissolveGO.GetComponent<Dissolve>();
 		newDissolve.StartDissolve(cardToDissolve.rt);
