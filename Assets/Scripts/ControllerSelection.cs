@@ -127,7 +127,8 @@ public class ControllerSelection : MonoBehaviour
 						{
 							if(currentControllerSelectionGroups[i].controllerSelectableObjects[j].isSlideOut && currentControllerSelectionGroups[i].controllerSelectableObjects[j].slideOut.mouseOver)
 							{
-								currentControllerSelectionGroups[i].controllerSelectableObjects[j].slideOut.OnPointerExit(new PointerEventData(EventSystem.current));
+                                // Debug.Log($"ControllerSelection Disabling slide out {currentControllerSelectionGroups[i].controllerSelectableObjects[j].slideOut.gameObject.name}");
+                                currentControllerSelectionGroups[i].controllerSelectableObjects[j].slideOut.OnPointerExit(new PointerEventData(EventSystem.current));
 							}
 						}
 					}
@@ -959,7 +960,8 @@ public class ControllerSelection : MonoBehaviour
 						}
 						for(int k = 0; k < slideOutsToDisable.Count; k++)
 						{
-							slideOutsToDisable[k].OnPointerExit(new PointerEventData(EventSystem.current));
+							// Debug.Log($"ControllerSelection Disabling slide out {slideOutsToDisable[k].gameObject.name}");
+                            slideOutsToDisable[k].OnPointerExit(new PointerEventData(EventSystem.current));
 						}
 						for(int k = 0; k < slideOutsToEnable.Count; k++)
 						{

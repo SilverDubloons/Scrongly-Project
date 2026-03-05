@@ -1,6 +1,7 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using UnityEngine;
 using static Deck;
 
 public class VariantExplainer : MonoBehaviour
@@ -42,7 +43,7 @@ public class VariantExplainer : MonoBehaviour
 		
 		string specialOptionsString = string.Empty;
 		// Debug.Log($"variantBasics[6]={variantBasics[6]}, variantBasics[8]={variantBasics[8]}");
-		if(variantBasics[6] == "" || int.Parse(variantBasics[6]) != 0)
+		if(variantBasics[6] == "" || int.Parse(variantBasics[6], CultureInfo.InvariantCulture) != 0)
 		{
 			specialOptionsString += $"Add {variantBasics[6]} random standard cards to deck";
 			if(bool.Parse(variantBasics[7]))
@@ -51,7 +52,7 @@ public class VariantExplainer : MonoBehaviour
 			}
 			specialOptionsString += "\n";
 		}
-		if(variantBasics[8] == "" || int.Parse(variantBasics[8]) != 0)
+		if(variantBasics[8] == "" || int.Parse(variantBasics[8], CultureInfo.InvariantCulture) != 0)
 		{
 			specialOptionsString += $"Add {variantBasics[8]} random special cards to deck";
 			if(bool.Parse(variantBasics[9]))
@@ -245,17 +246,17 @@ public class VariantExplainer : MonoBehaviour
 		for(int i = 0; i < variantRounds.Length; i++)
 		{
 			string[] roundData = variantRounds[i].Split('#', StringSplitOptions.RemoveEmptyEntries);
-			if(int.Parse(roundData[0]) > 29)
+			if(int.Parse(roundData[0], CultureInfo.InvariantCulture) > 29)
 			{
 				continue;
 			}
 			if(roundData.Length > 2)
 			{
-				variantRoundsForSorting.Add(new VariantRoundForSorting(int.Parse(roundData[0]), double.Parse(roundData[1]), roundData[2]));
+				variantRoundsForSorting.Add(new VariantRoundForSorting(int.Parse(roundData[0]), double.Parse(roundData[1], CultureInfo.InvariantCulture), roundData[2]));
 			}
 			else
 			{
-				variantRoundsForSorting.Add(new VariantRoundForSorting(int.Parse(roundData[0]), double.Parse(roundData[1]), string.Empty));
+				variantRoundsForSorting.Add(new VariantRoundForSorting(int.Parse(roundData[0]), double.Parse(roundData[1], CultureInfo.InvariantCulture), string.Empty));
 			}
 		}
 		variantRoundsForSorting.Sort((x, y) =>
@@ -289,12 +290,12 @@ public class VariantExplainer : MonoBehaviour
 							if(variantRoundsForSorting[i].bossType.Substring(0, 6) == "Random")	// RandomTier00-01
 							{
 								// int lowerEnd = int.Parse(roundData[2].Substring(10, 2));
-								int lowerEnd = int.Parse(variantRoundsForSorting[i].bossType.Substring(10, 2));
+								int lowerEnd = int.Parse(variantRoundsForSorting[i].bossType.Substring(10, 2), CultureInfo.InvariantCulture);
 								// if(roundData[2].Length >= 13)
 								if(variantRoundsForSorting[i].bossType.Length >= 13)
 								{
 									// int upperEnd = int.Parse(roundData[2].Substring(13, 2));
-									int upperEnd = int.Parse(variantRoundsForSorting[i].bossType.Substring(13, 2));
+									int upperEnd = int.Parse(variantRoundsForSorting[i].bossType.Substring(13, 2), CultureInfo.InvariantCulture);
 									variantRoundText += $"\n<color=red>Random Tier {lowerEnd + 1}-{upperEnd + 1} Boss</color>";
 								}
 								else

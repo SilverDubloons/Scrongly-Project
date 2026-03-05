@@ -1,8 +1,9 @@
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using System;
 using System.Collections;
+using System.Globalization;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class BaubleVariantOptions : MonoBehaviour
 {
@@ -52,10 +53,10 @@ public class BaubleVariantOptions : MonoBehaviour
 		// baubleRarityLabel.ChangeText(baubleRarity);
 		// baseCostLabel.ChangeText($"${baubleBaseCost}");
 		baseCost = baubleBaseCost;
-		baseCostInputField.text = baseCost.ToString();
+		baseCostInputField.text = baseCost.ToString(CultureInfo.InvariantCulture);
 		// Debug.Log($"{baubleName} baubleBaseCost = {baubleBaseCost} baseCost = {baseCost} baseCostInputField.text = {baseCostInputField.text}");
 		costStep = baubleCostStep;
-		costStepInputField.text = costStep.ToString();
+		costStepInputField.text = costStep.ToString(CultureInfo.InvariantCulture);
 		if(maxQuantity == 1)
 		{
 			// costStepInputField.interactable = false;
@@ -67,7 +68,7 @@ public class BaubleVariantOptions : MonoBehaviour
 		startingQuantitySlider.value = baubleStartingQuantity;
 		startingQuantitySlider.maxValue = maxQuantity;
 		startingQuantity = baubleStartingQuantity;
-		// startingQuantityLabel.ChangeText(baubleStartingQuantity.ToString());
+		// startingQuantityLabel.ChangeText(baubleStartingQuantity.ToString(CultureInfo.InvariantCulture));
 		this.baubleName = baubleName;
 		// tooltipObject.mainText = baubleDescription;
 		// UpdateTooltip();
@@ -184,10 +185,10 @@ public class BaubleVariantOptions : MonoBehaviour
 		baubleRaritySlider.value = rarityInt;
 		// Debug.Log($"{baubleTag}'s startingQuantity={startingQuantity}");
 		startingQuantitySlider.value = startingQuantity;
-		baseCostInputField.text = baseCost.ToString();
+		baseCostInputField.text = baseCost.ToString(CultureInfo.InvariantCulture);
 		if(Mathf.RoundToInt(startingQuantitySlider.maxValue) > 1)
 		{
-			costStepInputField.text = costStep.ToString();
+			costStepInputField.text = costStep.ToString(CultureInfo.InvariantCulture);
 		}
 	}
 	
@@ -206,8 +207,8 @@ public class BaubleVariantOptions : MonoBehaviour
 		{
 			costStepInputField.text = "0";
 		}
-		baseCost = int.Parse(baseCostInputField.text);
-		costStep = int.Parse(costStepInputField.text);
+		baseCost = int.Parse(baseCostInputField.text, CultureInfo.InvariantCulture);
+		costStep = int.Parse(costStepInputField.text, CultureInfo.InvariantCulture);
 		BaubleOptionsUpdated();
 	}
 	
@@ -223,7 +224,7 @@ public class BaubleVariantOptions : MonoBehaviour
 			int baseCostInput = -1;
 			try
 			{
-				baseCostInput = int.Parse(baseCostInputField.text);
+				baseCostInput = int.Parse(baseCostInputField.text, CultureInfo.InvariantCulture);
 			}
 			catch(Exception exception)
 			{
@@ -235,7 +236,7 @@ public class BaubleVariantOptions : MonoBehaviour
 			}
 			else if(baseCostInput > BaubleVariantsMenu.instance.reasonableBaubleCostMaximum)
 			{
-				baseCostInputField.text = BaubleVariantsMenu.instance.reasonableBaubleCostMaximum.ToString();
+				baseCostInputField.text = BaubleVariantsMenu.instance.reasonableBaubleCostMaximum.ToString(CultureInfo.InvariantCulture);
 			}
 		}
 		if(costStepInputField.text != string.Empty)
@@ -243,7 +244,7 @@ public class BaubleVariantOptions : MonoBehaviour
 			int costStepInput = -1;
 			try
 			{
-				costStepInput = int.Parse(costStepInputField.text);
+				costStepInput = int.Parse(costStepInputField.text, CultureInfo.InvariantCulture);
 			}
 			catch(Exception exception)
 			{
@@ -255,7 +256,7 @@ public class BaubleVariantOptions : MonoBehaviour
 			}
 			else if(costStepInput > BaubleVariantsMenu.instance.reasonableBaubleCostMaximum)
 			{
-				costStepInputField.text = BaubleVariantsMenu.instance.reasonableBaubleCostMaximum.ToString();
+				costStepInputField.text = BaubleVariantsMenu.instance.reasonableBaubleCostMaximum.ToString(CultureInfo.InvariantCulture);
 			}
 		}
 	}

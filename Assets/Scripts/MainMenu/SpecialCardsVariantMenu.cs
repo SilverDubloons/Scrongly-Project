@@ -1,6 +1,7 @@
+using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 using static Variant;
 
 public class SpecialCardsVariantMenu : MonoBehaviour
@@ -118,7 +119,7 @@ public class SpecialCardsVariantMenu : MonoBehaviour
 			}
 			else
 			{
-				tempVariantSpecialCard.cost = int.Parse(specialCardVariantOptions[i].costInputField.text);
+				tempVariantSpecialCard.cost = int.Parse(specialCardVariantOptions[i].costInputField.text, CultureInfo.InvariantCulture);
 			}
 			if(specialCardVariantOptions[i].impactInputField.text.Length <= 0)
 			{
@@ -126,7 +127,7 @@ public class SpecialCardsVariantMenu : MonoBehaviour
 			}
 			else
 			{
-				tempVariantSpecialCard.impact = double.Parse(specialCardVariantOptions[i].impactInputField.text);
+				tempVariantSpecialCard.impact = double.Parse(specialCardVariantOptions[i].impactInputField.text, CultureInfo.InvariantCulture);
 			}
 			VariantsMenu.instance.loadedVariant.variantSpecialCards[specialCardVariantOptions[i].specialCardTag] = tempVariantSpecialCard;
 		}

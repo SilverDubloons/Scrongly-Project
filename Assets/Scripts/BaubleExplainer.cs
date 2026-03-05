@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static Variant;
 using System;
-
+using System.Globalization;
 public class BaubleExplainer : MonoBehaviour
 {
 	public RectTransform rt;
@@ -75,7 +75,7 @@ public class BaubleExplainer : MonoBehaviour
 				baubleRarityImage.gameObject.SetActive(true);
 				baubleRarityImage.color = LocalInterface.instance.rarityDictionary[V.i.v.variantBaubles[tag].category].rarityColor;
 				baseCostLabel.gameObject.SetActive(true);
-				baseCostLabel.ChangeText($"${V.i.v.variantBaubles[tag].baseCost.ToString()}");
+				baseCostLabel.ChangeText($"${V.i.v.variantBaubles[tag].baseCost.ToString(CultureInfo.InvariantCulture)}");
 				baseCostLabel.ChangeColor(Color.white);
 				if(V.i.v.variantBaubles[tag].costStep == 0 && LocalInterface.instance.baseVariant.variantBaubles[tag].costStep == 0)
 				{
@@ -84,7 +84,7 @@ public class BaubleExplainer : MonoBehaviour
 				else
 				{
 					costStepLabel.gameObject.SetActive(true);
-					costStepLabel.ChangeText($"+{V.i.v.variantBaubles[tag].costStep.ToString()}");
+					costStepLabel.ChangeText($"+{V.i.v.variantBaubles[tag].costStep.ToString(CultureInfo.InvariantCulture)}");
 				}
 			}
 			else
@@ -101,7 +101,7 @@ public class BaubleExplainer : MonoBehaviour
 			else
 			{
 				startingQuantityLabel.gameObject.SetActive(true);
-				startingQuantityLabel.ChangeText(V.i.v.variantBaubles[tag].startingQuantity.ToString());
+				startingQuantityLabel.ChangeText(V.i.v.variantBaubles[tag].startingQuantity.ToString(CultureInfo.InvariantCulture));
 			}
 			
 		}

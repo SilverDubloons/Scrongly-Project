@@ -1,9 +1,10 @@
-using UnityEngine;
-using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
-using static Deck;
+using System.Globalization;
 using System.Text.RegularExpressions;
+using UnityEngine;
+using UnityEngine.UI;
+using static Deck;
 
 public class RunStatsPanel : MonoBehaviour
 {
@@ -117,10 +118,10 @@ public class RunStatsPanel : MonoBehaviour
 				switch(lineData[0])
 				{
 					case "currentRound":
-						roundReachedLabel.ChangeText((int.Parse(lineData[1]) + 1).ToString());
+						roundReachedLabel.ChangeText((int.Parse(lineData[1], CultureInfo.InvariantCulture) + 1).ToString(CultureInfo.InvariantCulture));
 					break;
 					case "currentRoundScore":
-						scoreInFinalRoundLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(double.Parse(lineData[1])));
+						scoreInFinalRoundLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(double.Parse(lineData[1], CultureInfo.InvariantCulture)));
 					break;
 					case "chosenDeck":
 						cardBackImage.sprite = Decks.instance.decks[lineData[1]].cardBack;
@@ -136,14 +137,14 @@ public class RunStatsPanel : MonoBehaviour
 							{
 								if(ownedBaubleData.Length > 1)
 								{
-									totalOwnedZodiacs += int.Parse(ownedBaubleData[1]);
+									totalOwnedZodiacs += int.Parse(ownedBaubleData[1], CultureInfo.InvariantCulture);
 								}
 							}
 							else
 							{
 								if(ownedBaubleData.Length > 1)
 								{
-									totalOwnedBaubles += int.Parse(ownedBaubleData[1]);
+									totalOwnedBaubles += int.Parse(ownedBaubleData[1], CultureInfo.InvariantCulture);
 								}
 							}
 						}
@@ -155,7 +156,7 @@ public class RunStatsPanel : MonoBehaviour
 						{
 							baublesGainedLabel.ChangeFontSize(16);
 						}
-						baublesGainedLabel.ChangeText(totalOwnedBaubles.ToString());
+						baublesGainedLabel.ChangeText(totalOwnedBaubles.ToString(CultureInfo.InvariantCulture));
 						if(totalOwnedZodiacs > 999)
 						{
 							zodiacsGainedLabel.ChangeFontSize(8);
@@ -164,10 +165,10 @@ public class RunStatsPanel : MonoBehaviour
 						{
 							zodiacsGainedLabel.ChangeFontSize(16);
 						}
-						zodiacsGainedLabel.ChangeText(totalOwnedZodiacs.ToString());
+						zodiacsGainedLabel.ChangeText(totalOwnedZodiacs.ToString(CultureInfo.InvariantCulture));
 					break;
 					case "seed":
-						seedLabel.ChangeText(lineData[1].ToString());
+						seedLabel.ChangeText(lineData[1].ToString(CultureInfo.InvariantCulture));
 					break;
 					case "isDailyGame":
 						isDailyGame = bool.Parse(lineData[1]);
@@ -176,7 +177,7 @@ public class RunStatsPanel : MonoBehaviour
 						isCustomGame = bool.Parse(lineData[1]);
 					break;
 					case "chipsEarned":
-						if(int.Parse(lineData[1]) > 999)
+						if(int.Parse(lineData[1], CultureInfo.InvariantCulture) > 999)
 						{
 							chipsEarnedLabel.ChangeFontSize(8);
 						}
@@ -193,7 +194,7 @@ public class RunStatsPanel : MonoBehaviour
 						int totalHandsPlayed = 0;
 						for(int j = 0; j < handsPlayedStrings.Length; j++)
 						{
-							int playedQuantity = int.Parse(handsPlayedStrings[j]);
+							int playedQuantity = int.Parse(handsPlayedStrings[j], CultureInfo.InvariantCulture);
 							totalHandsPlayed += playedQuantity;
 							if(playedQuantity > playedQuantityOfMostPlayedHand && playedQuantity > 0)
 							{
@@ -228,7 +229,7 @@ public class RunStatsPanel : MonoBehaviour
 							{
 								mostPlayedHandQuantityLabel.ChangeFontSize(16);
 							}
-							mostPlayedHandQuantityLabel.ChangeText(playedQuantityOfMostPlayedHand.ToString());
+							mostPlayedHandQuantityLabel.ChangeText(playedQuantityOfMostPlayedHand.ToString(CultureInfo.InvariantCulture));
 						}
 						if(totalHandsPlayed > 999)
 						{
@@ -238,10 +239,10 @@ public class RunStatsPanel : MonoBehaviour
 						{
 							handsPlayedLabel.ChangeFontSize(16);
 						}
-						handsPlayedLabel.ChangeText(totalHandsPlayed.ToString());
+						handsPlayedLabel.ChangeText(totalHandsPlayed.ToString(CultureInfo.InvariantCulture));
 					break;
 					case "cardsDiscarded":
-						if(int.Parse(lineData[1]) > 999)
+						if(int.Parse(lineData[1], CultureInfo.InvariantCulture) > 999)
 						{
 							cardsDiscardedLabel.ChangeFontSize(8);
 						}
@@ -252,7 +253,7 @@ public class RunStatsPanel : MonoBehaviour
 						cardsDiscardedLabel.ChangeText(lineData[1]);
 					break;
 					case "cardsAddedToDeck":
-						if(int.Parse(lineData[1]) > 999)
+						if(int.Parse(lineData[1], CultureInfo.InvariantCulture) > 999)
 						{
 							cardsAddedToDeckLabel.ChangeFontSize(8);
 						}
@@ -263,10 +264,10 @@ public class RunStatsPanel : MonoBehaviour
 						cardsAddedToDeckLabel.ChangeText(lineData[1]);
 					break;
 					case "highestHandScore":
-						bestHandScoreLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(double.Parse(lineData[1])));
+						bestHandScoreLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(double.Parse(lineData[1], CultureInfo.InvariantCulture)));
 					break;
 					case "highestHandTier":
-						int highestHandTierInt = int.Parse(lineData[1]);
+						int highestHandTierInt = int.Parse(lineData[1], CultureInfo.InvariantCulture);
 						if(highestHandTierInt >= 0)
 						{
 							string bestHandName = LocalInterface.instance.handNames[highestHandTierInt];

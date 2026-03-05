@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using static Deck;
 using System.Collections.Generic;
 using System.Collections;
-
+using System.Globalization;
 public class DeckViewer : MonoBehaviour
 {
     public Image[] suitImages;
@@ -248,7 +248,7 @@ public class DeckViewer : MonoBehaviour
 		UpdateLabel(faceCardsLabel, faceCards);
 		UpdateLabel(numberedCardsLabel, numberedCards);
 		UpdateLabel(specialCardsLabel, specialCards);
-		totalCardsLabel.ChangeText(cardsToShow.Count.ToString());
+		totalCardsLabel.ChangeText(cardsToShow.Count.ToString(CultureInfo.InvariantCulture));
 		if(cardsToShow.Count >= 1000)
 		{
 			totalCardsLabel.ChangeFontSize(8);
@@ -277,7 +277,7 @@ public class DeckViewer : MonoBehaviour
 			}
 			else
 			{
-				suitLabels[i].ChangeText(suitCards[i].ToString());
+				suitLabels[i].ChangeText(suitCards[i].ToString(CultureInfo.InvariantCulture));
 				suitBackdropRTs[i].sizeDelta = new Vector2(Mathf.Max(suitLabels[i].GetPreferredWidth() + 4f, 20f), suitBackdropRTs[i].sizeDelta.y);
 			}
 		}
@@ -381,7 +381,7 @@ public class DeckViewer : MonoBehaviour
 	
 	public void UpdateLabel(Label label, int newInt)
 	{
-		label.ChangeText(newInt.ToString());
+		label.ChangeText(newInt.ToString(CultureInfo.InvariantCulture));
 		if(newInt >= 10)
 		{
 			label.ChangeFontSize(8);

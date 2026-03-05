@@ -1,5 +1,6 @@
-using UnityEngine;
 using System;
+using System.Globalization;
+using UnityEngine;
 
 public class RNG : MonoBehaviour
 {
@@ -19,10 +20,10 @@ public class RNG : MonoBehaviour
 	public void LoadCallCountsFromString(string callCountsString)
 	{
 		string[] callCountsData = callCountsString.Split('%', StringSplitOptions.RemoveEmptyEntries);
-		shuffle.RestoreState(V.i.seed, int.Parse(callCountsData[0]));
-		shop.RestoreState(V.i.seed, int.Parse(callCountsData[1]));
-		starting.RestoreState(V.i.seed, int.Parse(callCountsData[2]));
-		hands.RestoreState(V.i.seed, int.Parse(callCountsData[3]));
-		misc.RestoreState(V.i.seed, int.Parse(callCountsData[4]));
+		shuffle.RestoreState(V.i.seed, int.Parse(callCountsData[0], CultureInfo.InvariantCulture));
+		shop.RestoreState(V.i.seed, int.Parse(callCountsData[1], CultureInfo.InvariantCulture));
+		starting.RestoreState(V.i.seed, int.Parse(callCountsData[2], CultureInfo.InvariantCulture));
+		hands.RestoreState(V.i.seed, int.Parse(callCountsData[3], CultureInfo.InvariantCulture));
+		misc.RestoreState(V.i.seed, int.Parse(callCountsData[4], CultureInfo.InvariantCulture));
 	}
 }

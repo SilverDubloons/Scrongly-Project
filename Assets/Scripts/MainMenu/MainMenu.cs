@@ -365,4 +365,20 @@ public class MainMenu : MonoBehaviour
 			exitButtonObject.gameObject.SetActive(visible);
 		#endif
 	}
+    public void TwitterClicked()
+    {
+        Application.OpenURL("https://twitter.com/SilverDubloons");
+    }
+    public void KoFiClicked()
+    {
+        Application.OpenURL("https://ko-fi.com/silverdubloons");
+    }
+    public void DiscordClicked()
+    {
+        Application.OpenURL("https://discord.gg/TdJJBgbWTf");
+    }
+    public void BlueSkyClicked()
+    {
+        Application.OpenURL("https://bsky.app/profile/silverdubloons.bsky.social");
+    }
 }

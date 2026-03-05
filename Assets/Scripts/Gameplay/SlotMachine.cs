@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using static Deck;
-
+using System.Globalization;
 public class SlotMachine : MonoBehaviour
 {
     public RectTransform slotMachineImageRT;
@@ -394,39 +394,48 @@ public class SlotMachine : MonoBehaviour
 		double currentPointThreshold = lowestPointThreshold;
 		double lastPointThreshold = 0;
 		t = 0;
-		while(t < chipGainingTime)
+		if (totalScore < double.PositiveInfinity)
 		{
-			t = Mathf.Clamp(t + Time.deltaTime * Preferences.instance.gameSpeed, 0, chipGainingTime);
-			currentDisplayedScore = LocalInterface.DoubleLerp(0, totalScore, LocalInterface.instance.animationCurve.Evaluate(t / chipGainingTime));
-			while(currentDisplayedScore >= currentPointThreshold)
+			while (t < chipGainingTime)
 			{
-				currentChip.StartMove();
-				if(GameManager.instance.spareChipsParent.childCount > 0)
+				t = Mathf.Clamp(t + Time.deltaTime * Preferences.instance.gameSpeed, 0, chipGainingTime);
+				currentDisplayedScore = LocalInterface.DoubleLerp(0, totalScore, LocalInterface.instance.animationCurve.Evaluate(t / chipGainingTime));
+				while (currentDisplayedScore >= currentPointThreshold)
 				{
-					Chip spareChip = GameManager.instance.spareChipsParent.GetChild(GameManager.instance.spareChipsParent.childCount - 1).GetComponent<Chip>();
-					spareChip.gameObject.SetActive(true);
-					spareChip.rt.SetParent(chipParent);
-					spareChip.rt.anchoredPosition = Vector2.zero;
-					currentChip = spareChip;
+					currentChip.StartMove();
+					if (GameManager.instance.spareChipsParent.childCount > 0)
+					{
+						Chip spareChip = GameManager.instance.spareChipsParent.GetChild(GameManager.instance.spareChipsParent.childCount - 1).GetComponent<Chip>();
+						spareChip.gameObject.SetActive(true);
+						spareChip.rt.SetParent(chipParent);
+						spareChip.rt.anchoredPosition = Vector2.zero;
+						currentChip = spareChip;
+					}
+					else
+					{
+						GameObject newChipGO = Instantiate(GameManager.instance.chipPrefab, chipParent);
+						Chip newChip = newChipGO.GetComponent<Chip>();
+						newChip.rt.anchoredPosition = Vector2.zero;
+						currentChip = newChip;
+					}
+					chipsEarned++;
+					totalChipsEarnedLabel.ChangeText($"Chips Earned: {chipsEarned}");
+					lastPointThreshold = currentPointThreshold;
+					currentPointThreshold = currentPointThreshold * pointThresholdFactor;
+					lowerEndLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(lastPointThreshold));
+					upperEndLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(currentPointThreshold));
+					SoundManager.instance.PlaySlotMachineChipGainedSound();
 				}
-				else
-				{
-					GameObject newChipGO = Instantiate(GameManager.instance.chipPrefab, chipParent);
-					Chip newChip = newChipGO.GetComponent<Chip>();
-					newChip.rt.anchoredPosition = Vector2.zero;
-					currentChip = newChip;
-				}
-				chipsEarned++;
-				totalChipsEarnedLabel.ChangeText($"Chips Earned: {chipsEarned}");
-				lastPointThreshold = currentPointThreshold;
-				currentPointThreshold = currentPointThreshold * pointThresholdFactor;
-				lowerEndLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(lastPointThreshold));
-				upperEndLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(currentPointThreshold));
-				SoundManager.instance.PlaySlotMachineChipGainedSound();
+				currentScoreFill.sizeDelta = new Vector2(Mathf.Lerp(0, currentScoreFillSize, ((float)currentDisplayedScore - (float)lastPointThreshold) / ((float)currentPointThreshold - (float)lastPointThreshold)), currentScoreFill.sizeDelta.y);
+				yield return null;
 			}
-			currentScoreFill.sizeDelta = new Vector2(Mathf.Lerp(0, currentScoreFillSize, ((float)currentDisplayedScore - (float)lastPointThreshold) / ((float)currentPointThreshold - (float)lastPointThreshold)), currentScoreFill.sizeDelta.y);
-			yield return null;
 		}
+		else
+		{
+			GameManager.instance.AddCurrency(1000);
+            chipsEarned += 1000;
+            totalChipsEarnedLabel.ChangeText($"Chips Earned: {chipsEarned}");
+        }
 		
 		if(spinsRemaining > 0)
 		{
@@ -625,7 +634,7 @@ public class SlotMachine : MonoBehaviour
 		spinsRemaining = spinsRemaining + change;
 		if(spinsRemaining > 0)
 		{
-			leverButton.ChangeButtonText(spinsRemaining.ToString());
+			leverButton.ChangeButtonText(spinsRemaining.ToString(CultureInfo.InvariantCulture));
 		}
 		else
 		{

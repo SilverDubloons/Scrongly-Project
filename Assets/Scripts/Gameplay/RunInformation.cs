@@ -1,7 +1,8 @@
-using UnityEngine;
-using System.Collections.Generic;
-using static Deck;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using UnityEngine;
+using static Deck;
 
 public class RunInformation : MonoBehaviour
 {
@@ -27,9 +28,9 @@ public class RunInformation : MonoBehaviour
 	public void HandPlayed(int handNumber, bool[] handsContained, bool inFatigue)
 	{
 		handsPlayed[handNumber]++;
-		if(handNumber > 8 && handsPlayed[handNumber] == 1)
+        HandsInformation.instance.HandUpdated(handsContained);
+        if (handNumber > 8 && handsPlayed[handNumber] == 1)
 		{
-			HandsInformation.instance.HandUpdated(handsContained);
 			if(!V.i.v.variantSpecialOptions["AllBaublesZodiacsUnlocked"].inEffect)
 			{
 				Shop.instance.AddBaubleToAvailablePool(LocalInterface.instance.GetMultiplierBaubleStringFromHandTier(handNumber));
@@ -169,7 +170,7 @@ public class RunInformation : MonoBehaviour
 		saveGameString += $"\nhandsPlayed=";
 		for(int i = 0; i < handsPlayed.Length; i++)
 		{
-			saveGameString += handsPlayed[i].ToString();
+			saveGameString += handsPlayed[i].ToString(CultureInfo.InvariantCulture);
 			if(i < handsPlayed.Length - 1)
 			{
 				saveGameString += "%";
@@ -267,15 +268,15 @@ public class RunInformation : MonoBehaviour
 		Deck.instance.UpdateCardsInDiscardPile();
 		HandArea.instance.ReorganizeHand();
 		dataIndex++;
-		GameManager.instance.SetCurrency(int.Parse(loadGameData[dataIndex].Replace("currency=", string.Empty)));
+		GameManager.instance.SetCurrency(int.Parse(loadGameData[dataIndex].Replace("currency=", string.Empty), CultureInfo.InvariantCulture));
 		dataIndex++;
-		GameManager.instance.SetHandsUntilFatigue(int.Parse(loadGameData[dataIndex].Replace("handsUntilFatigueRemaining=", string.Empty)));
+		GameManager.instance.SetHandsUntilFatigue(int.Parse(loadGameData[dataIndex].Replace("handsUntilFatigueRemaining=", string.Empty), CultureInfo.InvariantCulture));
 		dataIndex++;
-		GameManager.instance.SetDiscards(int.Parse(loadGameData[dataIndex].Replace("discardsRemaining=", string.Empty)));
+		GameManager.instance.SetDiscards(int.Parse(loadGameData[dataIndex].Replace("discardsRemaining=", string.Empty), CultureInfo.InvariantCulture));
 		dataIndex++;
-		GameManager.instance.LoadGameToRound(int.Parse(loadGameData[dataIndex].Replace("currentRound=", string.Empty)));
+		GameManager.instance.LoadGameToRound(int.Parse(loadGameData[dataIndex].Replace("currentRound=", string.Empty), CultureInfo.InvariantCulture));
 		dataIndex++;
-		ScoreVial.instance.LoadScore(double.Parse(loadGameData[dataIndex].Replace("currentRoundScore=", string.Empty)));
+		ScoreVial.instance.LoadScore(double.Parse(loadGameData[dataIndex].Replace("currentRoundScore=", string.Empty), CultureInfo.InvariantCulture));
 		dataIndex++;
 		ScoreVial.instance.LoadChipThresholds(loadGameData[dataIndex].Replace("chipThresholds=", string.Empty));
 		dataIndex++;
@@ -287,7 +288,7 @@ public class RunInformation : MonoBehaviour
 		dataIndex++;
 		Baubles.instance.ConvertStringToDisabledBaubles(loadGameData[dataIndex].Replace("disabledBaubles=", string.Empty));
 		dataIndex++;
-		V.i.seed = int.Parse(loadGameData[dataIndex].Replace("seed=", string.Empty));
+		V.i.seed = int.Parse(loadGameData[dataIndex].Replace("seed=", string.Empty), CultureInfo.InvariantCulture);
 		dataIndex++;
 		RNG.instance.LoadCallCountsFromString(loadGameData[dataIndex].Replace("callCounts=", string.Empty));
 		dataIndex++;
@@ -295,23 +296,23 @@ public class RunInformation : MonoBehaviour
 		dataIndex++;
 		V.i.isCustomGame = bool.Parse(loadGameData[dataIndex].Replace("isCustomGame=", string.Empty));
 		dataIndex++;
-		chipsEarned = int.Parse(loadGameData[dataIndex].Replace("chipsEarned=", string.Empty));
+		chipsEarned = int.Parse(loadGameData[dataIndex].Replace("chipsEarned=", string.Empty), CultureInfo.InvariantCulture);
 		dataIndex++;
 		string handsPlayedString = loadGameData[dataIndex].Replace("handsPlayed=", string.Empty);
 		string[] handsPlayedData = handsPlayedString.Split('%', StringSplitOptions.RemoveEmptyEntries);
 		handsPlayed = new int[18];
 		for(int i = 0; i < handsPlayedData.Length; i++)
 		{
-			handsPlayed[i] = int.Parse(handsPlayedData[i]);
+			handsPlayed[i] = int.Parse(handsPlayedData[i], CultureInfo.InvariantCulture);
 		}
 		dataIndex++;
-		cardsDiscarded = int.Parse(loadGameData[dataIndex].Replace("cardsDiscarded=", string.Empty));
+		cardsDiscarded = int.Parse(loadGameData[dataIndex].Replace("cardsDiscarded=", string.Empty), CultureInfo.InvariantCulture);
 		dataIndex++;
-		cardsAddedToDeck = int.Parse(loadGameData[dataIndex].Replace("cardsAddedToDeck=", string.Empty));
+		cardsAddedToDeck = int.Parse(loadGameData[dataIndex].Replace("cardsAddedToDeck=", string.Empty), CultureInfo.InvariantCulture);
 		dataIndex++;
-		highestHandScore = double.Parse(loadGameData[dataIndex].Replace("highestHandScore=", string.Empty));
+		highestHandScore = double.Parse(loadGameData[dataIndex].Replace("highestHandScore=", string.Empty), CultureInfo.InvariantCulture);
 		dataIndex++;
-		highestHandTier = int.Parse(loadGameData[dataIndex].Replace("highestHandTier=", string.Empty));
+		highestHandTier = int.Parse(loadGameData[dataIndex].Replace("highestHandTier=", string.Empty), CultureInfo.InvariantCulture);
 		dataIndex++;
 		highestHandScoreCardDatas.Clear();
 		string highestHandScoreCardDatasString = loadGameData[dataIndex].Replace("highestHandScoreCardDatas=", string.Empty);
@@ -335,9 +336,9 @@ public class RunInformation : MonoBehaviour
 			PlayArea.instance.ConvertStringToPreplacedCards(preplacedCardsString);
 		}
 		dataIndex++;
-		handsPlayedInFatigue = int.Parse(loadGameData[dataIndex].Replace("handsPlayedInFatigue=", string.Empty));
+		handsPlayedInFatigue = int.Parse(loadGameData[dataIndex].Replace("handsPlayedInFatigue=", string.Empty), CultureInfo.InvariantCulture);
 		dataIndex++;
-		consecutiveHandsWithMagnetClearingAllChipThresholds = int.Parse(loadGameData[dataIndex].Replace("consecutiveHandsWithMagnetClearingAllChipThresholds=", string.Empty));
+		consecutiveHandsWithMagnetClearingAllChipThresholds = int.Parse(loadGameData[dataIndex].Replace("consecutiveHandsWithMagnetClearingAllChipThresholds=", string.Empty), CultureInfo.InvariantCulture);
 		dataIndex++;
 		V.i.dateTimeStarted = DateTime.Parse(loadGameData[dataIndex].Replace("dateTimeStarted=", string.Empty));
 		dataIndex++;
@@ -349,7 +350,7 @@ public class RunInformation : MonoBehaviour
 			string flushZodiacBaubleSuitOrdersData = loadGameData[dataIndex].Replace("flushZodiacBaubleSuitOrders=", string.Empty);
 			string[] flushZodiacBaubleSuitOrdersArray = flushZodiacBaubleSuitOrdersData.Split('%', StringSplitOptions.RemoveEmptyEntries);
 			// Debug.Log($"flushZodiacBaubleSuitOrdersData={flushZodiacBaubleSuitOrdersData}, flushZodiacBaubleSuitOrdersArray.Length={flushZodiacBaubleSuitOrdersArray.Length}");
-			GameManager.instance.flushZodiacBaubleSuitOrders = new int[4]{int.Parse(flushZodiacBaubleSuitOrdersArray[0]), int.Parse(flushZodiacBaubleSuitOrdersArray[1]), int.Parse(flushZodiacBaubleSuitOrdersArray[2]), int.Parse(flushZodiacBaubleSuitOrdersArray[3])};
+			GameManager.instance.flushZodiacBaubleSuitOrders = new int[4]{int.Parse(flushZodiacBaubleSuitOrdersArray[0], CultureInfo.InvariantCulture), int.Parse(flushZodiacBaubleSuitOrdersArray[1], CultureInfo.InvariantCulture), int.Parse(flushZodiacBaubleSuitOrdersArray[2], CultureInfo.InvariantCulture), int.Parse(flushZodiacBaubleSuitOrdersArray[3], CultureInfo.InvariantCulture)};
 			// Debug.Log($"Loading flushZodiacBaubleSuitOrders, flushZodiacBaubleSuitOrdersData={flushZodiacBaubleSuitOrdersData}");
 		}
 		else

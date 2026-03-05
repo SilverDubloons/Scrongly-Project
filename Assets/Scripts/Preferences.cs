@@ -1,12 +1,14 @@
-using UnityEngine;
-using UnityEngine.UI;
+using NUnit.Framework.Constraints;
 using System;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
-using UnityEngine.Events;
-using TMPro;
+using System.Globalization;
 using System.Linq;
+using TMPro;
+using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Preferences : MonoBehaviour
 {
@@ -26,6 +28,8 @@ public class Preferences : MonoBehaviour
 	public Slider soundVolumeSlider;
 	public Toggle musicToggle;
 	public Slider musicVolumeSlider;
+	public Toggle classicMusicToggle;
+	public Toggle scronglyMusicToggle;
 	public Toggle muteOnFocusLostToggle;
 	public Toggle muteMusicWhenMenuOpenToggle;
 	// gameplay options
@@ -102,6 +106,7 @@ public class Preferences : MonoBehaviour
 	public int currentTheme;
 	public bool animateLockButton;
 	public int  dragThreshold; // 5 to 100, default 20. Higher means more likely to register drags, lower means more likely 
+	public MusicOption musicOption;
 	
 	public string preferencesFileName;
 	public string preferencesFileVersion;
@@ -211,33 +216,33 @@ public class Preferences : MonoBehaviour
 				{
 					soundOn = bool.Parse(preferencesLines[1].Replace("soundOn=", string.Empty));
 					musicOn = bool.Parse(preferencesLines[2].Replace("musicOn=", string.Empty));
-					soundVolume = float.Parse(preferencesLines[3].Replace("soundVolume=", string.Empty));
-					musicVolume = float.Parse(preferencesLines[4].Replace("musicVolume=", string.Empty));
+					soundVolume = float.Parse(preferencesLines[3].Replace("soundVolume=", string.Empty), CultureInfo.InvariantCulture);
+					musicVolume = float.Parse(preferencesLines[4].Replace("musicVolume=", string.Empty), CultureInfo.InvariantCulture);
 					muteOnFocusLost = bool.Parse(preferencesLines[5].Replace("muteOnFocusLost=", string.Empty));
-					maxTimeBetweenDoubleClicks = float.Parse(preferencesLines[6].Replace("maxTimeBetweenDoubleClicks=", string.Empty));
+					maxTimeBetweenDoubleClicks = float.Parse(preferencesLines[6].Replace("maxTimeBetweenDoubleClicks=", string.Empty), CultureInfo.InvariantCulture);
 					cheatsOn = bool.Parse(preferencesLines[7].Replace("cheatsOn=", string.Empty));
 					rotatingBackground = bool.Parse(preferencesLines[8].Replace("rotatingBackground=", string.Empty));
 					lastSelectedVariant = preferencesLines[9].Replace("lastSelectedVariant=", string.Empty);
-					gameSpeed = float.Parse(preferencesLines[10].Replace("gameSpeed=", string.Empty));
+					gameSpeed = float.Parse(preferencesLines[10].Replace("gameSpeed=", string.Empty), CultureInfo.InvariantCulture);
 					specialCardsSortToLeftOfHand = bool.Parse(preferencesLines[11].Replace("specialCardsSortToLeftOfHand=", string.Empty));
 					disableExcessScoringAnimation = bool.Parse(preferencesLines[12].Replace("disableExcessScoringAnimation=", string.Empty));
 					muteMusicWhenMenuOpen = bool.Parse(preferencesLines[13].Replace("muteMusicWhenMenuOpen=", string.Empty));
 					showCommonTooltips = bool.Parse(preferencesLines[14].Replace("showCommonTooltips=", string.Empty));
 					onlyShowModifiedCardValues = bool.Parse(preferencesLines[15].Replace("onlyShowModifiedCardValues=", string.Empty));
-					lastSelectedDifficulty = int.Parse(preferencesLines[16].Replace("lastSelectedDifficulty=", string.Empty));
-					displayType = int.Parse(preferencesLines[17].Replace("displayType=", string.Empty));
-					resolutionX = int.Parse(preferencesLines[18].Replace("resolutionX=", string.Empty));
-					resolutionY = int.Parse(preferencesLines[19].Replace("resolutionY=", string.Empty));
+					lastSelectedDifficulty = int.Parse(preferencesLines[16].Replace("lastSelectedDifficulty=", string.Empty), CultureInfo.InvariantCulture);
+					displayType = int.Parse(preferencesLines[17].Replace("displayType=", string.Empty), CultureInfo.InvariantCulture);
+					resolutionX = int.Parse(preferencesLines[18].Replace("resolutionX=", string.Empty), CultureInfo.InvariantCulture);
+					resolutionY = int.Parse(preferencesLines[19].Replace("resolutionY=", string.Empty), CultureInfo.InvariantCulture);
 					vSyncOn = bool.Parse(preferencesLines[20].Replace("vSyncOn=", string.Empty));
-					targetFrameRate = int.Parse(preferencesLines[21].Replace("targetFrameRate=", string.Empty));
+					targetFrameRate = int.Parse(preferencesLines[21].Replace("targetFrameRate=", string.Empty), CultureInfo.InvariantCulture);
 					showFramerate = bool.Parse(preferencesLines[22].Replace("showFramerate=", string.Empty));
-					glyphSet = int.Parse(preferencesLines[23].Replace("glyphSet=", string.Empty));
-					controllerDeadzone = float.Parse(preferencesLines[24].Replace("controllerDeadzone=", string.Empty));
+					glyphSet = int.Parse(preferencesLines[23].Replace("glyphSet=", string.Empty), CultureInfo.InvariantCulture);
+					controllerDeadzone = float.Parse(preferencesLines[24].Replace("controllerDeadzone=", string.Empty), CultureInfo.InvariantCulture);
 					showBaubleTooltips = bool.Parse(preferencesLines[25].Replace("showBaubleTooltips=", string.Empty));
 					showSpecialCardTooltips = bool.Parse(preferencesLines[26].Replace("showSpecialCardTooltips=", string.Empty));
 					showZodiacTooltips = bool.Parse(preferencesLines[27].Replace("showZodiacTooltips=", string.Empty));
 					showHandTooltips = bool.Parse(preferencesLines[28].Replace("showHandTooltips=", string.Empty));
-					currentTheme = int.Parse(preferencesLines[29].Replace("currentTheme=", string.Empty));
+					currentTheme = int.Parse(preferencesLines[29].Replace("currentTheme=", string.Empty), CultureInfo.InvariantCulture);
 					if (preferencesLines.Length > 30)
 					{
 						animateLockButton = bool.Parse(preferencesLines[30].Replace("animateLockButton=", string.Empty));
@@ -249,11 +254,20 @@ public class Preferences : MonoBehaviour
                     }
 					if (preferencesLines.Length > 31)
 					{
-						dragThreshold = int.Parse(preferencesLines[31].Replace("dragThreshold=", string.Empty));
+						dragThreshold = int.Parse(preferencesLines[31].Replace("dragThreshold=", string.Empty), CultureInfo.InvariantCulture);
 					}
 					else
 					{
 						dragThreshold = 20;
+						SetPreferencesFileToCurrentSettings();
+                    }
+					if (preferencesLines.Length > 32)
+					{
+						musicOption = Enum.TryParse(preferencesLines[32].Replace("musicOption=", string.Empty), out MusicOption parsedMusicOption) ? parsedMusicOption : MusicOption.Scrongly;
+					}
+					else
+					{
+                        musicOption = MusicOption.Scrongly;
 						SetPreferencesFileToCurrentSettings();
                     }
 				}
@@ -379,7 +393,8 @@ public class Preferences : MonoBehaviour
 		currentTheme = 0;
         animateLockButton = true;
         dragThreshold = 20;
-		string[] preferencesLines = LocalInterface.instance.GetFileTextLines(preferencesFileName);
+        musicOption = MusicOption.Scrongly;
+        string[] preferencesLines = LocalInterface.instance.GetFileTextLines(preferencesFileName);
 		if(preferencesLines != null && !doNotLoadFile)
 		{
 			try
@@ -398,16 +413,16 @@ public class Preferences : MonoBehaviour
 								musicOn = bool.Parse(preferenceLineData[1]);
 							break;
 							case "soundVolume":
-								soundVolume = float.Parse(preferenceLineData[1]);
+								soundVolume = float.Parse(preferenceLineData[1], CultureInfo.InvariantCulture);
 							break;
 							case "musicVolume":
-								musicVolume = float.Parse(preferenceLineData[1]);
+								musicVolume = float.Parse(preferenceLineData[1], CultureInfo.InvariantCulture);
 							break;
 							case "muteOnFocusLost":
 								muteOnFocusLost = bool.Parse(preferenceLineData[1]);
 							break;
 							case "maxTimeBetweenDoubleClicks":
-								maxTimeBetweenDoubleClicks = float.Parse(preferenceLineData[1]);
+								maxTimeBetweenDoubleClicks = float.Parse(preferenceLineData[1], CultureInfo.InvariantCulture);
 							break;
 							case "cheatsOn":
 								cheatsOn = bool.Parse(preferenceLineData[1]);
@@ -419,7 +434,7 @@ public class Preferences : MonoBehaviour
 								lastSelectedVariant = preferenceLineData[1];
 							break;
 							case "gameSpeed":
-								gameSpeed = float.Parse(preferenceLineData[1]);
+								gameSpeed = float.Parse(preferenceLineData[1], CultureInfo.InvariantCulture);
 							break;
 							case "specialCardsSortToLeftOfHand":
 								specialCardsSortToLeftOfHand = bool.Parse(preferenceLineData[1]);
@@ -437,31 +452,31 @@ public class Preferences : MonoBehaviour
 								onlyShowModifiedCardValues = bool.Parse(preferenceLineData[1]);
 							break;
 							case "lastSelectedDifficulty":
-								lastSelectedDifficulty = int.Parse(preferenceLineData[1]);
+								lastSelectedDifficulty = int.Parse(preferenceLineData[1], CultureInfo.InvariantCulture);
 							break;
 							case "displayType":
-								displayType = int.Parse(preferenceLineData[1]);
+								displayType = int.Parse(preferenceLineData[1], CultureInfo.InvariantCulture);
 							break;
 							case "resolutionX":
-								resolutionX = int.Parse(preferenceLineData[1]);
+								resolutionX = int.Parse(preferenceLineData[1], CultureInfo.InvariantCulture);
 							break;
 							case "resolutionY":
-								resolutionY = int.Parse(preferenceLineData[1]);
+								resolutionY = int.Parse(preferenceLineData[1], CultureInfo.InvariantCulture);
 							break;
 							case "vSyncOn":
 								vSyncOn = bool.Parse(preferenceLineData[1]);
 							break;
 							case "targetFrameRate":
-								targetFrameRate = int.Parse(preferenceLineData[1]);
+								targetFrameRate = int.Parse(preferenceLineData[1], CultureInfo.InvariantCulture);
 							break;
 							case "showFramerate":
 								showFramerate = bool.Parse(preferenceLineData[1]);
 							break;
 							case "glyphSet":
-								glyphSet = int.Parse(preferenceLineData[1]);
+								glyphSet = int.Parse(preferenceLineData[1], CultureInfo.InvariantCulture);
 							break;
 							case "controllerDeadzone":
-								controllerDeadzone = float.Parse(preferenceLineData[1]);
+								controllerDeadzone = float.Parse(preferenceLineData[1], CultureInfo.InvariantCulture);
 							break;
 							case "showBaubleTooltips":
 								showBaubleTooltips = bool.Parse(preferenceLineData[1]);
@@ -476,14 +491,17 @@ public class Preferences : MonoBehaviour
 								showHandTooltips = bool.Parse(preferenceLineData[1]);
 							break;
 							case "currentTheme":
-								currentTheme = int.Parse(preferenceLineData[1]);
+								currentTheme = int.Parse(preferenceLineData[1], CultureInfo.InvariantCulture);
 							break;
                             case "animateLockButton":
                                 animateLockButton = bool.Parse(preferenceLineData[1]);
                             break;
                             case "dragThreshold":
-                                dragThreshold = int.Parse(preferenceLineData[1]);
+                                dragThreshold = int.Parse(preferenceLineData[1], CultureInfo.InvariantCulture);
                             break;
+							case "musicOption":
+								musicOption = Enum.TryParse(preferenceLineData[1], out MusicOption parsedMusicOption) ? parsedMusicOption : MusicOption.Scrongly;
+							break;
                         }
 					}
 				}
@@ -499,7 +517,7 @@ public class Preferences : MonoBehaviour
 	
 	public void SetPreferencesFileToCurrentSettings()
 	{
-		string preferencesText = $"{preferencesFileVersion}\nsoundOn={soundOn.ToString()}\nmusicOn={musicOn.ToString()}\nsoundVolume={soundVolume.ToString()}\nmusicVolume={musicVolume.ToString()}\nmuteOnFocusLost={muteOnFocusLost.ToString()}\nmaxTimeBetweenDoubleClicks={maxTimeBetweenDoubleClicks.ToString()}\ncheatsOn={cheatsOn.ToString()}\nrotatingBackground={rotatingBackground.ToString()}\nlastSelectedVariant={lastSelectedVariant}\ngameSpeed={gameSpeed.ToString()}\nspecialCardsSortToLeftOfHand={specialCardsSortToLeftOfHand.ToString()}\ndisableExcessScoringAnimation={disableExcessScoringAnimation.ToString()}\nmuteMusicWhenMenuOpen={muteMusicWhenMenuOpen.ToString()}\nshowCommonTooltips={showCommonTooltips}\nonlyShowModifiedCardValues={onlyShowModifiedCardValues}\nlastSelectedDifficulty={lastSelectedDifficulty}\ndisplayType={displayType}\nresolutionX={resolutionX}\nresolutionY={resolutionY}\nvSyncOn={vSyncOn}\ntargetFrameRate={targetFrameRate}\nshowFramerate={showFramerate}\nglyphSet={glyphSet}\ncontrollerDeadzone={controllerDeadzone}\nshowBaubleTooltips={showBaubleTooltips}\nshowSpecialCardTooltips={showSpecialCardTooltips}\nshowZodiacTooltips={showZodiacTooltips}\nshowHandTooltips={showHandTooltips}\ncurrentTheme={currentTheme}\nanimateLockButton={animateLockButton}\ndragThreshold={dragThreshold}";
+		string preferencesText = $"{preferencesFileVersion}\nsoundOn={soundOn.ToString(CultureInfo.InvariantCulture)}\nmusicOn={musicOn.ToString(CultureInfo.InvariantCulture)}\nsoundVolume={soundVolume.ToString(CultureInfo.InvariantCulture)}\nmusicVolume={musicVolume.ToString(CultureInfo.InvariantCulture)}\nmuteOnFocusLost={muteOnFocusLost.ToString(CultureInfo.InvariantCulture)}\nmaxTimeBetweenDoubleClicks={maxTimeBetweenDoubleClicks.ToString(CultureInfo.InvariantCulture)}\ncheatsOn={cheatsOn.ToString(CultureInfo.InvariantCulture)}\nrotatingBackground={rotatingBackground.ToString(CultureInfo.InvariantCulture)}\nlastSelectedVariant={lastSelectedVariant}\ngameSpeed={gameSpeed.ToString(CultureInfo.InvariantCulture)}\nspecialCardsSortToLeftOfHand={specialCardsSortToLeftOfHand.ToString(CultureInfo.InvariantCulture)}\ndisableExcessScoringAnimation={disableExcessScoringAnimation.ToString(CultureInfo.InvariantCulture)}\nmuteMusicWhenMenuOpen={muteMusicWhenMenuOpen.ToString(CultureInfo.InvariantCulture)}\nshowCommonTooltips={showCommonTooltips}\nonlyShowModifiedCardValues={onlyShowModifiedCardValues}\nlastSelectedDifficulty={lastSelectedDifficulty}\ndisplayType={displayType}\nresolutionX={resolutionX}\nresolutionY={resolutionY}\nvSyncOn={vSyncOn}\ntargetFrameRate={targetFrameRate}\nshowFramerate={showFramerate}\nglyphSet={glyphSet}\ncontrollerDeadzone={controllerDeadzone}\nshowBaubleTooltips={showBaubleTooltips}\nshowSpecialCardTooltips={showSpecialCardTooltips}\nshowZodiacTooltips={showZodiacTooltips}\nshowHandTooltips={showHandTooltips}\ncurrentTheme={currentTheme}\nanimateLockButton={animateLockButton}\ndragThreshold={dragThreshold}\nmusicOption={musicOption}";
 		LocalInterface.instance.SetFileText(preferencesFileName, preferencesText);
 	}
 
@@ -518,7 +536,9 @@ public class Preferences : MonoBehaviour
 		soundVolumeSlider.value = soundVolume;
 		musicToggle.isOn = musicOn;
 		musicVolumeSlider.value = musicVolume;
-		muteOnFocusLostToggle.isOn = muteOnFocusLost;
+        classicMusicToggle.isOn = musicOption == MusicOption.Classic;
+        scronglyMusicToggle.isOn = musicOption == MusicOption.Scrongly;
+        muteOnFocusLostToggle.isOn = muteOnFocusLost;
 		muteMusicWhenMenuOpenToggle.isOn = muteMusicWhenMenuOpen;
 		// gameplay
 		gameSpeedSlider.value = (int)(Mathf.Log(gameSpeed, 2) + 1);
@@ -608,22 +628,37 @@ public class Preferences : MonoBehaviour
 		{
 			if(muteMusicWhenMenuOpenToggle.isOn && !muteMusicWhenMenuOpen)
 			{
-				MusicManager.instance.StartFade(0);
+				MusicManager.instance.StartFadeCurrentMusic(0);
 			}
 			else if(!muteMusicWhenMenuOpenToggle.isOn && muteMusicWhenMenuOpen)
 			{
-				MusicManager.instance.StartFade(musicVolume);
-			}
+                MusicManager.instance.StartFadeCurrentMusic(musicVolume);
+            }
 			else if(!muteMusicWhenMenuOpen)
 			{
-				MusicManager.instance.musicSource.volume = musicVolume;
+				MusicManager.instance.SetCurrentMusicToVolume(musicVolume);
 			}
 		}
 		else
 		{
-			MusicManager.instance.musicSource.Stop();
+			MusicManager.instance.MusicOptionsUpdated();
 		}
-		muteMusicWhenMenuOpen = muteMusicWhenMenuOpenToggle.isOn;
+		MusicOption oldMusicOption = musicOption;
+		musicOption = classicMusicToggle.isOn ? MusicOption.Classic : MusicOption.Scrongly;
+		if (oldMusicOption != musicOption)
+		{
+			switch(musicOption)
+			{
+				case MusicOption.Classic:
+					MusicManager.instance.StopScronglyMusic();
+				break;
+				case MusicOption.Scrongly:
+					MusicManager.instance.StartScronglyMusic();
+					MusicManager.instance.StopClassicMusic();
+                break;
+            }
+		}
+        muteMusicWhenMenuOpen = muteMusicWhenMenuOpenToggle.isOn;
 		// gameplay
 		gameSpeed = Mathf.Pow(2, gameSpeedSlider.value) / 2;
 		showCommonTooltips = showCommonTooltipsToggle.isOn;
@@ -689,10 +724,10 @@ public class Preferences : MonoBehaviour
 		menuVisualObject.SetActive(false);
 		// MusicManager.instance.MusicOptionsUpdated();
 		MusicManager.instance.MenuClosed();
-		if(muteMusicWhenMenuOpen)
+		/*if(muteMusicWhenMenuOpen)
 		{
-			MusicManager.instance.StartFade(musicVolume);
-		}
+			MusicManager.instance.StartFadeCurrentMusic(0f);
+		}*/
 		mainOptionsMenuControllerSelectionGroup.RemoveFromCurrentGroups();
 		audioMenuControllerSelectionGroup.RemoveFromCurrentGroups();
 		controllerMenuControllerSelectionGroup.RemoveFromCurrentGroups();
@@ -714,7 +749,7 @@ public class Preferences : MonoBehaviour
 		// MusicManager.instance.MusicOptionsUpdated();
 		if(muteMusicWhenMenuOpen)
 		{
-			MusicManager.instance.StartFade(0);
+			MusicManager.instance.StartFadeCurrentMusic(0f);
 		}
 		mainOptionsMenuControllerSelectionGroup.AddToCurrentGroups();
 	}
@@ -873,4 +908,10 @@ public class Preferences : MonoBehaviour
 	{
 		MainMenu.instance.StartTutorial();
 	}
+}
+
+public enum MusicOption
+{ 
+	Classic,
+	Scrongly
 }

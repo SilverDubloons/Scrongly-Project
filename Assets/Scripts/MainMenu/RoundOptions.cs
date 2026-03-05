@@ -1,7 +1,8 @@
+using System;
+using System.Globalization;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System;
 
 public class RoundOptions : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class RoundOptions : MonoBehaviour
 			int maxRound = 29;
 			float scalingFactor = (float)highestBossTier / (float)maxRound;
 			int bossRound = Mathf.RoundToInt((float)roundNumber * scalingFactor);
-			UpdateBossTag($"RandomTier0{bossRound.ToString()}");
+			UpdateBossTag($"RandomTier0{bossRound.ToString(CultureInfo.InvariantCulture)}");
 		}
 		else
 		{
@@ -46,7 +47,7 @@ public class RoundOptions : MonoBehaviour
 		}
 		else
 		{
-			scoreThresholdInputField.text = newScore.ToString();
+			scoreThresholdInputField.text = newScore.ToString(CultureInfo.InvariantCulture);
 		}
 	}
 	
@@ -65,10 +66,10 @@ public class RoundOptions : MonoBehaviour
 			{
 				if(newBossTag.Substring(0, 6) == "Random")	// RandomTier00-01
 				{
-					int lowerEnd = int.Parse(newBossTag.Substring(10, 2));
+					int lowerEnd = int.Parse(newBossTag.Substring(10, 2), CultureInfo.InvariantCulture);
 					if(newBossTag.Length >= 13)
 					{
-						int upperEnd = int.Parse(newBossTag.Substring(13, 2));
+						int upperEnd = int.Parse(newBossTag.Substring(13, 2), CultureInfo.InvariantCulture);
 						bossLabel.ChangeText($"Random Tier {lowerEnd + 1}-{upperEnd + 1} Boss");
 					}
 					else
@@ -129,11 +130,11 @@ public class RoundOptions : MonoBehaviour
 		}
 		try
 		{	
-			double roundScoreInput = double.Parse(scoreThresholdInputField.text);
+			double roundScoreInput = double.Parse(scoreThresholdInputField.text, CultureInfo.InvariantCulture);
 			if(roundScoreInput > RoundsVariantMenu.instance.reasonableRoundScoreMaximum)
 			{
 				roundScoreThreshold = RoundsVariantMenu.instance.reasonableRoundScoreMaximum;
-				scoreThresholdInputField.text = roundScoreThreshold.ToString();
+				scoreThresholdInputField.text = roundScoreThreshold.ToString(CultureInfo.InvariantCulture);
 			}
 			else
 			{
@@ -143,7 +144,7 @@ public class RoundOptions : MonoBehaviour
 		catch(Exception exception)
 		{
 			LocalInterface.instance.DisplayError($"Could not parse \"{scoreThresholdInputField.text}\" to a double. Exception message= {exception.Message}");
-			scoreThresholdInputField.text = VariantsMenu.instance.loadedVariant.variantRounds[roundNumber].scoreNeeded.ToString();
+			scoreThresholdInputField.text = VariantsMenu.instance.loadedVariant.variantRounds[roundNumber].scoreNeeded.ToString(CultureInfo.InvariantCulture);
 		}
 	}
 }

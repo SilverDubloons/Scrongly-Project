@@ -1,8 +1,9 @@
-using UnityEngine;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
-using static Variant;
+using UnityEngine;
 using UnityEngine.Events;
+using static Variant;
 
 public class LoadVariantMenu : MonoBehaviour
 {
@@ -76,7 +77,7 @@ public class LoadVariantMenu : MonoBehaviour
 			string variantDescription = variantBasics[2];
 			Color variantSpriteColor = LocalInterface.instance.ParseColor(variantBasics[3]);
 			string variantSpriteCategory = variantBasics[4];
-			int variantSpriteIndex = int.Parse(variantBasics[5]);
+			int variantSpriteIndex = int.Parse(variantBasics[5], CultureInfo.InvariantCulture);
 			GameObject newVariantSimpleGO = Instantiate(variantSimplePrefab, contentRT);
 			newVariantSimpleGO.name = variantName;
 			VariantSimple newVariantSimple = newVariantSimpleGO.GetComponent<VariantSimple>();

@@ -1,6 +1,7 @@
+using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 using static Variant;
 
 public class ZodiacsVariantMenu : MonoBehaviour
@@ -50,7 +51,7 @@ public class ZodiacsVariantMenu : MonoBehaviour
 				newZodiacVariantOptionsGO.name = entry.Value.tag;
 				ZodiacVariantOptions newZodiacVariantOptions = newZodiacVariantOptionsGO.GetComponent<ZodiacVariantOptions>();
 				zodiacVariantOptions.Add(newZodiacVariantOptions);
-				newZodiacVariantOptions.SetupZodiacVariantOptions(entry.Value.sprite, entry.Value.tag, int.Parse(entry.Value.tag.Substring(4, 2)), entry.Value.menuDescription, entry.Value.baubleName);
+				newZodiacVariantOptions.SetupZodiacVariantOptions(entry.Value.sprite, entry.Value.tag, int.Parse(entry.Value.tag.Substring(4, 2), CultureInfo.InvariantCulture), entry.Value.menuDescription, entry.Value.baubleName);
 				controllerSelectionGroup.controllerSelectableObjects.Add(newZodiacVariantOptions.costInputFieldControllerSelectableObject);
 				controllerSelectionGroup.controllerSelectableObjects.Add(newZodiacVariantOptions.pointsInputFieldControllerSelectableObject);
 				controllerSelectionGroup.controllerSelectableObjects.Add(newZodiacVariantOptions.multiplierInputFieldControllerSelectableObject);
@@ -103,9 +104,9 @@ public class ZodiacsVariantMenu : MonoBehaviour
 		for(int i = 0;i < zodiacVariantOptions.Count; i++)
 		{
 			VariantBauble tempVariantBauble = VariantsMenu.instance.loadedVariant.variantBaubles[zodiacVariantOptions[i].zodiacTag];
-			tempVariantBauble.baseCost = int.Parse(zodiacVariantOptions[i].costInputField.text);
-			tempVariantBauble.impact1 = double.Parse(zodiacVariantOptions[i].pointsInputField.text);
-			tempVariantBauble.impact2 = double.Parse(zodiacVariantOptions[i].multiplierInputField.text);
+			tempVariantBauble.baseCost = int.Parse(zodiacVariantOptions[i].costInputField.text, CultureInfo.InvariantCulture);
+			tempVariantBauble.impact1 = double.Parse(zodiacVariantOptions[i].pointsInputField.text, CultureInfo.InvariantCulture);
+			tempVariantBauble.impact2 = double.Parse(zodiacVariantOptions[i].multiplierInputField.text, CultureInfo.InvariantCulture);
 			VariantsMenu.instance.loadedVariant.variantBaubles[zodiacVariantOptions[i].zodiacTag] = tempVariantBauble;
 		}
 		MovingObjects.instance.mo["ZodiacsVariantMenu"].StartMove("OffScreen");

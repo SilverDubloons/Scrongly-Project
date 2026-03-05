@@ -1,8 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 using static Variant;
-using System;
 
 public class RoundsVariantMenu : MonoBehaviour
 {
@@ -84,7 +85,7 @@ public class RoundsVariantMenu : MonoBehaviour
 				newRoundOptionsGO.name = $"Round {entry.Value.roundNumber}";
 				RoundOptions newRoundOptions = newRoundOptionsGO.GetComponent<RoundOptions>();
 				roundOptions.Add(newRoundOptions);
-				newRoundOptions.roundLabel.ChangeText((entry.Value.roundNumber + 1).ToString());
+				newRoundOptions.roundLabel.ChangeText((entry.Value.roundNumber + 1).ToString(CultureInfo.InvariantCulture));
 				if(entry.Value.bossType != string.Empty)
 				{
 					newRoundOptions.bossToggle.isOn = true;
@@ -93,10 +94,10 @@ public class RoundsVariantMenu : MonoBehaviour
 					{
 						if(entry.Value.bossType.Substring(0, 6) == "Random")	// RandomTier00-01
 						{
-							int lowerEnd = int.Parse(entry.Value.bossType.Substring(10, 2));
+							int lowerEnd = int.Parse(entry.Value.bossType.Substring(10, 2), CultureInfo.InvariantCulture);
 							if(entry.Value.bossType.Length >= 13)
 							{
-								int upperEnd = int.Parse(entry.Value.bossType.Substring(13, 2));
+								int upperEnd = int.Parse(entry.Value.bossType.Substring(13, 2), CultureInfo.InvariantCulture);
 								newRoundOptions.bossLabel.ChangeText($"Random Tier {lowerEnd + 1}-{upperEnd + 1} Boss");
 							}
 							else
@@ -115,7 +116,7 @@ public class RoundsVariantMenu : MonoBehaviour
 					}
 				}
 				newRoundOptions.roundNumber = entry.Value.roundNumber;
-				newRoundOptions.scoreThresholdInputField.text = entry.Value.scoreNeeded.ToString();
+				newRoundOptions.scoreThresholdInputField.text = entry.Value.scoreNeeded.ToString(CultureInfo.InvariantCulture);
 				newRoundOptions.bossToggleControllerSelectableObject.scrollViewContentRT = roundOptionsParent;
 				newRoundOptions.pickButtonControllerSelectableObject.scrollViewContentRT = roundOptionsParent;
 				newRoundOptions.scoreThresholdInputFieldControllerSelectableObject.scrollViewContentRT = roundOptionsParent;
@@ -287,10 +288,10 @@ public class RoundsVariantMenu : MonoBehaviour
 					{
 						if(entry.Value.bossType.Substring(0, 6) == "Random")	// RandomTier00-01
 						{
-							int lowerEnd = int.Parse(entry.Value.bossType.Substring(10, 2));
+							int lowerEnd = int.Parse(entry.Value.bossType.Substring(10, 2), CultureInfo.InvariantCulture);
 							if(entry.Value.bossType.Length >= 13)
 							{
-								int upperEnd = int.Parse(entry.Value.bossType.Substring(13, 2));
+								int upperEnd = int.Parse(entry.Value.bossType.Substring(13, 2), CultureInfo.InvariantCulture);
 								roundOptions[entry.Value.roundNumber].bossLabel.ChangeText($"Random Tier {lowerEnd + 1}-{upperEnd + 1} Boss");
 							}
 							else
@@ -317,7 +318,7 @@ public class RoundsVariantMenu : MonoBehaviour
 					isDifficultyLevel = false;
 				}
 				roundOptions[entry.Value.roundNumber].roundNumber = entry.Value.roundNumber;
-				roundOptions[entry.Value.roundNumber].scoreThresholdInputField.text = entry.Value.scoreNeeded.ToString();
+				roundOptions[entry.Value.roundNumber].scoreThresholdInputField.text = entry.Value.scoreNeeded.ToString(CultureInfo.InvariantCulture);
 			}
 		}
 		if(isDifficultyLevel)

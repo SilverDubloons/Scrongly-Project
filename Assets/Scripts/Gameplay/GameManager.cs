@@ -1,9 +1,10 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -93,11 +94,11 @@ public class GameManager : MonoBehaviour
 		for(int i = 0; i < bossRoundsSplit.Length; i++)
 		{
 			string[] bossRoundData = bossRoundsSplit[i].Split('|');
-			int round = int.Parse(bossRoundData[0]);
+			int round = int.Parse(bossRoundData[0], CultureInfo.InvariantCulture);
 			string tag = bossRoundData[1];
 			string description = bossRoundData[2];
-			int random1 = int.Parse(bossRoundData[3]);
-			int random2 = int.Parse(bossRoundData[4]);
+			int random1 = int.Parse(bossRoundData[3], CultureInfo.InvariantCulture);
+			int random2 = int.Parse(bossRoundData[4], CultureInfo.InvariantCulture);
 			bossRounds.Add(round, new BossRound(tag, description, random1, random2));
 		}
 	}
@@ -115,14 +116,14 @@ public class GameManager : MonoBehaviour
 	public void DiscardUsed()
 	{
 		discardsRemaining--;
-		discardsRemainingLabel.ChangeText(discardsRemaining.ToString());
+		discardsRemainingLabel.ChangeText(discardsRemaining.ToString(CultureInfo.InvariantCulture));
 		discardsRemainingLabel.StartExpandRetract();
 	}
 	
 	public void SetDiscards(int dis)
 	{
 		discardsRemaining = dis;
-		discardsRemainingLabel.ChangeText(discardsRemaining.ToString());
+		discardsRemainingLabel.ChangeText(discardsRemaining.ToString(CultureInfo.InvariantCulture));
 		discardsRemainingLabel.StartExpandRetract();
 	}
 	
@@ -141,7 +142,7 @@ public class GameManager : MonoBehaviour
 		{
 			discardsRemaining = 0;
 		}
-		discardsRemainingLabel.ChangeText(discardsRemaining.ToString());
+		discardsRemainingLabel.ChangeText(discardsRemaining.ToString(CultureInfo.InvariantCulture));
 		discardsRemainingLabel.StartExpandRetract();
 	}
 	
@@ -227,7 +228,7 @@ public class GameManager : MonoBehaviour
 			handsUntilFatigueLabel.gameObject.SetActive(true);
 			handsUntilFatigueRemainingLabel.gameObject.SetActive(true);
 			fatiguedLabel.gameObject.SetActive(false);
-			handsUntilFatigueRemainingLabel.ChangeText(handsUntilFatigueRemaining.ToString());
+			handsUntilFatigueRemainingLabel.ChangeText(handsUntilFatigueRemaining.ToString(CultureInfo.InvariantCulture));
 		}
 	}
 	
@@ -239,7 +240,7 @@ public class GameManager : MonoBehaviour
 			RunInformation.instance.chipsEarned += amount;
 			Stats.instance.CurrencyEarned(amount);
 		}
-		currencyLabel.ChangeText(currency.ToString());
+		currencyLabel.ChangeText(currency.ToString(CultureInfo.InvariantCulture));
 		currencyLabel.StartExpandRetract();
 		Shop.instance.CurrencyUpdated();
 	}
@@ -247,7 +248,7 @@ public class GameManager : MonoBehaviour
 	public void SetCurrency(int amount)
 	{
 		currency = amount;
-		currencyLabel.ChangeText(currency.ToString());
+		currencyLabel.ChangeText(currency.ToString(CultureInfo.InvariantCulture));
 		currencyLabel.StartExpandRetract();
 		if(Shop.instance.shopFinishedOpening)
 		{
@@ -284,7 +285,8 @@ public class GameManager : MonoBehaviour
 			lastRoundWasBossRound = true;
 		}
 		currentRound++;
-		PerformNewRoundMaintenance(lastRoundWasBossRound);
+		MusicManager.instance.UpdateScronglyMusic();
+        PerformNewRoundMaintenance(lastRoundWasBossRound);
 	}
 	
 	public void PerformNewRoundMaintenance(bool lastRoundWasBossRound)

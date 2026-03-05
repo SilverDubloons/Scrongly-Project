@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-
+using System.Globalization;
 public class BaubleIcon : MonoBehaviour
 {
     public RectTransform rt;
@@ -22,7 +22,7 @@ public class BaubleIcon : MonoBehaviour
 		}
 		else
 		{
-			quantityLabel.ChangeText(quantityOwned.ToString());
+			quantityLabel.ChangeText(quantityOwned.ToString(CultureInfo.InvariantCulture));
 		}
 		var resolver = new DescriptionResolver();
 		// string input = V.i.v.variantBaubles[baubleTag].inGameDescription;

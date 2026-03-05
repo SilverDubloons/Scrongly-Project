@@ -1,7 +1,8 @@
-using UnityEngine;
-using TMPro;
 using System;
 using System.Collections;
+using System.Globalization;
+using TMPro;
+using UnityEngine;
 
 public class SpecialOptionInputField : MonoBehaviour
 {
@@ -57,7 +58,7 @@ public class SpecialOptionInputField : MonoBehaviour
 			int inputInt = min - 1;
 			try
 			{
-				inputInt = int.Parse(inputField.text);
+				inputInt = int.Parse(inputField.text, CultureInfo.InvariantCulture);
 			}
 			catch(Exception exception)
 			{
@@ -66,12 +67,12 @@ public class SpecialOptionInputField : MonoBehaviour
 			if(inputInt < min)
 			{
 				inputInt = min;
-				inputField.text = inputInt.ToString();
+				inputField.text = inputInt.ToString(CultureInfo.InvariantCulture);
 			}
 			else if(inputInt > max)
 			{
 				inputInt = max;
-				inputField.text = inputInt.ToString();
+				inputField.text = inputInt.ToString(CultureInfo.InvariantCulture);
 			}
 		}
 	}
@@ -84,9 +85,9 @@ public class SpecialOptionInputField : MonoBehaviour
 		}
 		if(inputField.text == string.Empty)
 		{
-			inputField.text = min.ToString();
+			inputField.text = min.ToString(CultureInfo.InvariantCulture);
 		}
-		val = int.Parse(inputField.text);
+		val = int.Parse(inputField.text, CultureInfo.InvariantCulture);
 /* 		hasChanged = true;
 		SpecialOptionsVariantMenu.instance.OptionHasChanged(); */
 	}
@@ -94,6 +95,6 @@ public class SpecialOptionInputField : MonoBehaviour
 	public void UpdateInputField(int newValue)
 	{
 		val = newValue;
-		inputField.text = val.ToString();
+		inputField.text = val.ToString(CultureInfo.InvariantCulture);
 	}
 }

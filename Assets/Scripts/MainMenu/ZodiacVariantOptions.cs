@@ -1,7 +1,8 @@
+using System;
+using System.Globalization;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System;
 
 public class ZodiacVariantOptions : MonoBehaviour
 {
@@ -39,8 +40,8 @@ public class ZodiacVariantOptions : MonoBehaviour
 		tooltipMainText = tooltipMainText.Replace("[MultColor]", $"{LocalInterface.instance.ColorToHexadecimal(LocalInterface.instance.multiplierColor)}");
 		try
 		{
-			double pointsInput = double.Parse(pointsInputField.text);
-			double multInput = double.Parse(multiplierInputField.text);
+			double pointsInput = double.Parse(pointsInputField.text, CultureInfo.InvariantCulture);
+			double multInput = double.Parse(multiplierInputField.text, CultureInfo.InvariantCulture);
 			tooltipObject.mainText = String.Format(tooltipMainText, LocalInterface.instance.ConvertDoubleToString(pointsInput), LocalInterface.instance.ConvertDoubleToString(multInput));
 		}
 		catch(Exception exception)
@@ -94,7 +95,7 @@ public class ZodiacVariantOptions : MonoBehaviour
 		{
 			if(costInputField.text != string.Empty)
 			{
-				int costInput = int.Parse(costInputField.text);
+				int costInput = int.Parse(costInputField.text, CultureInfo.InvariantCulture);
 				if(costInput < 0)
 				{
 					costInputField.text = "0";
@@ -114,7 +115,7 @@ public class ZodiacVariantOptions : MonoBehaviour
 		{
 			if(pointsInputField.text != string.Empty)
 			{
-				double pointsInput = double.Parse(pointsInputField.text);
+				double pointsInput = double.Parse(pointsInputField.text, CultureInfo.InvariantCulture);
 				if(pointsInput < 0)
 				{
 					pointsInputField.text = "0";
@@ -128,13 +129,13 @@ public class ZodiacVariantOptions : MonoBehaviour
 		catch(Exception exception)
 		{
 			LocalInterface.instance.DisplayError($"Error parsing pointsInputField of {zodiacTag}. {exception.Message}");
-			pointsInputField.text = VariantsMenu.instance.baseVariant.variantBaubles[zodiacTag].impact1.ToString();
+			pointsInputField.text = VariantsMenu.instance.baseVariant.variantBaubles[zodiacTag].impact1.ToString(CultureInfo.InvariantCulture);
 		}
 		try
 		{
 			if(multiplierInputField.text != string.Empty)
 			{
-				double multInput = double.Parse(multiplierInputField.text);
+				double multInput = double.Parse(multiplierInputField.text, CultureInfo.InvariantCulture);
 				if(multInput < 0)
 				{
 					multiplierInputField.text = "0";
@@ -148,7 +149,7 @@ public class ZodiacVariantOptions : MonoBehaviour
 		catch(Exception exception)
 		{
 			LocalInterface.instance.DisplayError($"Error parsing multiplierInputField of {zodiacTag}. {exception.Message}");
-			multiplierInputField.text = VariantsMenu.instance.baseVariant.variantBaubles[zodiacTag].impact2.ToString();
+			multiplierInputField.text = VariantsMenu.instance.baseVariant.variantBaubles[zodiacTag].impact2.ToString(CultureInfo.InvariantCulture);
 		}
 	}
 	
@@ -159,7 +160,7 @@ public class ZodiacVariantOptions : MonoBehaviour
 		{
 			try
 			{
-				costInput = int.Parse(costInputField.text);
+				costInput = int.Parse(costInputField.text, CultureInfo.InvariantCulture);
 			}
 			catch(Exception exception)
 			{
@@ -171,7 +172,7 @@ public class ZodiacVariantOptions : MonoBehaviour
 		{
 			try
 			{
-				pointsInput = double.Parse(pointsInputField.text);
+				pointsInput = double.Parse(pointsInputField.text, CultureInfo.InvariantCulture);
 			}
 			catch(Exception exception)
 			{
@@ -183,7 +184,7 @@ public class ZodiacVariantOptions : MonoBehaviour
 		{
 			try
 			{
-				multInput = double.Parse(multiplierInputField.text);
+				multInput = double.Parse(multiplierInputField.text, CultureInfo.InvariantCulture);
 			}
 			catch(Exception exception)
 			{

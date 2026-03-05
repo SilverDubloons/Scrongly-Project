@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System;
 using UnityEngine.Events;
-
+using System.Globalization;
 public class BaubleNotification : MonoBehaviour
 {
     public RectTransform rt;
@@ -46,7 +46,7 @@ public class BaubleNotification : MonoBehaviour
 						maxDiceRoll = true;
 					}
 					image.sprite = Baubles.instance.diceSprites[7];
-					diceLabel.ChangeText(diceRoll.ToString());
+					diceLabel.ChangeText(diceRoll.ToString(CultureInfo.InvariantCulture));
 					diceLabelRT.anchoredPosition = d8LabelLocation;
 				break;
 				case 3:
@@ -56,7 +56,7 @@ public class BaubleNotification : MonoBehaviour
 						maxDiceRoll = true;
 					}
 					image.sprite = Baubles.instance.diceSprites[8];
-					diceLabel.ChangeText(diceRoll.ToString());
+					diceLabel.ChangeText(diceRoll.ToString(CultureInfo.InvariantCulture));
 					diceLabelRT.anchoredPosition = d10LabelLocation;
 				break;
 				case 4:
@@ -66,7 +66,7 @@ public class BaubleNotification : MonoBehaviour
 						maxDiceRoll = true;
 					}
 					image.sprite = Baubles.instance.diceSprites[9];
-					diceLabel.ChangeText(diceRoll.ToString());
+					diceLabel.ChangeText(diceRoll.ToString(CultureInfo.InvariantCulture));
 					diceLabelRT.anchoredPosition = d12LabelLocation;
 				break;
 				case 5:
@@ -76,7 +76,7 @@ public class BaubleNotification : MonoBehaviour
 						maxDiceRoll = true;
 					}
 					image.sprite = Baubles.instance.diceSprites[10];
-					diceLabel.ChangeText(diceRoll.ToString());
+					diceLabel.ChangeText(diceRoll.ToString(CultureInfo.InvariantCulture));
 					diceLabelRT.anchoredPosition = d20LabelLocation;
 				break;
 				default:

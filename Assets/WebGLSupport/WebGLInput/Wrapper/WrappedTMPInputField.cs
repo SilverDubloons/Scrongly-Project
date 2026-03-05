@@ -8,6 +8,7 @@ using TMPro;
 using WebGLSupport.Detail;
 using UnityEngine.UI;
 using System;
+using System.Globalization;
 
 namespace WebGLSupport
 {

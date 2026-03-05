@@ -1,8 +1,10 @@
-using UnityEngine;
-using System.Collections.Generic;
-using System.Collections;
-using UnityEngine.UI;
+using NUnit.Framework.Interfaces;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreVial : MonoBehaviour
 {
@@ -125,7 +127,14 @@ public class ScoreVial : MonoBehaviour
 		currentRoundScore = scoreToLoad;
 		double currentRoundThreshold = GameManager.instance.GetCurrentRoundScoreThreshold();
 		currentRoundScoreNormalized = Mathf.Clamp((float)(currentRoundScore / currentRoundThreshold), 0, 1f);
-		currentScoreLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(currentRoundScore));
+		if (double.IsNaN(currentRoundScore))
+		{
+            currentScoreLabel.ChangeText("0");
+		}
+		else
+		{
+			currentScoreLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(currentRoundScore));
+		}
 		currentScoreRT.sizeDelta = new Vector2(currentScoreLabel.GetPreferredWidth() + 6, currentScoreRT.sizeDelta.y);
 		currentScoreRT.anchoredPosition = new Vector2(currentScoreRT.anchoredPosition.x, Mathf.Min((float)(currentRoundScore / currentRoundThreshold * vialHeight), vialHeight));
 		fill.sizeDelta = new Vector2(fill.sizeDelta.x, Mathf.Min((currentRoundScoreNormalized * (vialHeight + 1)), (vialHeight + 1)));
@@ -146,10 +155,10 @@ public class ScoreVial : MonoBehaviour
 			newChipThresholdGO.name = $"ChipThreshold{i}";
 			ChipThreshold newChipThreshold = newChipThresholdGO.GetComponent<ChipThreshold>();
 			chipThresholds.Add(newChipThreshold);
-			newChipThreshold.handsRemaining = int.Parse(chipThresholdData[3]);
-			newChipThreshold.scoreThreshold = float.Parse(chipThresholdData[2]);
+			newChipThreshold.handsRemaining = int.Parse(chipThresholdData[3], CultureInfo.InvariantCulture);
+			newChipThreshold.scoreThreshold = float.Parse(chipThresholdData[2], CultureInfo.InvariantCulture);
 			newChipThreshold.UpdateLabel();
-			newChipThreshold.rt.anchoredPosition = new Vector2(-74f, float.Parse(chipThresholdData[0]));
+			newChipThreshold.rt.anchoredPosition = new Vector2(-74f, float.Parse(chipThresholdData[0], CultureInfo.InvariantCulture));
 			if(bool.Parse(chipThresholdData[1]))
 			{
 				newChipThreshold.currentSizeNormalized = 1f;
@@ -199,7 +208,14 @@ public class ScoreVial : MonoBehaviour
 			fill.sizeDelta = Vector2.Lerp(oldFillSize, newFillSize, LocalInterface.instance.animationCurve.Evaluate(t / fillTime));
 			waveMask.offsetMax = new Vector2(0, Mathf.Min((vialHeight - fill.sizeDelta.y + 1f), 3f) );
 			currentScoreRT.anchoredPosition = Vector2.Lerp(oldScorePosition, newScorePosition, LocalInterface.instance.animationCurve.Evaluate(t / fillTime));
-			currentScoreLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(currentRoundScore));
+			if (double.IsNaN(currentRoundScore))
+			{
+				currentScoreLabel.ChangeText("0");
+			}
+			else
+			{
+				currentScoreLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(currentRoundScore));
+			}
 			currentScoreRT.sizeDelta = new Vector2(currentScoreLabel.GetPreferredWidth() + 6, currentScoreRT.sizeDelta.y);
 			currentSyncedScore = LocalInterface.DoubleLerp(oldSyncedScore, newSyncedScore, (double)LocalInterface.instance.animationCurve.Evaluate(t / fillTime));
 			chipThresholdsCleared += UpdateScoreThresholdPositions(currentSyncedScore);
@@ -387,8 +403,16 @@ public class ScoreVial : MonoBehaviour
 			fill.sizeDelta = Vector2.Lerp(fillOriginSize, fillEmptySize, LocalInterface.instance.animationCurve.Evaluate(t / drainTime));
 			currentScoreRT.anchoredPosition = Vector2.Lerp(currentScoreOriginLocation, scoreRTEmptyLocation, LocalInterface.instance.animationCurve.Evaluate(t / drainTime));
 			double currentDisplayedScore = LocalInterface.DoubleLerp(originScore, 0, LocalInterface.instance.animationCurve.Evaluate(t / drainTime));
-			currentScoreLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(currentDisplayedScore));
-			currentScoreRT.sizeDelta = new Vector2(currentScoreLabel.GetPreferredWidth() + 6, currentScoreRT.sizeDelta.y);
+			if (double.IsNaN(currentDisplayedScore))
+			{
+                currentScoreLabel.ChangeText("0");
+			}
+			else
+			{
+                currentScoreLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(currentDisplayedScore));
+			}
+
+            currentScoreRT.sizeDelta = new Vector2(currentScoreLabel.GetPreferredWidth() + 6, currentScoreRT.sizeDelta.y);
 			yield return null;
 		}
 		GameManager.instance.AdvanceRound();

@@ -1,6 +1,7 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using UnityEngine;
 
 public class Decks : MonoBehaviour
 {
@@ -54,7 +55,7 @@ public class Decks : MonoBehaviour
 		for(int i = 1; i < decksRows.Length; i++)
 		{
 			string[] deckData = decksRows[i].Split(',', StringSplitOptions.RemoveEmptyEntries);
-			int deckInt = int.Parse(deckData[3]);
+			int deckInt = int.Parse(deckData[3], CultureInfo.InvariantCulture);
 			bool unlocked = bool.Parse(deckData[4]);
 			decks.Add(deckData[0], new Deck(deckData[0], deckData[1].Replace("COMMA", ","), deckData[2].Replace("COMMA", ","), deckInt, deckSprites[deckInt], unlocked));
 			decksOrder.Add(deckData[0]);
@@ -91,7 +92,7 @@ public class Decks : MonoBehaviour
 		string newDeckFileString = $"{deckFileManagerVersion}\nlastSelectedDeck={lastSelectedDeck}";
 		foreach(KeyValuePair<string, Deck> entry in decks)
 		{
-			newDeckFileString = $"{newDeckFileString}\n{entry.Key}={entry.Value.unlocked.ToString()}";
+			newDeckFileString = $"{newDeckFileString}\n{entry.Key}={entry.Value.unlocked.ToString(CultureInfo.InvariantCulture)}";
 		}
 		LocalInterface.instance.SetFileText(unlockedDecksFileName, newDeckFileString);
 	}

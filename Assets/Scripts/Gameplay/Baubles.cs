@@ -1,8 +1,9 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System;
-using UnityEngine.Events;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.Events;
 
 public class Baubles : MonoBehaviour
 {
@@ -117,20 +118,20 @@ public class Baubles : MonoBehaviour
 	
 	public double GetHandPoints(int handNumber)
 	{
-		string formattedHandIntString = handNumber.ToString();
+		string formattedHandIntString = handNumber.ToString(CultureInfo.InvariantCulture);
 		if(handNumber < 10)
 		{
-			formattedHandIntString = $"0{handNumber.ToString()}";
+			formattedHandIntString = $"0{handNumber.ToString(CultureInfo.InvariantCulture)}";
 		}
 		return GameManager.instance.handPoints[handNumber] + GetImpactDouble($"Hand{formattedHandIntString}Power");
 	}
 	
 	public double GetHandMult(int handNumber)
 	{
-		string formattedHandIntString = handNumber.ToString();
+		string formattedHandIntString = handNumber.ToString(CultureInfo.InvariantCulture);
 		if(handNumber < 10)
 		{
-			formattedHandIntString = $"0{handNumber.ToString()}";
+			formattedHandIntString = $"0{handNumber.ToString(CultureInfo.InvariantCulture)}";
 		}
 		return GameManager.instance.handMults[handNumber] + GetImpactDouble($"Hand{formattedHandIntString}Power", true);
 	}
@@ -370,7 +371,7 @@ public class Baubles : MonoBehaviour
 		{
 			string[] ownedBaubleData = ownedBaublesData[i].Split('|', StringSplitOptions.RemoveEmptyEntries);
 			// Debug.Log($"i={i}, ownedBaublesData[i]={ownedBaublesData[i]}");
-			for(int j = 0; j < int.Parse(ownedBaubleData[1]); j++)
+			for(int j = 0; j < int.Parse(ownedBaubleData[1], CultureInfo.InvariantCulture); j++)
 			{
 				if(LocalInterface.BaubleNameIsZodiac(ownedBaubleData[0]))
 				{

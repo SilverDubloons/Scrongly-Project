@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-
+using System.Globalization;
 public class DeckVariantCard : MonoBehaviour
 {
 	public RectTransform rt;
@@ -86,7 +86,7 @@ public class DeckVariantCard : MonoBehaviour
 				plusButton.ChangeButtonEnabled(true);
 			}
 		}
-		quantityLabel.ChangeText(quantity.ToString());
+		quantityLabel.ChangeText(quantity.ToString(CultureInfo.InvariantCulture));
 	}
 	
 	public void MinusClicked()

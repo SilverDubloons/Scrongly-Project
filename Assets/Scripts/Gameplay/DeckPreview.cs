@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static Deck;
 using System.Collections.Generic;
-
+using System.Globalization;
 public class DeckPreview : MonoBehaviour
 {
 	public RectTransform rt;
@@ -128,7 +128,7 @@ public class DeckPreview : MonoBehaviour
 		}
 		for(int i = 0; i < rankQuantityLabels.Length; i++)
 		{
-			rankQuantityLabels[i].ChangeText(rankCards[i].ToString());
+			rankQuantityLabels[i].ChangeText(rankCards[i].ToString(CultureInfo.InvariantCulture));
 			if(rankCards[i] >= 10)
 			{
 				rankQuantityLabels[i].ChangeFontSize(8);
@@ -140,7 +140,7 @@ public class DeckPreview : MonoBehaviour
 		}
 		if(specialCards > 0)
 		{
-			specialQuantityLabel.ChangeText(specialCards.ToString());
+			specialQuantityLabel.ChangeText(specialCards.ToString(CultureInfo.InvariantCulture));
 			specialQuantityBackdrop.SetActive(true);
 		}
 		else
@@ -149,10 +149,10 @@ public class DeckPreview : MonoBehaviour
 		}
 		for(int i = 0; i < suitQuantityLabels.Length; i++)
 		{
-			string suitQuantityString = suitCards[i].ToString();
+			string suitQuantityString = suitCards[i].ToString(CultureInfo.InvariantCulture);
 			if(i < 4 && suitCards[4] > 0)
 			{
-				suitQuantityString += $"({(suitCards[i] + suitCards[4]).ToString()})";
+				suitQuantityString += $"({(suitCards[i] + suitCards[4]).ToString(CultureInfo.InvariantCulture)})";
 			}
 			suitQuantityLabels[i].ChangeText(suitQuantityString);
 			if((suitCards[i] >= 100 && suitCards[i] + suitCards[4] >= 10) || (suitCards[i] >= 10 && suitCards[i] + suitCards[4] >= 100))
@@ -166,7 +166,7 @@ public class DeckPreview : MonoBehaviour
 		}
 		for(int i = 0; i < individualQuantityLabels.Length; i++)
 		{
-			individualQuantityLabels[i].ChangeText(suitRankCards[i / 13, i % 13].ToString());
+			individualQuantityLabels[i].ChangeText(suitRankCards[i / 13, i % 13].ToString(CultureInfo.InvariantCulture));
 			if(suitRankCards[i / 13, i % 13] >= 10)
 			{
 				individualQuantityLabels[i].ChangeFontSize(8);

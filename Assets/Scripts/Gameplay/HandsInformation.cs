@@ -1,6 +1,7 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using UnityEngine;
 
 public class HandsInformation : MonoBehaviour
 {
@@ -47,11 +48,11 @@ public class HandsInformation : MonoBehaviour
 			string formattedHandIntString = string.Empty;
 			if(i < 10)
 			{
-				formattedHandIntString = $"0{i.ToString()}";
+				formattedHandIntString = $"0{i.ToString(CultureInfo.InvariantCulture)}";
 			}
 			else
 			{
-				formattedHandIntString = i.ToString();
+				formattedHandIntString = i.ToString(CultureInfo.InvariantCulture);
 			}
 			if(i < 10 || V.i.v.variantSpecialOptions["AllBaublesZodiacsUnlocked"].inEffect)
 			{
@@ -67,13 +68,13 @@ public class HandsInformation : MonoBehaviour
 			for(int j = 0; j < handsContainedColumns.Length; j++)
 			{
 				// Debug.Log($"i={i}, j={j}, handsContainedColumns[j]={handsContainedColumns[j]}l");
-				newHandInfo.guaranteedHandsContained.Add(int.Parse(handsContainedColumns[j]));
+				newHandInfo.guaranteedHandsContained.Add(int.Parse(handsContainedColumns[j], CultureInfo.InvariantCulture));
 			}
 			string secondRowContent = handsWithinRows[i * 2 + 2].Trim();
 			string[] handsWithinColumns = secondRowContent.Split(',', StringSplitOptions.RemoveEmptyEntries);
 			for(int j = 0; j < handsWithinColumns.Length; j++)
 			{
-				newHandInfo.guaranteedHandsThisHandIsIn.Add(int.Parse(handsWithinColumns[j]));
+				newHandInfo.guaranteedHandsThisHandIsIn.Add(int.Parse(handsWithinColumns[j], CultureInfo.InvariantCulture));
 			}
 			slideOut.contentControllerSelectionGroup.controllerSelectableObjects.Add(newHandInfo.handNameControllerSelectableObject);
 			slideOut.contentControllerSelectionGroup.controllerSelectableObjects.Add(newHandInfo.individualControllerSelectableObject);
@@ -173,7 +174,8 @@ public class HandsInformation : MonoBehaviour
 			if(handsContained[i])
 			{
 				handInfos[i].handNameBackdrop.color = handContainedBackdropColor;
-			}
+                handInfos[i].UpdateHandInfo();
+            }
 			else
 			{
 				if(i <= 8 || RunInformation.instance.handsPlayed[i] > 0 || V.i.v.variantSpecialOptions["AllBaublesZodiacsUnlocked"].inEffect)
@@ -185,7 +187,7 @@ public class HandsInformation : MonoBehaviour
 					handInfos[i].handNameBackdrop.color = unplayedHandsBackdropColor;
 				}
 			}
-		}
+        }
 	}
 	
 	void Start()

@@ -1,6 +1,7 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using UnityEngine;
 
 public class Variant
 {
@@ -51,7 +52,7 @@ public class Variant
 		{
 			this.tag = textParts[0];
 			this.inEffect = bool.Parse(textParts[1]);
-			this.impact = int.Parse(textParts[2]);
+			this.impact = int.Parse(textParts[2], CultureInfo.InvariantCulture);
 			this.label = LocalInterface.instance.baseVariant.variantSpecialOptions[this.tag].label;
 			this.description = LocalInterface.instance.baseVariant.variantSpecialOptions[this.tag].description;
 			this.type = LocalInterface.instance.baseVariant.variantSpecialOptions[this.tag].type;
@@ -117,15 +118,15 @@ public class Variant
 		public VariantBauble(string[] textParts)
 		{
 			this.tag = textParts[0];
-			this.baseCost = int.Parse(textParts[1]);
-			this.costStep = int.Parse(textParts[2]);
+			this.baseCost = int.Parse(textParts[1], CultureInfo.InvariantCulture);
+			this.costStep = int.Parse(textParts[2], CultureInfo.InvariantCulture);
 			this.category = textParts[3];
 			this.availableInStore = bool.Parse(textParts[4]);
-			this.startingQuantity = int.Parse(textParts[5]);
+			this.startingQuantity = int.Parse(textParts[5], CultureInfo.InvariantCulture);
 			if(textParts.Length > 6)
 			{
-				this.impact1 = double.Parse(textParts[6]);
-				this.impact2 = double.Parse(textParts[7]);
+				this.impact1 = double.Parse(textParts[6], CultureInfo.InvariantCulture);
+				this.impact2 = double.Parse(textParts[7], CultureInfo.InvariantCulture);
 			}
 			else
 			{
@@ -228,8 +229,8 @@ public class Variant
 		{
 			this.tag = textParts[0];
 			this.category = textParts[1];
-			this.cost = int.Parse(textParts[2]);
-			this.impact = double.Parse(textParts[3]);
+			this.cost = int.Parse(textParts[2], CultureInfo.InvariantCulture);
+			this.impact = double.Parse(textParts[3], CultureInfo.InvariantCulture);
 			this.inShop = bool.Parse(textParts[4]);
 			this.specialCardName = LocalInterface.instance.baseVariant.variantSpecialCards[this.tag].specialCardName;
 			this.description = LocalInterface.instance.baseVariant.variantSpecialCards[this.tag].description;
@@ -275,8 +276,8 @@ public class Variant
 		}
 		public VariantRound(string[] textParts)
 		{
-			this.roundNumber = int.Parse(textParts[0]);
-			this.scoreNeeded = double.Parse(textParts[1]);
+			this.roundNumber = int.Parse(textParts[0], CultureInfo.InvariantCulture);
+			this.scoreNeeded = double.Parse(textParts[1], CultureInfo.InvariantCulture);
 			this.bossType = textParts[2];
 		}
 		public VariantRound(VariantRound roundToCopy)
@@ -472,10 +473,10 @@ public class Variant
 		variantDescription = basicData[2];
 		variantSpriteColor = LocalInterface.instance.ParseColor(basicData[3]);
 		variantSpriteCategory = basicData[4];
-		variantSpriteIndex = int.Parse(basicData[5]);
-		numberOfRandomStandardCardsToAddToDeck = int.Parse(basicData[6]);
+		variantSpriteIndex = int.Parse(basicData[5], CultureInfo.InvariantCulture);
+		numberOfRandomStandardCardsToAddToDeck = int.Parse(basicData[6], CultureInfo.InvariantCulture);
 		includeRainbowInRandomCards = bool.Parse(basicData[7]);
-		numberOfRandomSpecialCardsToAddToDeck = int.Parse(basicData[8]);
+		numberOfRandomSpecialCardsToAddToDeck = int.Parse(basicData[8], CultureInfo.InvariantCulture);
 		considerRarity = bool.Parse(basicData[9]);
 		string[] startingDeckData = variantLines[1].Replace("startingDeck=", string.Empty).Split('%', StringSplitOptions.RemoveEmptyEntries);
 		for(int i = 0; i < startingDeckData.Length; i++)
@@ -525,7 +526,7 @@ public class Variant
 		for(int i = 0; i < roundsData.Length; i++)
 		{
 			string[] roundData = roundsData[i].Split('#');
-			roundsDataDictionary.Add(int.Parse(roundData[0]), new VariantRound(roundData));
+			roundsDataDictionary.Add(int.Parse(roundData[0], CultureInfo.InvariantCulture), new VariantRound(roundData));
 		}
 		foreach(KeyValuePair<int, VariantRound> entry in LocalInterface.instance.baseVariant.variantRounds)
 		{

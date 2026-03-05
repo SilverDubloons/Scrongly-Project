@@ -106,7 +106,7 @@ public class DeckPicker : MonoBehaviour
 		string newDeckFile = $"{deckFileManagerVersion}\nlastSelectedDeck={lastSelectedDeck}";
 		foreach(KeyValuePair<string, Deck> entry in decks)
 		{
-			newDeckFile = $"{newDeckFile}\n{entry.Key}={entry.Value.unlocked.ToString()}";
+			newDeckFile = $"{newDeckFile}\n{entry.Key}={entry.Value.unlocked.ToString(CultureInfo.InvariantCulture)}";
 		}
 		LocalInterface.instance.SetFileText(decksFileName, newDeckFile);
 	} */

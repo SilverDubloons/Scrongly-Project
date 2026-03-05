@@ -1,7 +1,8 @@
-using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
+using System.Globalization;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using static Deck;
 
 public class ShopItem : MonoBehaviour
@@ -76,7 +77,7 @@ public class ShopItem : MonoBehaviour
 			case "Zodiac":
 				onLayaway = true;
 				itemTag = shopItemDataLines[1];
-				SetItemCost(int.Parse(shopItemDataLines[2]));
+				SetItemCost(int.Parse(shopItemDataLines[2], CultureInfo.InvariantCulture));
 				itemImage.sprite = V.i.v.variantBaubles[itemTag].sprite;
 				tooltipObject.title = V.i.v.variantBaubles[itemTag].baubleName;
 				if(itemType == "Bauble")
@@ -245,7 +246,7 @@ public class ShopItem : MonoBehaviour
 	public void SetItemCost(int newCost)
 	{
 		itemCost = newCost;
-		costLabel.ChangeText(newCost.ToString());
+		costLabel.ChangeText(newCost.ToString(CultureInfo.InvariantCulture));
 		if(newCost >= 100)
 		{
 			costLabel.ChangeFontSize(8);

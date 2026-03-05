@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-
+using System.Globalization;
 public class SpecialOptionSlider : MonoBehaviour
 {
 	public RectTransform rt;
@@ -52,13 +52,13 @@ public class SpecialOptionSlider : MonoBehaviour
 /* 		hasChanged = true;
 		SpecialOptionsVariantMenu.instance.OptionHasChanged(); */
 		val = Mathf.RoundToInt(slider.value);
-		outputLabel.ChangeText(val.ToString());
+		outputLabel.ChangeText(val.ToString(CultureInfo.InvariantCulture));
 	}
 	
 	public void UpdateSlider(int newValue)
 	{
 		val = newValue;
 		slider.value = val;
-		outputLabel.ChangeText(val.ToString());
+		outputLabel.ChangeText(val.ToString(CultureInfo.InvariantCulture));
 	}
 }

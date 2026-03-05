@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using static Deck;
 
-public class HandInfoTooltip : MonoBehaviour, IPointerExitHandler
+public class HandInfoTooltip : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 {
 	public RectTransform rt;
 	public RectTransform handNameBackdropRT;
@@ -446,4 +446,12 @@ public class HandInfoTooltip : MonoBehaviour, IPointerExitHandler
 	{
 		backdropObject.SetActive(false);
 	}
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        if (ControllerSelection.instance.usingController)
+        {
+            return;
+        }
+        DisableTooltip();
+    }
 }

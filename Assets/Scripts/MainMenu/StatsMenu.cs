@@ -1,8 +1,9 @@
-using UnityEngine;
-using System.Collections.Generic;
-using System.IO;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using UnityEngine;
 
 public class StatsMenu : MonoBehaviour
 {
@@ -78,7 +79,7 @@ public class StatsMenu : MonoBehaviour
 		foreach(KeyValuePair<string, Decks.Deck> entry in Decks.instance.decks)
 		{
 			deckStats[deckIndex].cardbackImage.sprite = entry.Value.cardBack;
-			deckStats[deckIndex].valueLabel.ChangeText((Stats.instance.GetStatInt(Stats.instance.GetHighestDifficultyCompletedDeckParameter(entry.Value.deckName)) + 1).ToString());
+			deckStats[deckIndex].valueLabel.ChangeText((Stats.instance.GetStatInt(Stats.instance.GetHighestDifficultyCompletedDeckParameter(entry.Value.deckName)) + 1).ToString(CultureInfo.InvariantCulture));
 			deckIndex++;
 		}
 	}
@@ -176,7 +177,7 @@ public class StatsMenu : MonoBehaviour
 
     private string GetOrdinalSuffix(int day)
     {
-        if (day < 1 || day > 31) return day.ToString();
+        if (day < 1 || day > 31) return day.ToString(CultureInfo.InvariantCulture);
         
         switch (day % 10)
         {
@@ -241,7 +242,7 @@ public class StatsMenu : MonoBehaviour
 				switch(standardStatsToDisplay[i].type)
 				{
 					case "int":
-						statLines[i].SetupStatLine(standardStatsToDisplay[i].description, Stats.instance.GetStatInt(standardStatsToDisplay[i].tag).ToString());
+						statLines[i].SetupStatLine(standardStatsToDisplay[i].description, Stats.instance.GetStatInt(standardStatsToDisplay[i].tag).ToString(CultureInfo.InvariantCulture));
 					break;
 					case "double":
 						statLines[i].SetupStatLine(standardStatsToDisplay[i].description, LocalInterface.instance.ConvertDoubleToString(Stats.instance.GetStatDouble(standardStatsToDisplay[i].tag)));
@@ -257,7 +258,7 @@ public class StatsMenu : MonoBehaviour
 				switch(standardStatsToDisplay[i].type)
 				{
 					case "int":
-						newStatLine.SetupStatLine(standardStatsToDisplay[i].description, Stats.instance.GetStatInt(standardStatsToDisplay[i].tag).ToString());
+						newStatLine.SetupStatLine(standardStatsToDisplay[i].description, Stats.instance.GetStatInt(standardStatsToDisplay[i].tag).ToString(CultureInfo.InvariantCulture));
 					break;
 					case "double":
 						newStatLine.SetupStatLine(standardStatsToDisplay[i].description, LocalInterface.instance.ConvertDoubleToString(Stats.instance.GetStatDouble(standardStatsToDisplay[i].tag)));
@@ -306,7 +307,7 @@ public class StatsMenu : MonoBehaviour
 				switch(dailyStatsToDisplay[i].type)
 				{
 					case "int":
-						statLines[i].SetupStatLine(dailyStatsToDisplay[i].description, Stats.instance.GetStatInt(dailyStatsToDisplay[i].tag).ToString());
+						statLines[i].SetupStatLine(dailyStatsToDisplay[i].description, Stats.instance.GetStatInt(dailyStatsToDisplay[i].tag).ToString(CultureInfo.InvariantCulture));
 					break;
 					case "double":
 						statLines[i].SetupStatLine(dailyStatsToDisplay[i].description, LocalInterface.instance.ConvertDoubleToString(Stats.instance.GetStatDouble(dailyStatsToDisplay[i].tag)));
@@ -322,7 +323,7 @@ public class StatsMenu : MonoBehaviour
 				switch(dailyStatsToDisplay[i].type)
 				{
 					case "int":
-						newStatLine.SetupStatLine(dailyStatsToDisplay[i].description, Stats.instance.GetStatInt(dailyStatsToDisplay[i].tag).ToString());
+						newStatLine.SetupStatLine(dailyStatsToDisplay[i].description, Stats.instance.GetStatInt(dailyStatsToDisplay[i].tag).ToString(CultureInfo.InvariantCulture));
 					break;
 					case "double":
 						newStatLine.SetupStatLine(dailyStatsToDisplay[i].description, LocalInterface.instance.ConvertDoubleToString(Stats.instance.GetStatDouble(dailyStatsToDisplay[i].tag)));
@@ -353,7 +354,7 @@ public class StatsMenu : MonoBehaviour
 				switch(customStatsToDisplay[i].type)
 				{
 					case "int":
-						statLines[i].SetupStatLine(customStatsToDisplay[i].description, Stats.instance.GetStatInt(customStatsToDisplay[i].tag).ToString());
+						statLines[i].SetupStatLine(customStatsToDisplay[i].description, Stats.instance.GetStatInt(customStatsToDisplay[i].tag).ToString(CultureInfo.InvariantCulture));
 					break;
 					case "double":
 						statLines[i].SetupStatLine(customStatsToDisplay[i].description, LocalInterface.instance.ConvertDoubleToString(Stats.instance.GetStatDouble(customStatsToDisplay[i].tag)));
@@ -369,7 +370,7 @@ public class StatsMenu : MonoBehaviour
 				switch(customStatsToDisplay[i].type)
 				{
 					case "int":
-						newStatLine.SetupStatLine(customStatsToDisplay[i].description, Stats.instance.GetStatInt(customStatsToDisplay[i].tag).ToString());
+						newStatLine.SetupStatLine(customStatsToDisplay[i].description, Stats.instance.GetStatInt(customStatsToDisplay[i].tag).ToString(CultureInfo.InvariantCulture));
 					break;
 					case "double":
 						newStatLine.SetupStatLine(customStatsToDisplay[i].description, LocalInterface.instance.ConvertDoubleToString(Stats.instance.GetStatDouble(customStatsToDisplay[i].tag)));
@@ -465,7 +466,7 @@ public class StatsMenu : MonoBehaviour
 	
 	public bool GetWhetherGameWasWonFromSaveString(string saveGameString)
 	{
-		int currentRound = int.Parse(GetSaveParameter(saveGameString, "currentRound"));
+		int currentRound = int.Parse(GetSaveParameter(saveGameString, "currentRound"), CultureInfo.InvariantCulture);
 		if(currentRound >= 30)
 		{
 			return true;
@@ -476,7 +477,7 @@ public class StatsMenu : MonoBehaviour
 		}
 		else
 		{
-			double currentRoundScore = double.Parse(GetSaveParameter(saveGameString, "currentRoundScore"));
+			double currentRoundScore = double.Parse(GetSaveParameter(saveGameString, "currentRoundScore"), CultureInfo.InvariantCulture);
 			string variantRoundsString = GetSaveParameter(saveGameString, "variantRounds");
 			if(variantRoundsString == null || variantRoundsString.Length == 0)
 			{
@@ -494,9 +495,9 @@ public class StatsMenu : MonoBehaviour
 					string[] variantRoundData = variantRounds[i].Split('#');
 					if(variantRoundData.Length > 1)
 					{
-						if(int.Parse(variantRoundData[0]) == 29)
+						if(int.Parse(variantRoundData[0], CultureInfo.InvariantCulture) == 29)
 						{
-							return currentRoundScore >= double.Parse(variantRoundData[1]);
+							return currentRoundScore >= double.Parse(variantRoundData[1], CultureInfo.InvariantCulture);
 						}
 					}
 				}

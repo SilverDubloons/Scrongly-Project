@@ -52,7 +52,11 @@ public class SlideOut : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	
 	public void OnPointerEnter(PointerEventData pointerEventData)
     {
-		// Debug.Log($"{this.gameObject.name} OnPointerEnter");
+        if (ControllerSelection.instance.usingController)
+        {
+            return;
+        }
+        // Debug.Log($"{this.gameObject.name} OnPointerEnter");
 		if(slideEnabled && moveState < 0.99f)
 		{
 			SoundManager.instance.PlaySlideOutSound();
@@ -75,7 +79,8 @@ public class SlideOut : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 			{
 				highestChildIndex = baublesIndex;
 			}
-			rt.SetSiblingIndex(highestChildIndex);
+			// Debug.Log($"roundIndex= {roundIndex}, handsIndex={handsIndex}, baublesIndex={baublesIndex}, highestChildIndex: {highestChildIndex}");
+            rt.SetSiblingIndex(highestChildIndex);
 		}
 		// transform.SetSiblingIndex(transform.parent.childCount - 1);
 		mouseOver = true;
@@ -84,7 +89,11 @@ public class SlideOut : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	
 	public void OnPointerExit(PointerEventData pointerEventData)
     {
-		// Debug.Log($"{this.gameObject.name} OnPointerExit");
+        if (ControllerSelection.instance.usingController)
+        {
+            return;
+        }
+        // Debug.Log($"{this.gameObject.name} OnPointerExit");
 		if(LocalInterface.instance.GetCurrentSceneName() == "GameplayScene")
 		{
 			if(this == BaublesInformation.instance.slideOut || this == HandsInformation.instance.slideOut)

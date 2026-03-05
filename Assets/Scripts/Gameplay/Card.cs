@@ -1,10 +1,12 @@
-using UnityEngine;
-using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using static Card;
 using static Deck;
-using System;
 
 public class Card : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -35,8 +37,20 @@ public class Card : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
 	private IEnumerator flipCoroutine;
 	public bool flipping;
 	public CardData cardData;
-	
-	public void StartMove(Vector2 destination, Vector3 destinationRotation, bool canMoveAtEnd = true, bool destroyAtEnd = false, bool discardAtEnd = false, bool addToDrawPileAtEnd = false, DropZone newDropZoneAtEnd = null)
+	public List<TimeAndLocation> timeAndLocations = new List<TimeAndLocation>();
+    public struct TimeAndLocation
+	{
+		public Vector2 position;
+		public float time;
+		
+		public TimeAndLocation(Vector2 position, float time)
+		{
+			this.position = position;
+			this.time = time;
+		}
+    }
+
+    public void StartMove(Vector2 destination, Vector3 destinationRotation, bool canMoveAtEnd = true, bool destroyAtEnd = false, bool discardAtEnd = false, bool addToDrawPileAtEnd = false, DropZone newDropZoneAtEnd = null)
 	{
 		if(moving)
 		{
@@ -167,7 +181,8 @@ public class Card : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
 		{
 			return;
 		}
-		if(dropZonePlacedIn != null)
+		timeAndLocations.Clear();
+        if (dropZonePlacedIn != null)
 		{
 			dropZonePlacedIn.CardRemoved();
 			PlayArea.instance.HandUpdated();
@@ -191,7 +206,22 @@ public class Card : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
 		}
 		// Vector2 mousePos = new Vector2((Input.mousePosition.x / Screen.width) * LocalInterface.instance.referenceResolution.x - LocalInterface.instance.referenceResolution.x / 2, (Input.mousePosition.y / Screen.height) * LocalInterface.instance.referenceResolution.y - LocalInterface.instance.referenceResolution.y / 2);
 		Vector2 mousePos = LocalInterface.instance.GetMousePosition();
-		rt.anchoredPosition = mousePos;
+
+		float totalDistance = 0f;
+		float distanceThreshold = 75f;
+        timeAndLocations.Add(new TimeAndLocation(mousePos, Time.time));
+		for (int i = timeAndLocations.Count - 1; i >= 1 && Time.time - timeAndLocations[i].time < 0.05f; i--)
+		{
+            totalDistance += Vector2.Distance(timeAndLocations[i].position, timeAndLocations[i - 1].position);
+			if (totalDistance >= distanceThreshold)
+			{
+				SoundManager.instance.PlayCardWhooshSound();
+				timeAndLocations.Clear();
+                break;
+			}
+        }
+
+            rt.anchoredPosition = mousePos;
 		rt.rotation = Quaternion.identity;
 		List<RaycastResult> results = new List<RaycastResult>();
 		EventSystem.current.RaycastAll(pointerEventData, results);
@@ -449,7 +479,7 @@ public class Card : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
 				List<int> includedFlushes = new List<int>();
 				for(int i = 0; i < flushesDataSplit.Length; i++)
 				{
-					includedFlushes.Add(int.Parse(flushesDataSplit[i]));
+					includedFlushes.Add(int.Parse(flushesDataSplit[i], CultureInfo.InvariantCulture));
 				}
 				if(includedFlushes.Contains(GameManager.instance.flushZodiacBaubleSuitOrders[0]))
 				{
@@ -693,7 +723,12 @@ public class Card : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
 			{
 				ChangeRank(12);
 			}
-		}
+            if (Input.GetKey(KeyCode.I))
+            {
+				cardData.baseValue = float.PositiveInfinity;
+				cardData.multiplier = float.PositiveInfinity;
+            }
+        }
 	}
 	
 	public void OnPointerEnter(PointerEventData pointerEventData)

@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using UnityEngine.Events;
 using TMPro;
 using UnityEngine.EventSystems;
+using System.Globalization;
 
 // C:\Users\jsilv\AppData\LocalLow\SilverDubloons\ScronglyEnhanced
 // D:\Unity Projects\ScronglyEnhanced\Assets\Text
@@ -445,7 +446,8 @@ public class LocalInterface : MonoBehaviour
 			}
 			
 			SceneChanged("MainMenuScene", true);
-		}
+			musicManager.InitializeScronglyMusic(MusicState.Menu);
+        }
 		else
 		{
 			for(int i = persistentObjects.Length - 1; i >= 0; i--)
@@ -486,30 +488,21 @@ public class LocalInterface : MonoBehaviour
 			JS_FileSystem_Sync();
 		#endif
 	}
-	
-	public void BlueSkyClicked()
-	{
-		Application.OpenURL("https://bsky.app/profile/silverdubloons.bsky.social");
-	}
-	
-	public void TwitterClicked()
-	{
-		Application.OpenURL("https://twitter.com/SilverDubloons");
-	}
-	
-	public void KoFiClicked()
-	{
-		Application.OpenURL("https://ko-fi.com/silverdubloons");
-	}
-	
-	public void DiscordClicked()
-	{
-		Application.OpenURL("https://discord.gg/TdJJBgbWTf");
-	}
-	
 	public string ConvertFloatToString(float f)
 	{
-		string prefix = "";
+        if (float.IsNaN(f))
+        {
+            return "NaN";
+        }
+        if (float.IsPositiveInfinity(f))
+        {
+            return "Infinity";
+        }
+		if (float.IsNegativeInfinity(f))
+        {
+            return "-Infinity";
+        }
+        string prefix = "";
 		if(f < 0)
 		{
 			prefix = "-";
@@ -519,7 +512,7 @@ public class LocalInterface : MonoBehaviour
 		string formattedNumber = "";
 		if(f >= 1000000000000000)
 		{
-			suffix = "e" + (Mathf.Floor(Mathf.Log10(f) / 3) * 3).ToString();
+			suffix = "e" + (Mathf.Floor(Mathf.Log10(f) / 3) * 3).ToString(CultureInfo.InvariantCulture);
 			float exponentNumber = (f / Mathf.Pow(10, Mathf.Floor(Mathf.Log10(f) / 3) * 3));
 			if(exponentNumber > 100)
 			{
@@ -605,7 +598,19 @@ public class LocalInterface : MonoBehaviour
 	
 	public string ConvertDoubleToString(double d)
 	{
-		string prefix = "";
+		if (double.IsNaN(d))
+		{
+			return "NaN";
+		}
+		if(double.IsPositiveInfinity(d))
+		{
+			return "Infinity";
+        }
+		if (double.IsNegativeInfinity(d))
+		{
+			return "-Infinity";
+		}
+        string prefix = "";
 		if(d < 0)
 		{
 			prefix = "-";
@@ -615,7 +620,7 @@ public class LocalInterface : MonoBehaviour
 		string formattedNumber = "";
 		if(d >= 1000000000000000)
 		{
-			suffix = "e" + (Math.Floor(Math.Log10(d) / 3) * 3).ToString();
+			suffix = "e" + (Math.Floor(Math.Log10(d) / 3) * 3).ToString(CultureInfo.InvariantCulture);
 			double exponentNumber = (d / Math.Pow(10, Math.Floor(Math.Log10(d) / 3) * 3));
 			if(exponentNumber > 100)
 			{
@@ -778,11 +783,11 @@ public class LocalInterface : MonoBehaviour
 		string errorFileText = GetFileText(errorLogFileName);
 		if(errorFileText == null)
 		{
-			errorFileText = $"{DateTime.Now.ToString()}:{errorMessage}";
+			errorFileText = $"{DateTime.Now.ToString(CultureInfo.InvariantCulture)}:{errorMessage}";
 		}
 		else
 		{
-			errorFileText += $"\n{DateTime.Now.ToString()}:{errorMessage}";
+			errorFileText += $"\n{DateTime.Now.ToString(CultureInfo.InvariantCulture)}:{errorMessage}";
 		}
 		SetFileText(errorLogFileName, errorFileText);
 	}
@@ -922,10 +927,10 @@ public class LocalInterface : MonoBehaviour
 			string cleaned = colorString.Substring(5, colorString.Length - 6);
 			string[] components = cleaned.Split(',');
 			
-			float r = float.Parse(components[0].Trim());
-			float g = float.Parse(components[1].Trim());
-			float b = float.Parse(components[2].Trim());
-			float a = float.Parse(components[3].Trim());
+			float r = float.Parse(components[0].Trim(), CultureInfo.InvariantCulture);
+			float g = float.Parse(components[1].Trim(), CultureInfo.InvariantCulture);
+			float b = float.Parse(components[2].Trim(), CultureInfo.InvariantCulture);
+			float a = float.Parse(components[3].Trim(), CultureInfo.InvariantCulture);
 			
 			return new Color(r, g, b, a);
 		}
@@ -1021,11 +1026,11 @@ public class LocalInterface : MonoBehaviour
 		string baubleString = string.Empty;
 		if(handTier < 10)
 		{
-			baubleString = $"Hand0{handTier.ToString()}Power";
+			baubleString = $"Hand0{handTier.ToString(CultureInfo.InvariantCulture)}Power";
 		}
 		else
 		{
-			baubleString = $"Hand{handTier.ToString()}Power";
+			baubleString = $"Hand{handTier.ToString(CultureInfo.InvariantCulture)}Power";
 		}
 		return baubleString;
 	}
@@ -1035,11 +1040,11 @@ public class LocalInterface : MonoBehaviour
 		string baubleString = string.Empty;
 		if(handTier < 10)
 		{
-			baubleString = $"Hand0{handTier.ToString()}Mult";
+			baubleString = $"Hand0{handTier.ToString(CultureInfo.InvariantCulture)}Mult";
 		}
 		else
 		{
-			baubleString = $"Hand{handTier.ToString()}Mult";
+			baubleString = $"Hand{handTier.ToString(CultureInfo.InvariantCulture)}Mult";
 		}
 		return baubleString;
 	}
@@ -1047,7 +1052,7 @@ public class LocalInterface : MonoBehaviour
 	public int GetHandTierFromZodiacTag(string zodiacTag)
 	{
 		string intString = zodiacTag.Substring(4, 2);
-		return int.Parse(intString);
+		return int.Parse(intString, CultureInfo.InvariantCulture);
 	}
 	
 /* 	public Vector2 GetCanvasPositionOfRectTransform(RectTransform rectTransform)
@@ -1300,7 +1305,8 @@ public class LocalInterface : MonoBehaviour
 	
 	public void SceneChanged(string newSceneName, bool firstSceneChange = false)
 	{
-		if(GetCurrentSceneName() == "MainMenuScene")
+        MusicManager.instance.UpdateScronglyMusic();
+        if (GetCurrentSceneName() == "MainMenuScene")
 		{
 			deckPicker = GameObject.FindWithTag("DeckPicker").GetComponent<DeckPicker>();
 			variantsMenu = GameObject.FindWithTag("VariantsMenu").GetComponent<VariantsMenu>();

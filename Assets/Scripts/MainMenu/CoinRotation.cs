@@ -27,7 +27,7 @@ public class CoinRotation : MonoBehaviour, IPointerClickHandler
 			SetRelativePosition();
 			Vector2 mousePos = LocalInterface.instance.GetMousePosition();
 			Vector2 clickOffset = mousePos - relativePosition;
-			// Debug.Log($"relativePosition = {relativePosition.ToString()} mousePos = {mousePos.ToString()} clickOffset = {clickOffset.ToString()}");
+			// Debug.Log($"relativePosition = {relativePosition.ToString(CultureInfo.InvariantCulture)} mousePos = {mousePos.ToString(CultureInfo.InvariantCulture)} clickOffset = {clickOffset.ToString(CultureInfo.InvariantCulture)}");
 			Vector3 endRotation = new Vector3(Mathf.Round(clickOffset.y / offsetPixelsForOneSpin) * 360f, Mathf.Round(clickOffset.x / offsetPixelsForOneSpin) * 360f, 0);
 			if(endRotation != Vector3.zero)
 			{

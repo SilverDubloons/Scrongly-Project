@@ -1,8 +1,9 @@
-using UnityEngine;
-using TMPro;
-using System.Text.RegularExpressions;
-using System.Reflection;
 using System;
+using System.Globalization;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using TMPro;
+using UnityEngine;
 
 public class OnScreenKeyboard : MonoBehaviour
 {
@@ -146,14 +147,14 @@ public class OnScreenKeyboard : MonoBehaviour
 				{
 					if(shift)
 					{
-						keyboardKeys[i].buttonPlus.ChangeButtonText(keyboardKeys[i].baseChar.ToString());
-						bool inputAcceptable = regex.IsMatch(keyboardKeys[i].baseChar.ToString());
+						keyboardKeys[i].buttonPlus.ChangeButtonText(keyboardKeys[i].baseChar.ToString(CultureInfo.InvariantCulture));
+						bool inputAcceptable = regex.IsMatch(keyboardKeys[i].baseChar.ToString(CultureInfo.InvariantCulture));
 						keyboardKeys[i].buttonPlus.ChangeButtonEnabled(inputAcceptable);
 					}
 					else
 					{
-						keyboardKeys[i].buttonPlus.ChangeButtonText(keyboardKeys[i].altChar.ToString());
-						bool inputAcceptable = regex.IsMatch(keyboardKeys[i].altChar.ToString());
+						keyboardKeys[i].buttonPlus.ChangeButtonText(keyboardKeys[i].altChar.ToString(CultureInfo.InvariantCulture));
+						bool inputAcceptable = regex.IsMatch(keyboardKeys[i].altChar.ToString(CultureInfo.InvariantCulture));
 						keyboardKeys[i].buttonPlus.ChangeButtonEnabled(inputAcceptable);
 					}
 				}
@@ -161,14 +162,14 @@ public class OnScreenKeyboard : MonoBehaviour
 				{
 					if(shift)
 					{
-						keyboardKeys[i].buttonPlus.ChangeButtonText(keyboardKeys[i].altChar.ToString());
-						bool inputAcceptable = regex.IsMatch(keyboardKeys[i].altChar.ToString());
+						keyboardKeys[i].buttonPlus.ChangeButtonText(keyboardKeys[i].altChar.ToString(CultureInfo.InvariantCulture));
+						bool inputAcceptable = regex.IsMatch(keyboardKeys[i].altChar.ToString(CultureInfo.InvariantCulture));
 						keyboardKeys[i].buttonPlus.ChangeButtonEnabled(inputAcceptable);
 					}
 					else
 					{
-						keyboardKeys[i].buttonPlus.ChangeButtonText(keyboardKeys[i].baseChar.ToString());
-						bool inputAcceptable = regex.IsMatch(keyboardKeys[i].baseChar.ToString());
+						keyboardKeys[i].buttonPlus.ChangeButtonText(keyboardKeys[i].baseChar.ToString(CultureInfo.InvariantCulture));
+						bool inputAcceptable = regex.IsMatch(keyboardKeys[i].baseChar.ToString(CultureInfo.InvariantCulture));
 						keyboardKeys[i].buttonPlus.ChangeButtonEnabled(inputAcceptable);
 					}
 				}
@@ -266,22 +267,22 @@ public class OnScreenKeyboard : MonoBehaviour
 			{
 				try
 				{
-					long input = long.Parse(inputField.text);
+					long input = long.Parse(inputField.text, CultureInfo.InvariantCulture);
 					if(input > int.MaxValue)
 					{
-						inputField.text = int.MaxValue.ToString();
+						inputField.text = int.MaxValue.ToString(CultureInfo.InvariantCulture);
 					}
 					if(input < int.MinValue)
 					{
-						inputField.text = int.MinValue.ToString();
+						inputField.text = int.MinValue.ToString(CultureInfo.InvariantCulture);
 					}
 					if(input > maxInt)
 					{
-						inputField.text = maxInt.ToString();
+						inputField.text = maxInt.ToString(CultureInfo.InvariantCulture);
 					}
 					if(input < minInt)
 					{
-						inputField.text = minInt.ToString();
+						inputField.text = minInt.ToString(CultureInfo.InvariantCulture);
 					}
 				}
 				catch(Exception exception)
@@ -295,14 +296,14 @@ public class OnScreenKeyboard : MonoBehaviour
 			{
 				try
 				{
-					float input = float.Parse(inputField.text);
+					float input = float.Parse(inputField.text, CultureInfo.InvariantCulture);
 					if(input > maxFloat)
 					{
-						inputField.text = maxFloat.ToString();
+						inputField.text = maxFloat.ToString(CultureInfo.InvariantCulture);
 					}
 					if(input < minFloat)
 					{
-						inputField.text = minFloat.ToString();
+						inputField.text = minFloat.ToString(CultureInfo.InvariantCulture);
 					}
 				}
 				catch(Exception exception)
@@ -316,14 +317,14 @@ public class OnScreenKeyboard : MonoBehaviour
 			{
 				try
 				{
-					double input = double.Parse(inputField.text);
+					double input = double.Parse(inputField.text, CultureInfo.InvariantCulture);
 					if(input > maxDouble)
 					{
-						inputField.text = maxDouble.ToString();
+						inputField.text = maxDouble.ToString(CultureInfo.InvariantCulture);
 					}
 					if(input < minDouble)
 					{
-						inputField.text = minDouble.ToString();
+						inputField.text = minDouble.ToString(CultureInfo.InvariantCulture);
 					}
 				}
 				catch(Exception exception)

@@ -1,13 +1,14 @@
-using UnityEngine;
-using UnityEngine.UI;
-using System.Collections.Generic;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using static Deck;
 using static GameManager;
 using static Variant;
-using UnityEngine.EventSystems;
-using System;
-using System.Linq;
 
 public class PlayArea : MonoBehaviour, IPointerClickHandler
 {
@@ -28,6 +29,7 @@ public class PlayArea : MonoBehaviour, IPointerClickHandler
 	
 	public Color redXColor;
 	public Color greenXColor;
+	public Color catsEyeColor;
     public DropZone[] standardDropZones;
     public DropZone[] specialCardDropZones;
 	
@@ -363,12 +365,16 @@ public class PlayArea : MonoBehaviour, IPointerClickHandler
 			standardDropZones[i].mushroomMultBackdrop.gameObject.SetActive(false);
 			if(Baubles.instance.GetImpactInt("UseAllCardsInPlayArea") > 0)
 			{
-				standardDropZones[i].xImage.color = greenXColor;
-			}
+				// standardDropZones[i].xImage.color = greenXColor;
+				standardDropZones[i].xImage.color = catsEyeColor;
+				standardDropZones[i].xImage.rectTransform.sizeDelta = new Vector2(44f, 44f);
+				standardDropZones[i].xImage.sprite = V.i.v.variantBaubles["UseAllCardsInPlayArea"].sprite;
+            }
 			else
 			{
 				standardDropZones[i].xImage.color = redXColor;
-			}
+                standardDropZones[i].xImage.rectTransform.sizeDelta = new Vector2(38f, 38f);
+            }
 			standardDropZones[i].xImage.transform.SetSiblingIndex(standardDropZones[i].transform.childCount - 1);
 			standardDropZones[i].mushroomMultBackdrop.transform.SetSiblingIndex(standardDropZones[i].transform.childCount - 1);
 			if(standardDropZones[i].cardPlaced)
@@ -2062,7 +2068,7 @@ public class PlayArea : MonoBehaviour, IPointerClickHandler
 		for(int i = 0; i < preplacedCardsData.Length; i++)
 		{
 			string[] preplacedCardData = preplacedCardsData[i].Split('@', StringSplitOptions.RemoveEmptyEntries);
-			int dropZoneInt = int.Parse(preplacedCardData[1]);
+			int dropZoneInt = int.Parse(preplacedCardData[1], CultureInfo.InvariantCulture);
 			Card preplacedCard = HandArea.instance.SpawnCard(new CardData(preplacedCardData[0]), Vector2.zero, standardDropZones[dropZoneInt].rt, false, false);
 			preplacedCard.rt.anchoredPosition = Vector2.zero;
 			preplacedCard.dropZonePlacedIn = standardDropZones[dropZoneInt];

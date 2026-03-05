@@ -1,10 +1,11 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using static Variant;
-using System.Collections.Generic;
-using System.Collections;
-using System;
-using System.Linq;
 
 public class Deck : MonoBehaviour
 {
@@ -66,7 +67,7 @@ public class Deck : MonoBehaviour
 			}
 			else
 			{
-				return $"{LocalInterface.instance.ConvertRankAndSuitToString(rank, suit)}|{baseValue.ToString()}|{multiplier.ToString()}";
+				return $"{LocalInterface.instance.ConvertRankAndSuitToString(rank, suit)}|{baseValue.ToString(CultureInfo.InvariantCulture)}|{multiplier.ToString(CultureInfo.InvariantCulture)}";
 			}
 		}
 		public CardData(string cardDataText)
@@ -142,8 +143,8 @@ public class Deck : MonoBehaviour
 						LocalInterface.instance.DisplayError($"Failed to parse suit of cardDataText={cardDataText}");
 					break;
 				}
-				baseValue = float.Parse(cardDataData[1]);
-				multiplier = float.Parse(cardDataData[2]);
+				baseValue = float.Parse(cardDataData[1], CultureInfo.InvariantCulture);
+				multiplier = float.Parse(cardDataData[2], CultureInfo.InvariantCulture);
 				deckViewerRow = -1;
 				deckViewerRowIndex = -1;
 			}
@@ -405,7 +406,7 @@ public class Deck : MonoBehaviour
 		{
 			// Debug.Log($"drawPile.Count={drawPile.Count}, cardsInDrawPile={cardsInDrawPile} topDeckCard=null");
 		}
-		drawPileLabel.ChangeText(cardsInDrawPile.ToString());
+		drawPileLabel.ChangeText(cardsInDrawPile.ToString(CultureInfo.InvariantCulture));
 		drawPileCardBack.gameObject.SetActive(drawPile.Count > 0 ? true : false);
 		if(DeckPreview.instance.displayingDrawPile)
 		{
@@ -467,7 +468,7 @@ public class Deck : MonoBehaviour
 	
 	public void UpdateCardsInDiscardPile()
 	{
-		discardPileLabel.ChangeText(discardPile.Count.ToString());
+		discardPileLabel.ChangeText(discardPile.Count.ToString(CultureInfo.InvariantCulture));
 		discardPileCardBack.gameObject.SetActive(discardPile.Count > 0 ? true : false);
 		if(DeckPreview.instance.displayingDiscardPile)
 		{

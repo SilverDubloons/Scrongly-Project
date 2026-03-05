@@ -1,8 +1,9 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using static Variant;
+using System.Globalization;
+using UnityEngine;
 using static GameManager;
+using static Variant;
 
 public class GameStart : MonoBehaviour
 {
@@ -119,10 +120,10 @@ public class GameStart : MonoBehaviour
 					if(entry.Value.bossType.Substring(0, 6) == "Random")
 					{
 						int tier = -1;
-						int lowerEnd = int.Parse(entry.Value.bossType.Substring(10, 2));
+						int lowerEnd = int.Parse(entry.Value.bossType.Substring(10, 2), CultureInfo.InvariantCulture);
 						if(entry.Value.bossType.Length >= 13)
 						{
-							int upperEnd = int.Parse(entry.Value.bossType.Substring(13, 2));
+							int upperEnd = int.Parse(entry.Value.bossType.Substring(13, 2), CultureInfo.InvariantCulture);
 							tier = rng.starting.Range(lowerEnd, upperEnd + 1);
 							
 						}

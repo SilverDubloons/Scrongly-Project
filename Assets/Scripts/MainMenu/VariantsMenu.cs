@@ -1,9 +1,10 @@
-using UnityEngine;
-using UnityEngine.UI;
-using System.Collections.Generic;
-using static Variant;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
+using static Variant;
 
 
 // D:\Unity Projects\ScronglyEnhanced\Assets\Text
@@ -304,8 +305,8 @@ public class VariantsMenu : MonoBehaviour
 			else
 			{
 				string[] rangeStrings = columns[4].Split('-');
-				range = new Vector2Int(int.Parse(rangeStrings[0]), int.Parse(rangeStrings[1]));
-				impact = int.Parse(columns[5]);
+				range = new Vector2Int(int.Parse(rangeStrings[0], CultureInfo.InvariantCulture), int.Parse(rangeStrings[1], CultureInfo.InvariantCulture));
+				impact = int.Parse(columns[5], CultureInfo.InvariantCulture);
 				if(impact == -1)
 				{
 					inEffect = false;
@@ -323,11 +324,11 @@ public class VariantsMenu : MonoBehaviour
 			string baubleName = columns[1];
 			string menuDescription = columns[2].Replace("COMMA", ",");;
 			string inGameDescription = columns[3].Replace("COMMA", ",");;
-			int max = int.Parse(columns[4]);
-			int baseCost = int.Parse(columns[5]);
-			int costStep = int.Parse(columns[6]);
-			double impact1 = double.Parse(columns[7]);
-			double impact2 = double.Parse(columns[8]);
+			int max = int.Parse(columns[4], CultureInfo.InvariantCulture);
+			int baseCost = int.Parse(columns[5], CultureInfo.InvariantCulture);
+			int costStep = int.Parse(columns[6], CultureInfo.InvariantCulture);
+			double impact1 = double.Parse(columns[7], CultureInfo.InvariantCulture);
+			double impact2 = double.Parse(columns[8], CultureInfo.InvariantCulture);
 			string category = columns[9];
 			Sprite sprite = GetSpriteFromCoordinates(columns[10], baubleImages);
 			bool startsAvailable = bool.Parse(columns[11]);
@@ -365,7 +366,7 @@ public class VariantsMenu : MonoBehaviour
 		string[] baseRounds = baseVariantRoundsText.text.Split('\n');
 		for(int i = 0; i < 50; i ++)
 		{
-			VariantRound newVariantRound = new VariantRound(i, double.Parse(baseRounds[i]), string.Empty);
+			VariantRound newVariantRound = new VariantRound(i, double.Parse(baseRounds[i], CultureInfo.InvariantCulture), string.Empty);
 			variantRounds.Add(i, newVariantRound);
 		}
 		Dictionary<string, VariantSpecialCard> variantSpecialCards = new Dictionary<string, VariantSpecialCard>();
@@ -379,8 +380,8 @@ public class VariantsMenu : MonoBehaviour
 			string category = columns[3];
 			Sprite sprite = GetSpriteFromCoordinates(columns[4], specialCardImages);
 			Sprite playedSprite = GetSpriteFromCoordinates(columns[5], specialCardImages);
-			int cost = int.Parse(columns[6]);
-			double impact = double.Parse(columns[7]);
+			int cost = int.Parse(columns[6], CultureInfo.InvariantCulture);
+			double impact = double.Parse(columns[7], CultureInfo.InvariantCulture);
 			bool startsAvailable = bool.Parse(columns[8]);
 			bool mustBeUnlocked = bool.Parse(columns[9]);
 			bool inShop = startsAvailable;
@@ -405,7 +406,7 @@ public class VariantsMenu : MonoBehaviour
 		char rowChar = char.Parse(rowString);
 		int rowInt = rowChar - 'A';
 		string columnString = coords.Substring(1);
-		int columnInt = int.Parse(columnString);
+		int columnInt = int.Parse(columnString, CultureInfo.InvariantCulture);
 		int imageIndex = rowInt * 16 + columnInt;
 		return spriteArray[imageIndex];
 	}

@@ -1,6 +1,7 @@
-using UnityEngine;
-using TMPro;
 using System;
+using System.Globalization;
+using TMPro;
+using UnityEngine;
 
 public class SeedInput : MonoBehaviour
 {
@@ -31,11 +32,11 @@ public class SeedInput : MonoBehaviour
 		{
 			try
 			{
-				long input = long.Parse(inputField.text);
+				long input = long.Parse(inputField.text, CultureInfo.InvariantCulture);
 				if(input > int.MaxValue)
 				{
 					input = int.MaxValue;
-					inputField.text = input.ToString();
+					inputField.text = input.ToString(CultureInfo.InvariantCulture);
 				}
 			}
 			catch(Exception exception)
@@ -55,7 +56,7 @@ public class SeedInput : MonoBehaviour
 		{
 			try
 			{
-				int input = int.Parse(inputField.text);
+				int input = int.Parse(inputField.text, CultureInfo.InvariantCulture);
 				return input;
 			}
 			catch(Exception exception)

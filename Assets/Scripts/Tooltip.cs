@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
-public class Tooltip : MonoBehaviour/* , IPointerEnterHandler */, IPointerExitHandler
+public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 	public GameObject tooltipObject;
 	public GameObject currentObject;
@@ -17,6 +17,7 @@ public class Tooltip : MonoBehaviour/* , IPointerEnterHandler */, IPointerExitHa
 	public Label titleLabel;
 	public Label subtitleLabel;
 	public Label mainTextLabel;
+	// increasing this significantly does fix the hand information tooltip problem.
 	public const float tooltipDistanceFromMouse = 5f;
 	public const float tooltipMaxSizeX = 140f;
 	public float tooltipYSizeIncrease;
@@ -145,16 +146,17 @@ public class Tooltip : MonoBehaviour/* , IPointerEnterHandler */, IPointerExitHa
 		tooltipObject.SetActive(false);
 	}
 	
-/* 	public void OnPointerEnter(PointerEventData pointerEventData)
+ 	public void OnPointerEnter(PointerEventData pointerEventData)
     {
-		mouseOverTooltip = true;
-		// DisableTooltip();
-	} */
+		// mouseOverTooltip = true;
+		DisableTooltip();
+	}
 	
 	public void OnPointerExit(PointerEventData pointerEventData)
 	{
 		// mouseOverTooltip = false;
-		List<RaycastResult> results = new List<RaycastResult>();
+		// Debug.Log("Tooltip OnPointerExit");
+        /*List<RaycastResult> results = new List<RaycastResult>();
 		EventSystem.current.RaycastAll(pointerEventData, results);
 		foreach(RaycastResult result in results)
 		{
@@ -208,12 +210,13 @@ public class Tooltip : MonoBehaviour/* , IPointerEnterHandler */, IPointerExitHa
 				}
 				if(!mouseOverHands)
 				{
-					// Debug.Log("Tooltip disabling HandsInformation.instance.slideOut.mouseOver");
-					SoundManager.instance.PlaySlideOutSound(true);
-					HandsInformation.instance.slideOut.mouseOver = false;
-				}
-			}
-		}
+                    // Debug.Log("Tooltip disabling HandsInformation.instance.slideOut.mouseOver");
+                    // I don't even remember why this is here but it seemed to be causing issues with the new columns so I'm commenting it out for now, may need to be readded in the future if it causes other issues
+                    // SoundManager.instance.PlaySlideOutSound(true);
+                    // HandsInformation.instance.slideOut.mouseOver = false;
+                }
+            }
+		}*/
 		DisableTooltip();
 	}
 }

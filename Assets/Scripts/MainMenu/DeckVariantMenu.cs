@@ -1,9 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 using static Variant;
-using TMPro;
-using System;
 
 public class DeckVariantMenu : MonoBehaviour
 {
@@ -126,7 +127,7 @@ public class DeckVariantMenu : MonoBehaviour
 		}
 		else
 		{
-			numberOfRandomStandardCardsToAddToDeckInputField.text = variant.numberOfRandomStandardCardsToAddToDeck.ToString();
+			numberOfRandomStandardCardsToAddToDeckInputField.text = variant.numberOfRandomStandardCardsToAddToDeck.ToString(CultureInfo.InvariantCulture);
 		}
 		includeRainbowInRandomCardsToggle.isOn = variant.includeRainbowInRandomCards;
 		if(variant.numberOfRandomSpecialCardsToAddToDeck <= 0)
@@ -135,7 +136,7 @@ public class DeckVariantMenu : MonoBehaviour
 		}
 		else
 		{
-			numberOfRandomSpecialCardsToAddToDeckInputField.text = variant.numberOfRandomSpecialCardsToAddToDeck.ToString();
+			numberOfRandomSpecialCardsToAddToDeckInputField.text = variant.numberOfRandomSpecialCardsToAddToDeck.ToString(CultureInfo.InvariantCulture);
 		}
 		considerRarityToggle.isOn = variant.considerRarity;
 	}
@@ -213,7 +214,7 @@ public class DeckVariantMenu : MonoBehaviour
 		}
 		else
 		{
-			numberOfRandomStandardCardsToAddToDeckInputField.text = variant.numberOfRandomStandardCardsToAddToDeck.ToString();
+			numberOfRandomStandardCardsToAddToDeckInputField.text = variant.numberOfRandomStandardCardsToAddToDeck.ToString(CultureInfo.InvariantCulture);
 		}
 		includeRainbowInRandomCardsToggle.isOn = variant.includeRainbowInRandomCards;
 		if(variant.numberOfRandomSpecialCardsToAddToDeck <= 0)
@@ -222,7 +223,7 @@ public class DeckVariantMenu : MonoBehaviour
 		}
 		else
 		{
-			numberOfRandomSpecialCardsToAddToDeckInputField.text = variant.numberOfRandomSpecialCardsToAddToDeck.ToString();
+			numberOfRandomSpecialCardsToAddToDeckInputField.text = variant.numberOfRandomSpecialCardsToAddToDeck.ToString(CultureInfo.InvariantCulture);
 		}
 		considerRarityToggle.isOn = variant.considerRarity;
 	}
@@ -264,7 +265,7 @@ public class DeckVariantMenu : MonoBehaviour
 		}
 		else
 		{
-			VariantsMenu.instance.loadedVariant.numberOfRandomStandardCardsToAddToDeck = int.Parse(numberOfRandomStandardCardsToAddToDeckInputField.text);
+			VariantsMenu.instance.loadedVariant.numberOfRandomStandardCardsToAddToDeck = int.Parse(numberOfRandomStandardCardsToAddToDeckInputField.text, CultureInfo.InvariantCulture);
 		}
 		VariantsMenu.instance.loadedVariant.includeRainbowInRandomCards = includeRainbowInRandomCardsToggle.isOn;
 		if(numberOfRandomSpecialCardsToAddToDeckInputField.text.Length <= 0)
@@ -273,7 +274,7 @@ public class DeckVariantMenu : MonoBehaviour
 		}
 		else
 		{
-			VariantsMenu.instance.loadedVariant.numberOfRandomSpecialCardsToAddToDeck = int.Parse(numberOfRandomSpecialCardsToAddToDeckInputField.text);
+			VariantsMenu.instance.loadedVariant.numberOfRandomSpecialCardsToAddToDeck = int.Parse(numberOfRandomSpecialCardsToAddToDeckInputField.text, CultureInfo.InvariantCulture);
 		}
 		VariantsMenu.instance.loadedVariant.considerRarity = considerRarityToggle.isOn;
 		MovingObjects.instance.mo["DeckVariantMenu"].StartMove("OffScreen");
@@ -315,7 +316,7 @@ public class DeckVariantMenu : MonoBehaviour
 			int rsc = -1;
 			try
 			{
-				rsc = int.Parse(numberOfRandomStandardCardsToAddToDeckInputField.text);
+				rsc = int.Parse(numberOfRandomStandardCardsToAddToDeckInputField.text, CultureInfo.InvariantCulture);
 			}
 			catch(Exception exception)
 			{
@@ -327,7 +328,7 @@ public class DeckVariantMenu : MonoBehaviour
 			}
 			else if(rsc > maximumRandomCardQuantity)
 			{
-				numberOfRandomStandardCardsToAddToDeckInputField.text = maximumRandomCardQuantity.ToString();
+				numberOfRandomStandardCardsToAddToDeckInputField.text = maximumRandomCardQuantity.ToString(CultureInfo.InvariantCulture);
 			}
 		}
 		if(numberOfRandomSpecialCardsToAddToDeckInputField.text.Length > 0)
@@ -335,7 +336,7 @@ public class DeckVariantMenu : MonoBehaviour
 			int rsc = -1;
 			try
 			{
-				rsc = int.Parse(numberOfRandomSpecialCardsToAddToDeckInputField.text);
+				rsc = int.Parse(numberOfRandomSpecialCardsToAddToDeckInputField.text, CultureInfo.InvariantCulture);
 			}
 			catch(Exception exception)
 			{
@@ -347,7 +348,7 @@ public class DeckVariantMenu : MonoBehaviour
 			}
 			else if(rsc > maximumRandomCardQuantity)
 			{
-				numberOfRandomSpecialCardsToAddToDeckInputField.text = maximumRandomCardQuantity.ToString();
+				numberOfRandomSpecialCardsToAddToDeckInputField.text = maximumRandomCardQuantity.ToString(CultureInfo.InvariantCulture);
 			}
 		}
 	}

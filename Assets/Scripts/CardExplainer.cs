@@ -1,5 +1,6 @@
 using UnityEngine;
 using static Deck;
+using System.Globalization;
 
 public class CardExplainer : MonoBehaviour
 {
@@ -12,6 +13,6 @@ public class CardExplainer : MonoBehaviour
 		rt.anchoredPosition = location;
 		card.cardData = cardData;
 		card.UpdateGraphics();
-		quantityLabel.ChangeText(quantity.ToString());
+		quantityLabel.ChangeText(quantity.ToString(CultureInfo.InvariantCulture));
 	}
 }

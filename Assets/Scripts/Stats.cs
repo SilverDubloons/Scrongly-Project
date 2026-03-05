@@ -1,8 +1,9 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
-using static Decks;
+using System.Globalization;
+using UnityEngine;
 using static Deck;
+using static Decks;
 
 public class Stats : MonoBehaviour
 {
@@ -86,85 +87,85 @@ public class Stats : MonoBehaviour
 					switch(statLineData[0])
 					{
 						case("chipsEarned"):
-							chipsEarned = int.Parse(statLineData[1]);
+							chipsEarned = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("chipThresholdsCleared"):
-							chipThresholdsCleared = int.Parse(statLineData[1]);
+							chipThresholdsCleared = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("cardsAddedToDeck"):
-							cardsAddedToDeck = int.Parse(statLineData[1]);
+							cardsAddedToDeck = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("baublesGained"):
-							baublesGained = int.Parse(statLineData[1]);
+							baublesGained = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("zodiacsGained"):
-							zodiacsGained = int.Parse(statLineData[1]);
+							zodiacsGained = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("numberedCardsScoredWithBauble"):
-							numberedCardsScoredWithBauble = int.Parse(statLineData[1]);
+							numberedCardsScoredWithBauble = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("faceCardsScoredWithBauble"):
-							faceCardsScoredWithBauble = int.Parse(statLineData[1]);
+							faceCardsScoredWithBauble = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("acesScoredWithBauble"):
-							acesScoredWithBauble = int.Parse(statLineData[1]);
+							acesScoredWithBauble = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("handsPlayed"):
-							handsPlayed = int.Parse(statLineData[1]);
+							handsPlayed = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("handsPlayedWhileFatigued"):
-							handsPlayedWhileFatigued = int.Parse(statLineData[1]);
+							handsPlayedWhileFatigued = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("discardsUsed"):
-							discardsUsed = int.Parse(statLineData[1]);
+							discardsUsed = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("cardsDiscarded"):
-							cardsDiscarded = int.Parse(statLineData[1]);
+							cardsDiscarded = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("standardRunsPlayed"):
-							standardRunsPlayed = int.Parse(statLineData[1]);
+							standardRunsPlayed = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("standardRunsCompleted"):
-							standardRunsCompleted = int.Parse(statLineData[1]);
+							standardRunsCompleted = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("dailyRunsPlayed"):
-							dailyRunsPlayed = int.Parse(statLineData[1]);
+							dailyRunsPlayed = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("dailyCompleted"):
-							dailyCompleted = int.Parse(statLineData[1]);
+							dailyCompleted = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("customRunsPlayed"):
-							customRunsPlayed = int.Parse(statLineData[1]);
+							customRunsPlayed = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("customRunsCompleted"):
-							customRunsCompleted = int.Parse(statLineData[1]);
+							customRunsCompleted = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("highestRoundReachedStandard"):
-							highestRoundReachedStandard = int.Parse(statLineData[1]);
+							highestRoundReachedStandard = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("scoreInHighestRoundReachedStandard"):
-							scoreInHighestRoundReachedStandard = double.Parse(statLineData[1]);
+							scoreInHighestRoundReachedStandard = double.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("highestScoringHandInStandardTier"):
-							highestScoringHandInStandardTier = int.Parse(statLineData[1]);
+							highestScoringHandInStandardTier = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("highestScoringHandInStandardPoints"):
-							highestScoringHandInStandardPoints = double.Parse(statLineData[1]);
+							highestScoringHandInStandardPoints = double.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("highestScoringHandInStandardCardDatas"):
 							highestScoringHandInStandardCardDatas = statLineData[1];
 						break;
 						case("sevensScored"):
-							sevensScored = int.Parse(statLineData[1]);
+							sevensScored = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("threeOfAKindsDiscarded"):
-							threeOfAKindsDiscarded = int.Parse(statLineData[1]);
+							threeOfAKindsDiscarded = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("mushroomsPlayed"):
-							mushroomsPlayed = int.Parse(statLineData[1]);
+							mushroomsPlayed = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						case("fiveOfAKindsPlayed"):
-							fiveOfAKindsPlayed = int.Parse(statLineData[1]);
+							fiveOfAKindsPlayed = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 						break;
 						default:
 							if(statLineData[0].Length > 30)
@@ -172,7 +173,7 @@ public class Stats : MonoBehaviour
 								if(statLineData[0].Substring(0, 30) == "highestDifficultyCompletedWith")
 								{
 									string deckName = statLineData[0].Substring(30);
-									deckLevelsCompleted[deckName] = int.Parse(statLineData[1]);
+									deckLevelsCompleted[deckName] = int.Parse(statLineData[1], CultureInfo.InvariantCulture);
 								}
 							}
 						break;
@@ -254,7 +255,7 @@ public class Stats : MonoBehaviour
 			{
 				if(statLineData[0].Trim() == parameter)
 				{
-					return int.Parse(statLineData[1].Trim());
+					return int.Parse(statLineData[1].Trim(), CultureInfo.InvariantCulture);
 				}
 			}
 		}
@@ -279,7 +280,7 @@ public class Stats : MonoBehaviour
 			{
 				if(statLineData[0].Trim() == parameter)
 				{
-					return double.Parse(statLineData[1].Trim());
+					return double.Parse(statLineData[1].Trim(), CultureInfo.InvariantCulture);
 				}
 			}
 		}
@@ -303,7 +304,7 @@ public class Stats : MonoBehaviour
 			{
 				if(statLineData[0].Trim() == parameter)
 				{
-					int statLineInteger = int.Parse(statLineData[1].Trim());
+					int statLineInteger = int.Parse(statLineData[1].Trim(), CultureInfo.InvariantCulture);
 					newStatsLines += $"{statLineData[0]}={statLineInteger + adjustment}\n";
 				}
 				else
@@ -321,12 +322,12 @@ public class Stats : MonoBehaviour
 	
 	public void SetStat(string parameter, double newValue)
 	{
-		SetStat(parameter, newValue.ToString());
+		SetStat(parameter, newValue.ToString(CultureInfo.InvariantCulture));
 	}
 	
 	public void SetStat(string parameter, int newValue)
 	{
-		SetStat(parameter, newValue.ToString());
+		SetStat(parameter, newValue.ToString(CultureInfo.InvariantCulture));
 	}
 	
 	public void SetStat(string parameter, string newValue)
@@ -368,13 +369,13 @@ public class Stats : MonoBehaviour
 				if(GameManager.instance.currentRound > GetStatInt("highestRoundReachedStandard"))
 				{
 					SetStat("highestRoundReachedStandard", GameManager.instance.currentRound);
-					SetStat("scoreInHighestRoundReachedStandard", ScoreVial.instance.currentRoundScore.ToString());
+					SetStat("scoreInHighestRoundReachedStandard", ScoreVial.instance.currentRoundScore.ToString(CultureInfo.InvariantCulture));
 				}
 				else
 				{
 					if(ScoreVial.instance.currentRoundScore > GetStatDouble("scoreInHighestRoundReachedStandard"))
 					{
-						SetStat("scoreInHighestRoundReachedStandard", ScoreVial.instance.currentRoundScore.ToString());
+						SetStat("scoreInHighestRoundReachedStandard", ScoreVial.instance.currentRoundScore.ToString(CultureInfo.InvariantCulture));
 					}
 				}
 			}

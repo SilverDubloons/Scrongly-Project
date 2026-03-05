@@ -1,7 +1,8 @@
+using System;
+using System.Globalization;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System;
 
 public class SpecialCardVariantOptions : MonoBehaviour
 {
@@ -54,7 +55,7 @@ public class SpecialCardVariantOptions : MonoBehaviour
 		inShopToggle.isOn = inShop;
 		int rarityInt = LocalInterface.instance.rarityDictionary[rarity].rarityInt;
 		raritySlider.value = rarityInt;
-		costInputField.text = cardCost.ToString();
+		costInputField.text = cardCost.ToString(CultureInfo.InvariantCulture);
 		if(inShop)
 		{
 			notInShopIndicator.SetActive(false);
@@ -84,7 +85,7 @@ public class SpecialCardVariantOptions : MonoBehaviour
 		}
 		tooltipObject.subtitle = rarity;
 		tooltipObject.subtitleColor = ThemeManager.instance.GetElementTypeForRarity(rarity);
-		impactInputField.text = impact.ToString();
+		impactInputField.text = impact.ToString(CultureInfo.InvariantCulture);
 		if(impactInfoLabel.activeSelf)
 		{
 			if(Math.Abs(VariantsMenu.instance.baseVariant.variantSpecialCards[specialCardTag].impact - impact) < LocalInterface.instance.epsilon)
@@ -93,7 +94,7 @@ public class SpecialCardVariantOptions : MonoBehaviour
 			}
 			else
 			{
-				impactLabel.ChangeText($"i{impact.ToString()}");
+				impactLabel.ChangeText($"i{impact.ToString(CultureInfo.InvariantCulture)}");
 			}
 		}
 		UpdateTooltip();
@@ -120,7 +121,7 @@ public class SpecialCardVariantOptions : MonoBehaviour
 		{
 			if(costInputField.text != string.Empty)
 			{
-				int costInput = int.Parse(costInputField.text);
+				int costInput = int.Parse(costInputField.text, CultureInfo.InvariantCulture);
 				if(costInput < 0)
 				{
 					costInputField.text = "0";
@@ -140,7 +141,7 @@ public class SpecialCardVariantOptions : MonoBehaviour
 		{
 			if(impactInputField.text != string.Empty)
 			{
-				double impactInput = double.Parse(impactInputField.text);
+				double impactInput = double.Parse(impactInputField.text, CultureInfo.InvariantCulture);
 				if(impactInput < 0)
 				{
 					impactInputField.text = "0";
@@ -154,7 +155,7 @@ public class SpecialCardVariantOptions : MonoBehaviour
 		catch(Exception exception)
 		{
 			LocalInterface.instance.DisplayError($"Error parsing impactInputField of {specialCardTag}. {exception.Message}");
-			impactInputField.text = VariantsMenu.instance.baseVariant.variantSpecialCards[specialCardTag].impact.ToString();
+			impactInputField.text = VariantsMenu.instance.baseVariant.variantSpecialCards[specialCardTag].impact.ToString(CultureInfo.InvariantCulture);
 		}
 	}
 	
@@ -165,7 +166,7 @@ public class SpecialCardVariantOptions : MonoBehaviour
 		{
 			try
 			{
-				costInput = int.Parse(costInputField.text);
+				costInput = int.Parse(costInputField.text, CultureInfo.InvariantCulture);
 			}
 			catch(Exception exception)
 			{
@@ -181,7 +182,7 @@ public class SpecialCardVariantOptions : MonoBehaviour
 		{
 			try
 			{
-				impactInput = double.Parse(impactInputField.text);
+				impactInput = double.Parse(impactInputField.text, CultureInfo.InvariantCulture);
 			}
 			catch(Exception exception)
 			{

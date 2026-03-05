@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
-
+using System.Globalization;
 public class HandInfo : MonoBehaviour
 {
 	public RectTransform rt;
@@ -14,6 +14,8 @@ public class HandInfo : MonoBehaviour
     public Label individualMultLabel;
     public Label minimumPointsLabel;
     public Label minimumMultLabel;
+    public Label timesPlayedLabel;
+    public Label zodiacsGainedLabel;
 	public ControllerSelectableObject handNameControllerSelectableObject;
 	public ControllerSelectableObject individualControllerSelectableObject;
 	public ControllerSelectableObject minimumControllerSelectableObject;
@@ -92,7 +94,27 @@ public class HandInfo : MonoBehaviour
 			minimumMultLabel.ChangeFontSize(LocalInterface.instance.largeFontSize);
 		}
 		minimumMultLabel.ChangeText(updatedMinimumMultString);
-	}
+		int zodiacsGained = Baubles.instance.GetQuantityOwned(LocalInterface.instance.GetZodiacBaubleStringFromHandTier(handNumber));
+        zodiacsGainedLabel.ChangeText(zodiacsGained.ToString(CultureInfo.InvariantCulture));
+		if (zodiacsGained >= 100)
+		{
+			zodiacsGainedLabel.ChangeFontSize(LocalInterface.instance.smallFontSize);
+		}
+		else
+		{
+            zodiacsGainedLabel.ChangeFontSize(LocalInterface.instance.largeFontSize);
+        }
+		int timesPlayed = RunInformation.instance.handsPlayed[handNumber];
+        timesPlayedLabel.ChangeText(RunInformation.instance.handsPlayed[handNumber].ToString(CultureInfo.InvariantCulture));
+        if (timesPlayed >= 100)
+		{
+			timesPlayedLabel.ChangeFontSize(LocalInterface.instance.smallFontSize);
+		}
+		else
+		{
+			timesPlayedLabel.ChangeFontSize(LocalInterface.instance.largeFontSize);
+        }
+    }
 	
 	public void OnMouseEnterIndividual()
     {

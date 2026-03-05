@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-
+using System.Globalization;
 public class RoundsInformation : MonoBehaviour
 {
     public Label currentRoundLabel;
@@ -22,7 +22,7 @@ public class RoundsInformation : MonoBehaviour
 	
 	public void UpdateRoundsInformation(bool includeEndlessMode)
 	{
-		currentRoundLabel.ChangeText((GameManager.instance.currentRound + 1).ToString());
+		currentRoundLabel.ChangeText((GameManager.instance.currentRound + 1).ToString(CultureInfo.InvariantCulture));
 		currentRoundThresholdLabel.ChangeText(LocalInterface.instance.ConvertDoubleToString(GameManager.instance.GetCurrentRoundScoreThreshold()));
 		StartCoroutine(UpdateRoundsInformationCoroutine(includeEndlessMode));
 	}

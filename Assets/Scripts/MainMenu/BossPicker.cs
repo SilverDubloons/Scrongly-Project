@@ -1,6 +1,7 @@
+using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 using static LocalInterface;
 
 public class BossPicker : MonoBehaviour
@@ -52,13 +53,13 @@ public class BossPicker : MonoBehaviour
 		int greater = Mathf.Max(Mathf.RoundToInt(slider1.value), Mathf.RoundToInt(slider2.value));
 		if(lesser == greater)
 		{
-			tierRangeLabel.ChangeText((lesser + 1).ToString());
-			randomTierButton.ChangeButtonText($"Random Tier {(lesser + 1).ToString()}");
+			tierRangeLabel.ChangeText((lesser + 1).ToString(CultureInfo.InvariantCulture));
+			randomTierButton.ChangeButtonText($"Random Tier {(lesser + 1).ToString(CultureInfo.InvariantCulture)}");
 		}
 		else
 		{
-			tierRangeLabel.ChangeText($"{(lesser + 1).ToString()}-{(greater + 1).ToString()}");
-			randomTierButton.ChangeButtonText($"Random Tier {(lesser + 1).ToString()}-{(greater + 1).ToString()}");
+			tierRangeLabel.ChangeText($"{(lesser + 1).ToString(CultureInfo.InvariantCulture)}-{(greater + 1).ToString(CultureInfo.InvariantCulture)}");
+			randomTierButton.ChangeButtonText($"Random Tier {(lesser + 1).ToString(CultureInfo.InvariantCulture)}-{(greater + 1).ToString(CultureInfo.InvariantCulture)}");
 		}
 		int buttonIndex = 0;
 		for(int i = 0; i < bossPickerButtons.Count; i++)
@@ -85,7 +86,7 @@ public class BossPicker : MonoBehaviour
 		for(int i = 1; i < rows.Length; i++)
 		{
 			string[] columns = rows[i].Split(',');
-			int tier = int.Parse(columns[2]);
+			int tier = int.Parse(columns[2], CultureInfo.InvariantCulture);
 			if(tier > highestTier)
 			{
 				highestTier = tier;
@@ -100,7 +101,7 @@ public class BossPicker : MonoBehaviour
 			string[] columns = rows[i].Split(',');
 			string tag = columns[0];
 			string description = columns[1].Replace("COMMA", ",");
-			int tier = int.Parse(columns[2]);
+			int tier = int.Parse(columns[2], CultureInfo.InvariantCulture);
 			// Debug.Log($"i={i}, tag={tag}, description={description}");
 			if(firstSceneChange)
 			{
@@ -132,11 +133,11 @@ public class BossPicker : MonoBehaviour
 		int greater = Mathf.Max(slider1Value, slider2Value);
 		if(slider1Value == slider2Value)
 		{
-			RoundsVariantMenu.instance.roundOptions[currentRound].UpdateBossTag($"RandomTier0{slider1Value.ToString()}");
+			RoundsVariantMenu.instance.roundOptions[currentRound].UpdateBossTag($"RandomTier0{slider1Value.ToString(CultureInfo.InvariantCulture)}");
 		}
 		else
 		{
-			RoundsVariantMenu.instance.roundOptions[currentRound].UpdateBossTag($"RandomTier0{lesser.ToString()}-0{greater.ToString()}");
+			RoundsVariantMenu.instance.roundOptions[currentRound].UpdateBossTag($"RandomTier0{lesser.ToString(CultureInfo.InvariantCulture)}-0{greater.ToString(CultureInfo.InvariantCulture)}");
 		}
 		visibleObject.SetActive(false);
 		controllerSelectionGroup.RemoveFromCurrentGroups();
@@ -171,10 +172,10 @@ public class BossPicker : MonoBehaviour
 			{
 				if(bossTag.Substring(0, 6) == "Random")	// RandomTier00-01
 				{
-					int lowerEnd = int.Parse(bossTag.Substring(10, 2));
+					int lowerEnd = int.Parse(bossTag.Substring(10, 2), CultureInfo.InvariantCulture);
 					if(bossTag.Length >= 13)
 					{
-						int upperEnd = int.Parse(bossTag.Substring(13, 2));
+						int upperEnd = int.Parse(bossTag.Substring(13, 2), CultureInfo.InvariantCulture);
 						slider1.value = lowerEnd;
 						slider2.value = upperEnd;
 					}

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
-
+using System.Globalization;
 public class TooltipObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 	public string mainText;
@@ -24,9 +24,12 @@ public class TooltipObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 	
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
-		
-		// Debug.Log($"TooltipObject OnPointerEnter on {this.gameObject.name} with parent {this.GetComponent<Transform>().parent.gameObject.name}");
-		DisplayTooltip(false);
+		if(ControllerSelection.instance.usingController)
+		{
+			return;
+        }	
+        // Debug.Log($"TooltipObject OnPointerEnter on {this.gameObject.name} with parent {this.GetComponent<Transform>().parent.gameObject.name}");
+        DisplayTooltip(false);
 	}
 	
 	public void DisplayTooltip(bool useController)
@@ -48,7 +51,7 @@ public class TooltipObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 					{
 						return;
 					}
-					mainText = $"You may only discard {HandArea.instance.GetMaxCardsDiscardedAtOnce().ToString()} cards at once";
+					mainText = $"You may only discard {HandArea.instance.GetMaxCardsDiscardedAtOnce().ToString(CultureInfo.InvariantCulture)} cards at once";
 				break;
 				case "HandsUntilFatigue":
 					if(!(GameManager.instance.IsPlayerFatigued()))
@@ -91,40 +94,47 @@ public class TooltipObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 		}
 		if(Tooltip.instance.currentObject != this.gameObject || useController)
 		{
-			if(hasProgressBar)
+			if (hasProgressBar)
 			{
-				switch(progressBarTag)
+				switch (progressBarTag)
 				{
 					case "IncreaseChipThresholds":
 						Tooltip.instance.ShowTooltip(this.gameObject, mainText, title, titleColor, subtitle, subtitleColor, true, Stats.instance.GetStatInt("chipThresholdsCleared"), 150, useController);
-					break;
+						break;
 					case "AllCardsAreFaceCards":
 						Tooltip.instance.ShowTooltip(this.gameObject, mainText, title, titleColor, subtitle, subtitleColor, true, Stats.instance.GetStatInt("faceCardsScoredWithBauble"), 50, useController);
-					break;
+						break;
 					case "AllCardsAreNumberedCards":
 						Tooltip.instance.ShowTooltip(this.gameObject, mainText, title, titleColor, subtitle, subtitleColor, true, Stats.instance.GetStatInt("numberedCardsScoredWithBauble"), 300, useController);
-					break;
+						break;
 					case "AllCardsAreAces":
 						Tooltip.instance.ShowTooltip(this.gameObject, mainText, title, titleColor, subtitle, subtitleColor, true, Stats.instance.GetStatInt("acesScoredWithBauble"), 50, useController);
-					break;
+						break;
 					case "SlotMachine":
 						Tooltip.instance.ShowTooltip(this.gameObject, mainText, title, titleColor, subtitle, subtitleColor, true, Stats.instance.GetStatInt("sevensScored"), 50, useController);
-					break;
+						break;
 					case "DiscardTriplesForMushrooms":
 						Tooltip.instance.ShowTooltip(this.gameObject, mainText, title, titleColor, subtitle, subtitleColor, true, Stats.instance.GetStatInt("threeOfAKindsDiscarded"), 10, useController);
-					break;
+						break;
 					case "IncreaseMushroomPowerTriples":
 						Tooltip.instance.ShowTooltip(this.gameObject, mainText, title, titleColor, subtitle, subtitleColor, true, Stats.instance.GetStatInt("mushroomsPlayed"), 15, useController);
-					break;
+						break;
 					case "GetMushroomsFromHands":
 						Tooltip.instance.ShowTooltip(this.gameObject, mainText, title, titleColor, subtitle, subtitleColor, true, Stats.instance.GetStatInt("fiveOfAKindsPlayed"), 20, useController);
-					break;
+						break;
 				}
 			}
 			else
 			{
 				// Debug.Log($"TooltipObject DisplayTooltip on {this.gameObject.name} with parent {this.GetComponent<Transform>().parent.gameObject.name}");
-				Tooltip.instance.ShowTooltip(this.gameObject, mainText, title, titleColor, subtitle, subtitleColor, false, 0, 0, useController);
+				if (isSpecialCard && Preferences.instance.showCommonTooltips)
+				{
+                    Tooltip.instance.ShowTooltip(this.gameObject, mainText + "\n\nSpecial cards are one use only and do not count towards your hand size limit", title, titleColor, subtitle, subtitleColor, false, 0, 0, useController);
+                }
+				else
+				{
+					Tooltip.instance.ShowTooltip(this.gameObject, mainText, title, titleColor, subtitle, subtitleColor, false, 0, 0, useController);
+				}
 			}
 		}
 	}

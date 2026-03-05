@@ -1,9 +1,10 @@
-using UnityEngine;
-using static Variant;
-using static Deck;
-using System.Collections.Generic;
-using System.Collections;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using UnityEngine;
+using static Deck;
+using static Variant;
 
 public class Shop : MonoBehaviour
 {
@@ -118,7 +119,7 @@ public class Shop : MonoBehaviour
 			{
 				if(System.Text.RegularExpressions.Regex.IsMatch(entry.Key, @"^Hand\d{2}Mult$"))
 				{
-					int handNumber = int.Parse(entry.Key.Substring(4, 2));
+					int handNumber = int.Parse(entry.Key.Substring(4, 2), CultureInfo.InvariantCulture);
 					if(handNumber <= 8 || RunInformation.instance.handsPlayed[handNumber] > 0 || V.i.v.variantSpecialOptions["AllBaublesZodiacsUnlocked"].inEffect)
 					{
 						
@@ -136,7 +137,7 @@ public class Shop : MonoBehaviour
 			}
 			if(entry.Value.category == "Zodiac")
 			{
-				int zodiacHandNumber = int.Parse(entry.Key.Substring(4, 2));
+				int zodiacHandNumber = int.Parse(entry.Key.Substring(4, 2), CultureInfo.InvariantCulture);
 				if(zodiacHandNumber <= 8 || RunInformation.instance.handsPlayed[zodiacHandNumber] > 0 || V.i.v.variantSpecialOptions["AllBaublesZodiacsUnlocked"].inEffect)
 				{
 					if(layawayItem != null && layawayItem.itemType == "Zodiac" && layawayItem.itemTag == entry.Key)
@@ -410,7 +411,8 @@ public class Shop : MonoBehaviour
 		}
 		ControllerSelection.instance.currentControllerSelectionGroups.Add(HandArea.instance.cardsControllerSelectionGroup);
 		inShop = false;
-		shopClosing = true;
+		MusicManager.instance.UpdateScronglyMusic();
+        shopClosing = true;
 		MovingObjects.instance.mo["PlayArea"].StartMove("OnScreen");
 		MovingObjects.instance.mo["HandArea"].StartMove("OnScreen");
 		MovingObjects.instance.mo["CardParent"].StartMove("OnScreen");
@@ -479,7 +481,8 @@ public class Shop : MonoBehaviour
 		GenerateShopItems();
 		UpdateInterest();
 		inShop = true;
-		shopClosing = false;
+        // MusicManager.instance.UpdateScronglyMusic();
+        shopClosing = false;
 		if(movePlayObjectsOffScreen)
 		{
 			MovingObjects.instance.mo["PlayArea"].StartMove("OffScreen");
@@ -499,7 +502,7 @@ public class Shop : MonoBehaviour
 	public void ChangeCurrentRerollCost(int changeToMake)
 	{
 		currentRerollCost += changeToMake;
-		rerollCostLabel.ChangeText(currentRerollCost.ToString());
+		rerollCostLabel.ChangeText(currentRerollCost.ToString(CultureInfo.InvariantCulture));
 		rerollCostLabel.StartExpandRetract();
 	}
 	

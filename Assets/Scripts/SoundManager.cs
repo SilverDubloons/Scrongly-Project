@@ -18,6 +18,7 @@ public class SoundManager : MonoBehaviour
 	public AudioClip[] violinSounds;
 	public AudioClip[] xylophoneSounds;
 	public AudioClip[] splatSounds;
+	public AudioClip[] cardWhooshSounds;
 	public AudioClip clickSound;
 	public AudioClip coinSpinningSound;
 	public AudioClip slideOutSound;
@@ -125,10 +126,18 @@ public class SoundManager : MonoBehaviour
 		soundFunctions[UnityEngine.Random.Range(0, soundFunctions.Count)]?.Invoke();
 	}
 	
-	public void PlaySound(AudioClip sound, float volumeFactor = 1f)
+	public void PlaySound(AudioClip sound, float volumeFactor = 1f, float pitchVariation = 0f)
 	{
 		if(Preferences.instance.soundOn && (Application.isFocused || (!Application.isFocused && !Preferences.instance.muteOnFocusLost)))
 		{
+			if (pitchVariation == 0)
+			{
+				soundSource.pitch = 1f;
+			}
+			else
+			{ 
+				soundSource.pitch = 1f + UnityEngine.Random.Range(-pitchVariation, pitchVariation);
+            }
 			soundSource.PlayOneShot(sound, Preferences.instance.soundVolume * volumeFactor);
 		}
 	}
@@ -142,6 +151,15 @@ public class SoundManager : MonoBehaviour
 	{
 		PlaySound(cardDropSounds[UnityEngine.Random.Range(0, cardDropSounds.Length)], 0.5f);
 	}
+	private float lastCardWhooshSoundTime;
+    public void PlayCardWhooshSound()
+	{
+		if (Time.time - lastCardWhooshSoundTime > 0.05f)
+		{
+			PlaySound(cardWhooshSounds[UnityEngine.Random.Range(0, cardWhooshSounds.Length)], 0.5f, 0.2f);
+		}
+		lastCardWhooshSoundTime = Time.time;
+    }
 	
 	private float lastCardSlideSoundTime;
 	
