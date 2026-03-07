@@ -52,7 +52,7 @@ public class Preferences : MonoBehaviour
 	public Toggle steamDeckToggle;
 	public Toggle xBoxToggle;
 	public Toggle playstationToggle;
-	// toggle options
+	// tooltip options
 	public Toggle showCommonTooltipsToggle;
 	public Toggle showBaubleTooltipsToggle;
 	public Toggle showSpecialCardTooltipsToggle;
@@ -288,7 +288,19 @@ public class Preferences : MonoBehaviour
 			Debug.Log("preferencesLines were null. Only normal on first run of game");
 			ResetPreferencesFile();
 		}
-		SetUIToCurrentOptions();
+		if (musicVolume > 1f)
+		{ 
+			musicVolume = 1f;
+        }
+		if(soundVolume > 1f)
+		{
+			soundVolume = 1f;
+        }
+		if (controllerDeadzone > 0.9f)
+		{ 
+			controllerDeadzone = 0.9f;
+        }
+        SetUIToCurrentOptions();
 		MusicManager.instance.MusicOptionsUpdated();
 		PopulateFramerateDropdown();
 		UpdateResolutionOptions();

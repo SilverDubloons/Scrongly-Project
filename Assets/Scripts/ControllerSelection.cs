@@ -10,16 +10,16 @@ public class ControllerSelection : MonoBehaviour
 	public RectTransform controllerSelectionRT;
 	public Image controllerSelectionImage;
 	public GameObject visibilityObject;
-	
+
 	public Sprite borderFourPixel;
 	public Sprite borderEightPixel;
 	public Color movingCardColor;
-	
+
 	public List<ControllerSelectionGroup> currentControllerSelectionGroups = new List<ControllerSelectionGroup>();
 	public ControllerSelectableObject currentlySelectedObject;
-	
+
 	public bool usingController;
-	
+
 	private InputAction moveAction; // left stick
 	private InputAction rightStickAction;
 	private InputAction southButtonAction;
@@ -37,7 +37,7 @@ public class ControllerSelection : MonoBehaviour
 	private InputAction dPadLeftAction;
 	private InputAction dPadRightAction;
 	private InputAction dPadDownAction;
-	
+
 	public float timeMoving;
 	public int timesMovedWithoutLettingGo;
 	public float rightStickTimeMoving;
@@ -47,9 +47,9 @@ public class ControllerSelection : MonoBehaviour
 	public float southButtonTimesMovedWithoutLettingGo;
 	public bool selectedCardHasBeenMoved;
 	public bool alreadyCheckedControllerType;
-    
+
 	public static ControllerSelection instance;
-	
+
 	public void SetupInstance()
 	{
 		instance = this;
@@ -72,250 +72,264 @@ public class ControllerSelection : MonoBehaviour
 		dPadDownAction = InputSystem.actions.FindAction("DPadDown");
 		visibilityObject.SetActive(false);
 	}
-	
+
 	void Update()
 	{
 		CheckLeftStickInput();
 		CheckRightStickInput();
-		if(southButtonAction.WasPerformedThisFrame())
+		if (southButtonAction.WasPerformedThisFrame())
 		{
 			SouthButtonPerformed();
 		}
-		if(southButtonAction.IsPressed())
+		if (southButtonAction.IsPressed())
 		{
 			southButtonTimePressed += Time.deltaTime;
-			if(currentlySelectedObject != null && currentlySelectedObject.isCard && southButtonTimePressed > 0.2f)
+			if (currentlySelectedObject != null && currentlySelectedObject.isCard && southButtonTimePressed > 0.2f)
 			{
 				controllerSelectionImage.color = movingCardColor;
 			}
 		}
-		if(southButtonAction.WasCompletedThisFrame())
+		if (southButtonAction.WasCompletedThisFrame())
 		{
 			SouthButtonCompleted();
 			southButtonTimePressed = 0;
 			selectedCardHasBeenMoved = false;
-			if(currentlySelectedObject != null && currentlySelectedObject.isCard)
+			if (currentlySelectedObject != null && currentlySelectedObject.isCard)
 			{
 				controllerSelectionImage.color = currentlySelectedObject.borderColor;
 			}
 		}
-		if(eastButtonAction.WasPerformedThisFrame())
+		if (eastButtonAction.WasPerformedThisFrame())
 		{
-			if(currentlySelectedObject != null && currentlySelectedObject.isDropdown && currentlySelectedObject.dropdown.IsExpanded)
+			if (currentlySelectedObject != null && currentlySelectedObject.isDropdown && currentlySelectedObject.dropdown.IsExpanded)
 			{
-				
+
 			}
 			else
 			{
 				HotkeyButtonPerformed("EastButton");
 			}
 		}
-		if(eastButtonAction.WasCompletedThisFrame())
+		if (eastButtonAction.WasCompletedThisFrame())
 		{
-			if(currentlySelectedObject != null && currentlySelectedObject.isDropdown && currentlySelectedObject.dropdown.IsExpanded)
+			if (currentlySelectedObject != null && currentlySelectedObject.isDropdown && currentlySelectedObject.dropdown.IsExpanded)
 			{
 				currentlySelectedObject.dropdown.Hide();
 			}
 			else
 			{
 				ControllerSelectableObject eastButtonCompletedObject = HotkeyButtonCompleted("EastButton");
-				if(eastButtonCompletedObject == null)
+				if (eastButtonCompletedObject == null)
 				{
-					for(int i = 0; i < currentControllerSelectionGroups.Count; i++)
+					for (int i = 0; i < currentControllerSelectionGroups.Count; i++)
 					{
-						for(int j = 0; j < currentControllerSelectionGroups[i].controllerSelectableObjects.Count; j++)
+						for (int j = 0; j < currentControllerSelectionGroups[i].controllerSelectableObjects.Count; j++)
 						{
-							if(currentControllerSelectionGroups[i].controllerSelectableObjects[j].isSlideOut && currentControllerSelectionGroups[i].controllerSelectableObjects[j].slideOut.mouseOver)
+							if (currentControllerSelectionGroups[i].controllerSelectableObjects[j].isSlideOut && currentControllerSelectionGroups[i].controllerSelectableObjects[j].slideOut.mouseOver)
 							{
-                                // Debug.Log($"ControllerSelection Disabling slide out {currentControllerSelectionGroups[i].controllerSelectableObjects[j].slideOut.gameObject.name}");
-                                currentControllerSelectionGroups[i].controllerSelectableObjects[j].slideOut.OnPointerExit(new PointerEventData(EventSystem.current));
+								// Debug.Log($"ControllerSelection Disabling slide out {currentControllerSelectionGroups[i].controllerSelectableObjects[j].slideOut.gameObject.name}");
+								currentControllerSelectionGroups[i].controllerSelectableObjects[j].slideOut.StartReturnSlide();
 							}
 						}
 					}
 				}
 			}
 		}
-		if(northButtonAction.WasPerformedThisFrame())
+		if (northButtonAction.WasPerformedThisFrame())
 		{
 			HotkeyButtonPerformed("NorthButton");
 		}
-		if(northButtonAction.WasCompletedThisFrame())
+		if (northButtonAction.WasCompletedThisFrame())
 		{
 			HotkeyButtonCompleted("NorthButton");
 		}
-		if(westButtonAction.WasPerformedThisFrame())
+		if (westButtonAction.WasPerformedThisFrame())
 		{
 			ControllerSelectableObject westPerformedObject = HotkeyButtonPerformed("WestButton");
-			if(westPerformedObject != null)
+			if (westPerformedObject != null)
 			{
-				if(westPerformedObject.isSpecial && westPerformedObject.specialTag == "OnScreenKeyboardShift")
+				if (westPerformedObject.isSpecial && westPerformedObject.specialTag == "OnScreenKeyboardShift")
 				{
 					OnScreenKeyboard.instance.ShiftPressedDown();
 				}
-			}				
+			}
 		}
-		if(westButtonAction.WasCompletedThisFrame())
+		if (westButtonAction.WasCompletedThisFrame())
 		{
 			ControllerSelectableObject westCompletedObject = HotkeyButtonCompleted("WestButton");
-			if(westCompletedObject != null)
+			if (westCompletedObject != null)
 			{
-				if(westCompletedObject.isSpecial && westCompletedObject.specialTag == "OnScreenKeyboardShift")
+				if (westCompletedObject.isSpecial && westCompletedObject.specialTag == "OnScreenKeyboardShift")
 				{
 					OnScreenKeyboard.instance.ShiftReleased();
 				}
 			}
 		}
-		if(l1ButtonAction.WasPerformedThisFrame())
+		if (l1ButtonAction.WasPerformedThisFrame())
 		{
 			HotkeyButtonPerformed("L1Button");
 		}
-		if(l1ButtonAction.WasCompletedThisFrame())
+		if (l1ButtonAction.WasCompletedThisFrame())
 		{
 			HotkeyButtonCompleted("L1Button");
 		}
-		if(l2ButtonAction.WasPerformedThisFrame())
+		if (l2ButtonAction.WasPerformedThisFrame())
 		{
 			ControllerSelectableObject l2PerformedObject = HotkeyButtonPerformed("L2Button");
-			if(l2PerformedObject != null)
+			if (l2PerformedObject != null)
 			{
-				if(l2PerformedObject.isSpecial && l2PerformedObject.specialTag == "DrawPile")
+				if (l2PerformedObject.isSpecial && l2PerformedObject.specialTag == "DrawPile")
 				{
 					DeckPreview.instance.MouseOverDeck(true);
 				}
 			}
 		}
-		if(l2ButtonAction.WasCompletedThisFrame())
+		if (l2ButtonAction.WasCompletedThisFrame())
 		{
 			ControllerSelectableObject l2CompletedObject = HotkeyButtonCompleted("L2Button");
-			if(l2CompletedObject != null)
+			if (l2CompletedObject != null)
 			{
-				if(l2CompletedObject.isSpecial && l2CompletedObject.specialTag == "DrawPile")
+				if (l2CompletedObject.isSpecial && l2CompletedObject.specialTag == "DrawPile")
 				{
 					DeckPreview.instance.MouseExited();
 				}
 			}
 		}
-		if(r1ButtonAction.WasPerformedThisFrame())
+		if (r1ButtonAction.WasPerformedThisFrame())
 		{
 			HotkeyButtonPerformed("R1Button");
 		}
-		if(r1ButtonAction.WasCompletedThisFrame())
+		if (r1ButtonAction.WasCompletedThisFrame())
 		{
 			HotkeyButtonCompleted("R1Button");
 		}
-		if(r2ButtonAction.WasPerformedThisFrame())
+		if (r2ButtonAction.WasPerformedThisFrame())
 		{
 			ControllerSelectableObject r2PerformedPerformedObject = HotkeyButtonPerformed("R2Button");
-			if(r2PerformedPerformedObject != null)
+			if (r2PerformedPerformedObject != null)
 			{
-				if(r2PerformedPerformedObject.isSpecial && r2PerformedPerformedObject.specialTag == "DiscardPile")
+				if (r2PerformedPerformedObject.isSpecial && r2PerformedPerformedObject.specialTag == "DiscardPile")
 				{
 					DeckPreview.instance.MouseOverDeck(false);
 				}
 			}
 		}
-		if(r2ButtonAction.WasCompletedThisFrame())
+		if (r2ButtonAction.WasCompletedThisFrame())
 		{
 			ControllerSelectableObject r2CompletedObject = HotkeyButtonCompleted("R2Button");
-			if(r2CompletedObject != null)
+			if (r2CompletedObject != null)
 			{
-				if(r2CompletedObject.isSpecial && r2CompletedObject.specialTag == "DiscardPile")
+				if (r2CompletedObject.isSpecial && r2CompletedObject.specialTag == "DiscardPile")
 				{
 					DeckPreview.instance.MouseExited();
 				}
 			}
 		}
-		if(leftStickPressButtonAction.WasPerformedThisFrame())
+		if (leftStickPressButtonAction.WasPerformedThisFrame())
 		{
 			HotkeyButtonPerformed("LeftStickPress");
 		}
-		if(leftStickPressButtonAction.WasCompletedThisFrame())
+		if (leftStickPressButtonAction.WasCompletedThisFrame())
 		{
 			HotkeyButtonCompleted("LeftStickPress");
 		}
-		if(rightStickPressButtonAction.WasPerformedThisFrame())
+		if (rightStickPressButtonAction.WasPerformedThisFrame())
 		{
 			HotkeyButtonPerformed("RightStickPress");
 		}
-		if(rightStickPressButtonAction.WasCompletedThisFrame())
+		if (rightStickPressButtonAction.WasCompletedThisFrame())
 		{
 			HotkeyButtonCompleted("RightStickPress");
 		}
-		if(dPadUpAction.WasPerformedThisFrame())
+		if (dPadUpAction.WasPerformedThisFrame())
 		{
 			ControllerSelectableObject dPadAction = HotkeyButtonPerformed("DPadUp");
+			if (dPadAction == null)
+			{
+				CheckLeftStickInput(0f, 1f);
+            }
 		}
-		if(dPadUpAction.WasCompletedThisFrame())
+		if (dPadUpAction.WasCompletedThisFrame())
 		{
 			ControllerSelectableObject dPadAction = HotkeyButtonCompleted("DPadUp");
-			if(dPadAction == null)
-			{
-				
-			}
-		}
-		if(dPadLeftAction.WasPerformedThisFrame())
+        }
+		if (dPadLeftAction.WasPerformedThisFrame())
 		{
 			ControllerSelectableObject dPadAction = HotkeyButtonPerformed("DPadLeft");
-		}
-		if(dPadLeftAction.WasCompletedThisFrame())
+            if (dPadAction == null)
+            {
+                CheckLeftStickInput(-1f, 0f);
+            }
+        }
+		if (dPadLeftAction.WasCompletedThisFrame())
 		{
 			ControllerSelectableObject dPadAction = HotkeyButtonCompleted("DPadLeft");
 		}
-		if(dPadRightAction.WasPerformedThisFrame())
+		if (dPadRightAction.WasPerformedThisFrame())
 		{
 			ControllerSelectableObject dPadAction = HotkeyButtonPerformed("DPadRight");
-		}
-		if(dPadRightAction.WasCompletedThisFrame())
+            if (dPadAction == null)
+            {
+                CheckLeftStickInput(1f, 0f);
+            }
+        }
+		if (dPadRightAction.WasCompletedThisFrame())
 		{
 			ControllerSelectableObject dPadAction = HotkeyButtonCompleted("DPadRight");
 		}
-		if(dPadDownAction.WasPerformedThisFrame())
+		if (dPadDownAction.WasPerformedThisFrame())
 		{
 			ControllerSelectableObject dPadAction = HotkeyButtonPerformed("DPadDown");
-		}
-		if(dPadDownAction.WasCompletedThisFrame())
+            if (dPadAction == null)
+            {
+                // Debug.Log($"DPadDown Performed dPadAction = null");
+                CheckLeftStickInput(0f, -1f);
+            }
+			
+        }
+		if (dPadDownAction.WasCompletedThisFrame())
 		{
 			ControllerSelectableObject dPadAction = HotkeyButtonCompleted("DPadDown");
 		}
-		if(startButtonAction.WasPerformedThisFrame())
+		if (startButtonAction.WasPerformedThisFrame())
 		{
 			ControllerSelectableObject dPadAction = HotkeyButtonPerformed("StartButton");
 		}
-		if(startButtonAction.WasCompletedThisFrame())
+		if (startButtonAction.WasCompletedThisFrame())
 		{
 			ControllerSelectableObject startCompletedObject = HotkeyButtonCompleted("StartButton");
-			if(startCompletedObject == null)
+			if (startCompletedObject == null)
 			{
 				Preferences.instance.ToggleMenuVisualObject();
 			}
 		}
-		if(usingController)
+		if (usingController)
 		{
 			Vector2 mousePos = LocalInterface.instance.GetMousePosition();
-			if(Mathf.Abs(mousePos.x - lastMousePos.x) > 0.1f || Mathf.Abs(mousePos.y - lastMousePos.y) > 0.1f)
+			if (Mathf.Abs(mousePos.x - lastMousePos.x) > 0.1f || Mathf.Abs(mousePos.y - lastMousePos.y) > 0.1f)
 			{
 				usingController = false;
 				Cursor.visible = true;
 				visibilityObject.SetActive(false);
-				for(int i = 0; i < currentControllerSelectionGroups.Count; i++)
+				for (int i = 0; i < currentControllerSelectionGroups.Count; i++)
 				{
-					for(int j = 0; j < currentControllerSelectionGroups[i].controllerSelectableObjects.Count; j++)
+					for (int j = 0; j < currentControllerSelectionGroups[i].controllerSelectableObjects.Count; j++)
 					{
-						if(currentControllerSelectionGroups[i].controllerSelectableObjects[j].isButton)
+						if (currentControllerSelectionGroups[i].controllerSelectableObjects[j].isButton)
 						{
 							currentControllerSelectionGroups[i].controllerSelectableObjects[j].buttonPlus.DisableHotkey();
-							if(OnScreenKeyboard.instance.visibilityObject.activeSelf)
+							if (OnScreenKeyboard.instance.visibilityObject.activeSelf)
 							{
 								OnScreenKeyboard.instance.CancelClicked(true);
 							}
 						}
-						if(currentControllerSelectionGroups[i].controllerSelectableObjects[j].hotkeyImage != null)
+						if (currentControllerSelectionGroups[i].controllerSelectableObjects[j].hotkeyImage != null)
 						{
 							currentControllerSelectionGroups[i].controllerSelectableObjects[j].hotkeyImage.gameObject.SetActive(false);
 						}
 					}
 				}
-				if(LocalInterface.instance.GetCurrentSceneName() == "GameplayScene" && V.i.isTutorial && (!Tutorial.instance.tutorialFinished || Tutorial.instance.displayingTips))
+				if (LocalInterface.instance.GetCurrentSceneName() == "GameplayScene" && V.i.isTutorial && (!Tutorial.instance.tutorialFinished || Tutorial.instance.displayingTips))
 				{
 					Tutorial.instance.ChangeToRegularText();
 				}
@@ -323,10 +337,14 @@ public class ControllerSelection : MonoBehaviour
 			lastMousePos = mousePos;
 		}
 	}
-	
-	public void CheckLeftStickInput()
+
+	public void CheckLeftStickInput(float x = 0, float y = 0)
 	{
 		Vector2 moveValue = moveAction.ReadValue<Vector2>();
+		if (x != 0 || y != 0)
+		{
+            moveValue = new Vector2(x, y);
+        }
 		if(Mathf.Abs(moveValue.x) < Preferences.instance.controllerDeadzone && Mathf.Abs(moveValue.y) < Preferences.instance.controllerDeadzone)
 		{
 			timeMoving = 0f;
@@ -875,8 +893,10 @@ public class ControllerSelection : MonoBehaviour
 	
 	public ControllerSelectableObject HotkeyButtonPerformed(string hotkeyActionName) // returns null if none found
 	{
-		if(!usingController)
+		// Debug.Log($"HotkeyButtonPerformed {hotkeyActionName}");
+        if (!usingController)
 		{
+			// Debug.Log($"HotkeyButtonPerformedNot using controller, activating controller input");
 			ActivateControllerInput();
 			return null;
 		}
@@ -885,9 +905,11 @@ public class ControllerSelection : MonoBehaviour
 		if(highestAvailabilityPriorityControllerSelectionGroup != null)
 		{
 			highestAvailabilityPriority = highestAvailabilityPriorityControllerSelectionGroup.availabilityPriority;
-		}
-		for(int i = 0; i < currentControllerSelectionGroups.Count; i++)
+            // Debug.Log($"HotkeyButtonPerformed highestAvailabilityPriority = {highestAvailabilityPriority}, highestAvailabilityPriorityControllerSelectionGroup = {highestAvailabilityPriorityControllerSelectionGroup.name}");
+        }
+        for (int i = 0; i < currentControllerSelectionGroups.Count; i++)
 		{
+			// Debug.Log($"currentControllerSelectionGroups[{i}]={currentControllerSelectionGroups[i].name}");
 			if(currentControllerSelectionGroups[i].availabilityPriority < highestAvailabilityPriority)
 			{
 				continue;
@@ -909,10 +931,12 @@ public class ControllerSelection : MonoBehaviour
 				}
 			}
 		}
-		return null;
+
+        return null;
 	}
-	
-	public ControllerSelectableObject HotkeyButtonCompleted(string hotkeyActionName)
+
+
+    public ControllerSelectableObject HotkeyButtonCompleted(string hotkeyActionName)
 	{
 		ControllerSelectionGroup highestAvailabilityPriorityControllerSelectionGroup = GetControllerSelectionGroupWithHighestAvailabilityPriority();
 		int highestAvailabilityPriority = int.MinValue;
@@ -961,11 +985,11 @@ public class ControllerSelection : MonoBehaviour
 						for(int k = 0; k < slideOutsToDisable.Count; k++)
 						{
 							// Debug.Log($"ControllerSelection Disabling slide out {slideOutsToDisable[k].gameObject.name}");
-                            slideOutsToDisable[k].OnPointerExit(new PointerEventData(EventSystem.current));
+                            slideOutsToDisable[k].StartReturnSlide();
 						}
 						for(int k = 0; k < slideOutsToEnable.Count; k++)
 						{
-							slideOutsToEnable[k].OnPointerEnter(new PointerEventData(EventSystem.current));
+							slideOutsToEnable[k].StartSlideOut();
 						}
 						return currentControllerSelectionGroups[i].controllerSelectableObjects[j];
 					}

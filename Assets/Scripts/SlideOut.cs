@@ -56,71 +56,78 @@ public class SlideOut : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             return;
         }
-        // Debug.Log($"{this.gameObject.name} OnPointerEnter");
-		if(slideEnabled && moveState < 0.99f)
-		{
-			SoundManager.instance.PlaySlideOutSound();
-		}
-		if(isInfoPanel)
-		{
-			int highestChildIndex = -1;
-			int roundIndex = GameManager.instance.roundsInformationPanel.GetSiblingIndex();
-			if(roundIndex > highestChildIndex)
-			{
-				highestChildIndex = roundIndex;
-			}
-			int handsIndex = GameManager.instance.handsInformationPanel.GetSiblingIndex();
-			if(handsIndex > highestChildIndex)
-			{
-				highestChildIndex = handsIndex;
-			}
-			int baublesIndex = GameManager.instance.baublesInformationPanel.GetSiblingIndex();
-			if(baublesIndex > highestChildIndex)
-			{
-				highestChildIndex = baublesIndex;
-			}
-			// Debug.Log($"roundIndex= {roundIndex}, handsIndex={handsIndex}, baublesIndex={baublesIndex}, highestChildIndex: {highestChildIndex}");
+		// Debug.Log($"{this.gameObject.name} OnPointerEnter");
+		StartSlideOut();
+    }
+	public void StartSlideOut()
+	{
+        if (slideEnabled && moveState < 0.99f)
+        {
+            SoundManager.instance.PlaySlideOutSound();
+        }
+        if (isInfoPanel)
+        {
+            int highestChildIndex = -1;
+            int roundIndex = GameManager.instance.roundsInformationPanel.GetSiblingIndex();
+            if (roundIndex > highestChildIndex)
+            {
+                highestChildIndex = roundIndex;
+            }
+            int handsIndex = GameManager.instance.handsInformationPanel.GetSiblingIndex();
+            if (handsIndex > highestChildIndex)
+            {
+                highestChildIndex = handsIndex;
+            }
+            int baublesIndex = GameManager.instance.baublesInformationPanel.GetSiblingIndex();
+            if (baublesIndex > highestChildIndex)
+            {
+                highestChildIndex = baublesIndex;
+            }
+            // Debug.Log($"roundIndex= {roundIndex}, handsIndex={handsIndex}, baublesIndex={baublesIndex}, highestChildIndex: {highestChildIndex}");
             rt.SetSiblingIndex(highestChildIndex);
-		}
-		// transform.SetSiblingIndex(transform.parent.childCount - 1);
-		mouseOver = true;
-		contentControllerSelectionGroup.AddToCurrentGroups();
-	}
-	
-	public void OnPointerExit(PointerEventData pointerEventData)
+        }
+        // transform.SetSiblingIndex(transform.parent.childCount - 1);
+        mouseOver = true;
+        contentControllerSelectionGroup.AddToCurrentGroups();
+    }
+    public void OnPointerExit(PointerEventData pointerEventData)
     {
         if (ControllerSelection.instance.usingController)
         {
             return;
         }
         // Debug.Log($"{this.gameObject.name} OnPointerExit");
-		if(LocalInterface.instance.GetCurrentSceneName() == "GameplayScene")
-		{
-			if(this == BaublesInformation.instance.slideOut || this == HandsInformation.instance.slideOut)
-			{
-				List<RaycastResult> results = new List<RaycastResult>();
-				EventSystem.current.RaycastAll(pointerEventData, results);
-				foreach (RaycastResult result in results)
-				{
-					if(result.gameObject != null)
-					{
-						if(result.gameObject == Tooltip.instance.tooltipObject || result.gameObject == HandInfoTooltip.instance.backdropObject)
-						{
-							return;
-						}
-					}
-				}
-			}
-		}
-		if(slideEnabled)
-		{
-			if(this == HandsInformation.instance.slideOut)
-			{
-				HandInfoTooltip.instance.DisableTooltip();
-			}
-			SoundManager.instance.PlaySlideOutSound(true);
-		}
-		mouseOver = false;
-		contentControllerSelectionGroup.RemoveFromCurrentGroups();
-	}
+        if (LocalInterface.instance.GetCurrentSceneName() == "GameplayScene")
+        {
+            if (this == BaublesInformation.instance.slideOut || this == HandsInformation.instance.slideOut)
+            {
+                List<RaycastResult> results = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(pointerEventData, results);
+                foreach (RaycastResult result in results)
+                {
+                    if (result.gameObject != null)
+                    {
+                        if (result.gameObject == Tooltip.instance.tooltipObject || result.gameObject == HandInfoTooltip.instance.backdropObject)
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        StartReturnSlide();
+    }
+	public void StartReturnSlide()
+	{
+        if (slideEnabled)
+        {
+            if (this == HandsInformation.instance.slideOut)
+            {
+                HandInfoTooltip.instance.DisableTooltip();
+            }
+            SoundManager.instance.PlaySlideOutSound(true);
+        }
+        mouseOver = false;
+        contentControllerSelectionGroup.RemoveFromCurrentGroups();
+    }
 }

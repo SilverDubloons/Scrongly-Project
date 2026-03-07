@@ -67370,6 +67370,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scroll View
       objectReference: {fileID: 0}
+    - target: {fileID: 6969065224170439038, guid: 59f830e8a4e7c7b49817058256bad4a6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 205
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -77637,7 +77641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ee3c03be8ca3241a827711586be6d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 5.Mar. 2026.00
+  version: 7.Mar. 2026.00
   steamBuild: 1
   versionLabel: {fileID: 1663512740}
   exitButtonObject: {fileID: 538157646}

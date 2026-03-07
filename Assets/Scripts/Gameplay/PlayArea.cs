@@ -36,6 +36,7 @@ public class PlayArea : MonoBehaviour, IPointerClickHandler
 	public Sprite unlockedButtonSprite;
 	public Sprite lockedButtonSprite;
 	public Sprite magicMirrorMisplacedSprite;
+	public Sprite xSprite;
 	public GameObject rainbowPaintPrefab;
 	public GameObject dissolvePrefab;
 	public GameObject magicMarkerPrefab;
@@ -374,6 +375,7 @@ public class PlayArea : MonoBehaviour, IPointerClickHandler
 			{
 				standardDropZones[i].xImage.color = redXColor;
                 standardDropZones[i].xImage.rectTransform.sizeDelta = new Vector2(38f, 38f);
+                standardDropZones[i].xImage.sprite = xSprite;
             }
 			standardDropZones[i].xImage.transform.SetSiblingIndex(standardDropZones[i].transform.childCount - 1);
 			standardDropZones[i].mushroomMultBackdrop.transform.SetSiblingIndex(standardDropZones[i].transform.childCount - 1);

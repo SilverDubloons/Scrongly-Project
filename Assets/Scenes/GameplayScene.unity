@@ -66832,6 +66832,7 @@ MonoBehaviour:
   unlockedButtonSprite: {fileID: 21300000, guid: dafb9d827d2713547b517bc30006642d, type: 3}
   lockedButtonSprite: {fileID: 21300000, guid: a51510d943b07d4498b7a974e277c26f, type: 3}
   magicMirrorMisplacedSprite: {fileID: 1103465278, guid: c52fa710d48bce3448863d22c4ff8614, type: 3}
+  xSprite: {fileID: 21300000, guid: d31dae89f539e8649a90522ec5870c4c, type: 3}
   rainbowPaintPrefab: {fileID: 6164558896275919395, guid: f5d1988010478694b99f97b2ac0c2982, type: 3}
   dissolvePrefab: {fileID: 9166018068573823103, guid: ce229f26da8fdba4eb67b137a65527f2, type: 3}
   magicMarkerPrefab: {fileID: 7250028599849351315, guid: b64466ef8738f8242ad1ee11e8b0b99c, type: 3}
@@ -68208,6 +68209,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 16
   m_lineSpacingMax: 0
@@ -68728,6 +68730,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 16
   m_lineSpacingMax: 0
